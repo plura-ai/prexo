@@ -1,6 +1,9 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
+  "concurrency": "100%",
+  "daemon": true,
+  "envMode": "strict",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
