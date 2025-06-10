@@ -1,0 +1,14 @@
+{
+    "name": "@prexo/auth",
+    "version": "0.0.0",
+    "private": false,
+    "exports": {
+        ".": "./src/auth.ts"
+    },
+    "dependencies": {
+        "better-auth": "^1.2.8",
+        "@prexo/utils": "workspace:*",
+        "@prexo/db": "workspace:*"
+    },
+    "devDependencies": {}
+}

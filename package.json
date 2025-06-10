@@ -2,14 +2,23 @@
   "name": "prexo",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
+    "build": "turbo run db:push && turbo build",
+    "build:www": "turbo --filter=www build",
     "dev": "turbo run dev",
+    "dev:www": "turbo --filter=www dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "check-types": "turbo run check-types",
+    "db:push": "bunx drizzle-kit push",
+    "db:generate": "bunx drizzle-kit generate",
+    "db:migrate": "bunx drizzle-kit migrate",
+    "db:studio": "bun drizzle-kit studio --verbose"
+
   },
   "devDependencies": {
+    "drizzle-kit": "^0.31.1",
     "prettier": "^3.5.3",
+    "tsx": "^4.19.4",
     "turbo": "^2.5.4",
     "typescript": "5.8.2"
   },
@@ -20,5 +29,10 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.44.2",
+    "mysql2": "^3.14.1"
+  }
 }
