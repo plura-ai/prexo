@@ -22,9 +22,10 @@ fi
 # Ensure the bun.lock file is present
 if [ ! -f bun.lock ]; then
     echo "bun.lock file not found. Running 'bun install' to create it..."
-    bun install
 fi
 
+# Install dependencies
+bun install
 echo "Setup complete. Please fill in the .env.local file with your keys."
 echo "Note: The .env.prod file is not used in development, but you can use it for production settings."
 echo "To run the application, use 'bun run dev' for development or 'bun run build' followed by 'bun start' for production."
