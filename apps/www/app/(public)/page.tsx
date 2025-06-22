@@ -14,7 +14,7 @@ export default function Home() {
       </section>
 
       <section id="about" className="flex flex-col items-center justify-center w-full h-full p-4 border-b border-dashed">
-ok
+        ok
       </section>
 
       <section id="fuck" className="flex flex-col items-center justify-center w-full h-full p-4 border-b border-dashed">
