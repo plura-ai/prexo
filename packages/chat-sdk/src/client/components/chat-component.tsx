@@ -239,14 +239,12 @@ export const ChatComponent = ({ theme, position = "bottom-right" }: ChatComponen
           "fixed z-50 antialiased",
           "bottom-0 left-0 right-0 w-full",
           "rounded-t-2xl border-2 border-zinc-500",
-          "sm:bottom-20 sm:top-auto sm:w-[360px]",
+          "sm:bottom-20 sm:top-auto sm:w-[360px] sm:max-w-4xl sm:mx-auto",
           "sm:rounded-2xl sm:border-2",
           "bg-white text-left text-black shadow-2xl",
           "transition-all duration-300",
           position === "bottom-left" ? "sm:left-4 sm:right-auto" : "sm:right-4 sm:left-auto",
-          isOpen
-            ? "pointer-events-auto translate-y-0 opacity-100"
-            : "pointer-events-none translate-y-full opacity-0"
+          isOpen ? "block opacity-100" : "hidden opacity-0"
         )}
       >
         {/* Chat Header */}

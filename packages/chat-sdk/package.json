@@ -21,11 +21,11 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/client/index.mjs"
+      "import": "./dist/client/index.js"
     },
-    "./styles.css": "./dist/client/styles.mjs"
+    "./styles.css": "./dist/client/styles.js"
   },
-  "main": "./dist/client/index.mjs",
+  "main": "./dist/client/index.js",
   "types": "./dist/client/index.d.ts",
   "files": [
     "dist"
