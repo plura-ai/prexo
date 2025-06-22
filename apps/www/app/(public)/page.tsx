@@ -20,6 +20,7 @@ export default function Home() {
       <section id="fuck" className="flex flex-col items-center justify-center w-full h-full p-4 border-b border-dashed">
 ok
       </section>
+      
     </main>
   );
 }

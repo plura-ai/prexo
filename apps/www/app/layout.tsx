@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ChatComponent } from "@prexo/chat-sdk";
 
 const uxumGrotesque = localFont({
   src: [
@@ -100,6 +101,9 @@ export default function RootLayout({
           >
             <div className="flex flex-col items-center bg-background">
               {children}
+            </div>
+            <div className="mx-auto max-w-3xl">
+            <ChatComponent position="bottom-left"/>
             </div>
           </ThemeProvider>
       </body>

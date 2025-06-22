@@ -1,0 +1,7 @@
+{
+    "functions": {
+      "apps/**/*": {
+        "maxDuration": 30
+      }
+    }
+  }
