@@ -19,9 +19,10 @@ type ChatComponentProps = {
     triggerButtonIcon?: React.ReactNode;
     triggerButtonColor?: string;
   };
+  position?: "bottom-left" | "bottom-right";
 };
 
-export const ChatComponent = ({ theme }: ChatComponentProps) => {
+export const ChatComponent = ({ theme, position = "bottom-right" }: ChatComponentProps) => {
   const [conversation, setConversation] = useState<Message[]>([]);
   const [sessionId, setSessionId] = useState<string>("");
   const [input, setInput] = useState<string>("");
@@ -218,11 +219,12 @@ export const ChatComponent = ({ theme }: ChatComponentProps) => {
       <Button
         onClick={toggleChat}
         className={cn(
-          "fixed bottom-8 right-8 z-[9999] size-12",
+          "fixed bottom-4 z-[9999] size-12",
           "flex items-center justify-center p-0",
           "rounded-full text-white shadow-xl",
           "transition-all duration-300 ease-in-out",
           isOpen ? "scale-0 opacity-0" : "scale-100 opacity-100",
+          position === "bottom-left" ? "left-4" : "right-4"
         )}
         style={{
           backgroundColor: theme?.triggerButtonColor ?? "#10b981", // default: emerald-500
@@ -235,17 +237,16 @@ export const ChatComponent = ({ theme }: ChatComponentProps) => {
       <div
         className={cn(
           "fixed z-50 antialiased",
-          // Mobile (default)
           "bottom-0 left-0 right-0 w-full",
           "rounded-t-2xl border-2 border-zinc-500",
-          // Desktop
-          "sm:!bottom-8 sm:!left-auto sm:!right-8 sm:!h-auto sm:!w-[420px]",
+          "sm:bottom-20 sm:top-auto sm:w-[360px]",
           "sm:rounded-2xl sm:border-2",
           "bg-white text-left text-black shadow-2xl",
           "transition-all duration-300",
+          position === "bottom-left" ? "sm:left-4 sm:right-auto" : "sm:right-4 sm:left-auto",
           isOpen
             ? "pointer-events-auto translate-y-0 opacity-100"
-            : "pointer-events-none translate-y-full opacity-0",
+            : "pointer-events-none translate-y-full opacity-0"
         )}
       >
         {/* Chat Header */}
@@ -280,7 +281,7 @@ export const ChatComponent = ({ theme }: ChatComponentProps) => {
 
         {/* Chat Body */}
         <ScrollArea
-          className="h-[40vh] overflow-auto overscroll-contain p-6 sm:h-[420px]"
+          className="h-[35vh] overflow-auto overscroll-contain p-4 sm:h-[360px]"
           ref={scrollAreaRef}
         >
           {/* empty message */}
@@ -304,7 +305,7 @@ export const ChatComponent = ({ theme }: ChatComponentProps) => {
         </ScrollArea>
 
         {/* Chat Form */}
-        <form onSubmit={handleSubmit} className="relative p-6">
+        <form onSubmit={handleSubmit} className="relative px-4 py-4">
           <TextareaAutosize
             className={cn(
               "flex w-full rounded-3xl border bg-transparent px-4 py-3",

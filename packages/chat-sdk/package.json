@@ -1,27 +1,41 @@
 {
   "name": "@prexo/chat-sdk",
-  "description": "Streaming Chat Component with Persistent History",
-  "version": "0.2.2",
-  "module": "index.ts",
-  "main": "./dist/client/index.mjs",
-  "types": "./dist/client/index.d.ts",
+  "version": "0.1.3",
+  "description": "AI Chat Component with Persistent History",
+  "keywords": [
+    "ai",
+    "ai-sdk",
+    "chat-sdk",
+    "chat-ai"
+  ],
+  "homepage": "https://github.com/plura-ai/prexo#readme",
+  "bugs": {
+    "url": "https://github.com/plura-ai/prexo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plura-ai/prexo.git#main"
+  },
+  "license": "MIT",
+  "author": "Saidev Dhal",
+  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/client/index.mjs"
     },
     "./styles.css": "./dist/client/styles.mjs"
   },
+  "main": "./dist/client/index.mjs",
+  "types": "./dist/client/index.d.ts",
   "files": [
     "dist"
   ],
-  "peerDependencies": {
-    "next": "^15.3.3",
-    "react": "^18 || ^19",
-    "typescript": "^5.8.2"
-  },
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch"
+    "dev": "tsup --watch",
+    "publish": "npm publish --access public",
+    "pre-publish": "bun run build",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.3.22",
@@ -56,10 +70,13 @@
     "prettier-plugin-tailwindcss": "^0.6.13",
     "tsup": "^8.5.0"
   },
-  "homepage": "https://github.com/upstash/rag-chat-component#readme",
-  "author": "Fahreddin Ozcan",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/upstash/rag-chat-component/issues"
+  "peerDependencies": {
+    "next": "^15.3.3",
+    "react": "^18 || ^19",
+    "typescript": "^5.8.2"
+  },
+  "module": "index.ts",
+  "publishConfig": {
+    "access": "public"
   }
 }
