@@ -102,9 +102,7 @@ export default function RootLayout({
             <div className="flex flex-col items-center bg-background">
               {children}
             </div>
-            <div className="mx-auto max-w-3xl">
             <ChatComponent position="bottom-left"/>
-            </div>
           </ThemeProvider>
       </body>
     </html>

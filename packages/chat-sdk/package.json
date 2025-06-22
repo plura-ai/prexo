@@ -1,6 +1,6 @@
 {
   "name": "@prexo/chat-sdk",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "AI Chat Component with Persistent History",
   "keywords": [
     "ai",
@@ -33,7 +33,6 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "publish": "npm publish --access public",
     "pre-publish": "bun run build",
     "type-check": "tsc --noEmit"
   },

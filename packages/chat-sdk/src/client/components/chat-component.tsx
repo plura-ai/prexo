@@ -214,7 +214,7 @@ export const ChatComponent = ({ theme, position = "bottom-right" }: ChatComponen
   const hasMessages = conversation.length > 0;
 
   return (
-    <div className="ups-chat rcc">
+    <div id="prexo-chat-widget-root" className="prexo-chat-widget rcc">
       {/* >>> Trigger Button */}
       <Button
         onClick={toggleChat}
@@ -223,7 +223,6 @@ export const ChatComponent = ({ theme, position = "bottom-right" }: ChatComponen
           "flex items-center justify-center p-0",
           "rounded-full text-white shadow-xl",
           "transition-all duration-300 ease-in-out",
-          isOpen ? "scale-0 opacity-0" : "scale-100 opacity-100",
           position === "bottom-left" ? "left-4" : "right-4"
         )}
         style={{
@@ -237,7 +236,7 @@ export const ChatComponent = ({ theme, position = "bottom-right" }: ChatComponen
       <div
         className={cn(
           "fixed z-50 antialiased",
-          "bottom-0 left-0 right-0 w-full",
+          "bottom-4 right-4 max-w-4xl w-full sm:w-[360px]",
           "rounded-t-2xl border-2 border-zinc-500",
           "sm:bottom-20 sm:top-auto sm:w-[360px] sm:max-w-4xl sm:mx-auto",
           "sm:rounded-2xl sm:border-2",
