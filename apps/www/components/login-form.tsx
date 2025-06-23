@@ -7,11 +7,51 @@ import {
   IconBrandGithub,
   IconBrandDiscord,
 } from "@tabler/icons-react";
+import { authClient } from "@prexo/auth";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const handleAuth = async (provider: "github" | "discord" | "google") => {
+    switch (provider) {
+      case "google":
+        await authClient.signIn.social({
+          provider: provider,
+          callbackURL: "/onboarding",
+          fetchOptions: {
+            onSuccess() {
+              console.log("Successfully signed in with Google");
+            },
+          },
+        });
+        break;
+      case "github":
+        await authClient.signIn.social({
+          provider: provider,
+          callbackURL: "/onboarding",
+          fetchOptions: {
+            onSuccess() {
+              console.log("Successfully signed in with Github");
+            },
+          },
+        });
+        break;
+      case "discord":
+        await authClient.signIn.social({
+          provider: provider,
+          callbackURL: "/onboarding",
+          fetchOptions: {
+            onSuccess() {
+              console.log("Successfully signed in with Discord");
+            },
+          },
+        });
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <form>
@@ -21,15 +61,15 @@ export function LoginForm({
             <p className="text-white/75">Log in to your prexo account</p>
           </div>
           <div className="flex flex-col gap-3">
-            <Button variant="outline" type="button" className="w-full">
+            <Button variant="outline" type="button" className="w-full cursor-pointer" onClick={() => handleAuth("google")}>
               <IconBrandGoogle />
               Continue with Google
             </Button>
-            <Button variant="outline" type="button" className="w-full">
+            <Button variant="outline" type="button" className="w-full cursor-pointer" onClick={() => handleAuth("github")}>
               <IconBrandGithub />
               Continue with Github
             </Button>
-            <Button variant="outline" type="button" className="w-full">
+            <Button variant="outline" type="button" className="w-full cursor-pointer" onClick={() => handleAuth("discord")}>
               <IconBrandDiscord />
               Continue with Discord
             </Button>

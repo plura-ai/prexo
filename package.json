@@ -4,8 +4,10 @@
   "scripts": {
     "build": "turbo run db:push && turbo build",
     "build:www": "turbo --filter=www build",
+    "build:api": "turbo --filter=api build",
     "dev": "turbo run dev",
     "dev:www": "turbo --filter=www dev",
+    "dev:api": "turbo --filter=api dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
@@ -32,7 +34,6 @@
   ],
   "dependencies": {
     "dotenv": "^16.5.0",
-    "drizzle-orm": "^0.44.2",
-    "mysql2": "^3.14.1"
+    "drizzle-orm": "^0.44.2"
   }
 }

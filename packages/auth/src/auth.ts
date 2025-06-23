@@ -66,6 +66,22 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
         // })
     ], 
     trustedOrigins: ["*"],
+    socialProviders: {
+        github: {
+          clientId: Envs.GITHUB_CLIENT_ID,
+          clientSecret: Envs.GITHUB_CLIENT_SECRET,
+        },
+        discord: {
+          clientId: Envs.DISCORD_CLIENT_ID,
+          clientSecret: Envs.DISCORD_CLIENT_SECRET,
+        },
+        google: {
+          clientId: Envs.GOOGLE_CLIENT_ID,
+          clientSecret: Envs.GOOGLE_CLIENT_SECRET,
+        },
+      },
     baseURL: Envs.BETTER_AUTH_URL,
     secret: Envs.BETTER_AUTH_SECRET,
 })
+
+export type Session = typeof auth.$Infer.Session;

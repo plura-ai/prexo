@@ -3,6 +3,7 @@ import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { handle } from "hono/vercel";
 import health from "../routes/alive";
+import ai from "../routes/ai";
 
 export const runtime = "edge";
 const app = new Hono().basePath("/v1");
@@ -23,6 +24,7 @@ app.use(
 
 // Import routes
 app.route("/health", health);
+app.route("/ai", ai);
 
   const GET = handle(app);
   const POST = handle(app);

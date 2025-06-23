@@ -6,10 +6,10 @@
     "dev": "next dev --turbopack --port 3001",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --max-warnings 0",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@ai-sdk/togetherai": "^0.2.14",
     "hono": "^4.8.2",
     "next": "15.3.4",
     "react": "^19.0.0",
