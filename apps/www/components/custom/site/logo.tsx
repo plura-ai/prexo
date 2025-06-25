@@ -11,7 +11,7 @@ interface LogoProps {
 
 export default function Logo({ height, width, alt, isCollapsed, isTextVisible = true }: LogoProps) {
   const [displayText, setDisplayText] = useState("");
-  const fullText = "PREXO [v.0.2]";
+  const fullText = "PREXO AI";
 
   useEffect(() => {
     if (isCollapsed) {
@@ -36,7 +36,7 @@ export default function Logo({ height, width, alt, isCollapsed, isTextVisible = 
     <div className="flex flex-row items-center gap-2 cursor-pointer">
       <Image src={"/logo.png"} height={height || 50} width={width || 40} alt={alt || "logo"} className="invert"/>
       {!isCollapsed && isTextVisible && (
-        <span className="text-2xl font-uxum font-bold">
+        <span className="text-2xl font-uxum font-bold p-2">
           {displayText}
         </span>
       )}

@@ -25,4 +25,5 @@ export const Envs = {
     NEXT_PUBLIC_BASE_API_URL: isDev ? process.env.NEXT_PUBLIC_DEV_BASE_API_URL! : process.env.NEXT_PUBLIC_BASE_API_URL!,
 } as const;
 
+
 export type Envs = typeof Envs;

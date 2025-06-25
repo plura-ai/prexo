@@ -1,6 +1,15 @@
-import { drizzle } from 'drizzle-orm/singlestore';
-import { Envs } from '@prexo/utils/envs';
+import { PrismaClient } from "@prisma/client/edge";
+import { withAccelerate } from "@prisma/extension-accelerate";
 
-export const db = drizzle({ connection: { uri: Envs.DATABASE_URL }});;
+const prismaClientSingleton = () => {
+  return new PrismaClient().$extends(withAccelerate());
+};
 
+declare const globalThis: {
+  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
+} & typeof global;
 
+export const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();
+
+if (process.env.NODE_ENV !== "production") globalThis.prismaGlobal = prisma;
+export * from "@prisma/client";

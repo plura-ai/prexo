@@ -1,21 +1,12 @@
 import { betterAuth } from "better-auth";
-import { db } from "@prexo/db";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { Envs } from "@prexo/utils/envs";
+import { prisma } from "@prexo/db";
+import { prismaAdapter } from "better-auth/adapters/prisma";
 import { passkey } from "better-auth/plugins/passkey"
 import { haveIBeenPwned } from "better-auth/plugins"
-import { createAuthClient } from "better-auth/client"
-import { passkeyClient } from "better-auth/client/plugins"
+
 // import { polar, checkout, portal, usage, webhooks } from "@polar-sh/better-auth";
 // import { Polar } from "@polar-sh/sdk";
 // import { polarClient } from "@polar-sh/better-auth";
-
-export const authClient = createAuthClient({
-    plugins: [ 
-        passkeyClient(),
-        // polarClient(),
-    ] 
-})
 
 // const polarInit = new Polar({
 //     accessToken: Envs.POLAR_ACCESS_TOKEN,
@@ -26,9 +17,9 @@ export const authClient = createAuthClient({
 // });
 
 export const auth: ReturnType<typeof betterAuth> = betterAuth({
-    database: drizzleAdapter(db, {
-        provider: "mysql", // or "pg", "sqlite"
-    }),
+  database: prismaAdapter(prisma, {
+    provider: "postgresql",
+  }),
     plugins: [ 
         passkey(), 
         haveIBeenPwned({
@@ -68,20 +59,20 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
     trustedOrigins: ["*"],
     socialProviders: {
         github: {
-          clientId: Envs.GITHUB_CLIENT_ID,
-          clientSecret: Envs.GITHUB_CLIENT_SECRET,
+          clientId: process.env.GITHUB_CLIENT_ID!,
+          clientSecret: process.env.GITHUB_CLIENT_SECRET!,
         },
         discord: {
-          clientId: Envs.DISCORD_CLIENT_ID,
-          clientSecret: Envs.DISCORD_CLIENT_SECRET,
+          clientId: process.env.DISCORD_CLIENT_ID!,
+          clientSecret: process.env.DISCORD_CLIENT_SECRET!,
         },
         google: {
-          clientId: Envs.GOOGLE_CLIENT_ID,
-          clientSecret: Envs.GOOGLE_CLIENT_SECRET,
+          clientId: process.env.GOOGLE_CLIENT_ID!,
+          clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
         },
       },
-    baseURL: Envs.BETTER_AUTH_URL,
-    secret: Envs.BETTER_AUTH_SECRET,
+    baseURL: process.env.BETTER_AUTH_UR!,
+    secret: process.env.BETTER_AUTH_SECRET!,
 })
 
 export type Session = typeof auth.$Infer.Session;

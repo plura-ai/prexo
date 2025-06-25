@@ -8,6 +8,7 @@ import Logo from '../../site/logo';
 import { Markdown } from '../markdown';
 import equal from 'fast-deep-equal';
 import { useScrollToBottom } from '@/hooks/use-scroll-to-bottom';
+import { Weather } from '../../ai-ui/weather';
 
 const PurePreviewMessage = ({
   message,
@@ -77,8 +78,49 @@ const PurePreviewMessage = ({
                     </div>
                   </div>
                 );
-              }
+              } 
 
+              if (type === 'tool-invocation') {
+                const { toolInvocation } = part;
+                const { toolName, toolCallId, state } = toolInvocation;
+
+                if (state === 'call') {
+                  const { args } = toolInvocation;
+
+                  return (
+                    <div
+                    key={toolCallId}
+                    className={cn({
+                      skeleton: ['getWeather'].includes(toolName),
+                    })}
+                  >
+                    {toolName === 'getWeather' && (
+                        <Weather {...args}/>
+                      )
+                    }
+                    </div>
+                  )
+                }
+
+                if (state === 'result') {
+                  if (toolName === 'displayWeather') {
+                    const { result } = toolInvocation;
+                    return (
+                      <div key={toolCallId}>
+                        <Weather {...result} />
+                      </div>
+                    );
+                  }
+                } else {
+                  return (
+                    <div key={toolCallId}>
+                      {toolName === 'displayWeather' ? (
+                        <div>Loading weather...</div>
+                      ) : null}
+                    </div>
+                  );
+                }
+              }
               return null;
             })}
           </div>

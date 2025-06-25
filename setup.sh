@@ -1,21 +1,15 @@
-touch .env.local
-touch .env.prod
-echo "DEV_DATABASE_URL=ADD_YOUR_KEY" >> .env.local
-echo "DEV_BETTER_AUTH_URL=ADD_YOUR_KEY" >> .env.local
-echo "DEV_BETTER_AUTH_SECRET=ADD_YOUR_KEY" >> .env.local
-echo "DEV_POLAR_ACCESS_TOKEN=ADD_YOUR_KEY" >> .env.local
-echo "DEV_POLAR_WEBHOOK_SECRET=ADD_YOUR_KEY" >> .env.local
+touch .env
 # The following variables are of production.
-echo "POLAR_WEBHOOK_SECRET=NO_NEED" >> .env.prod
-echo "POLAR_ACCESS_TOKEN=NO_NEED" >> .env.prod
-echo "BETTER_AUTH_SECRET=NO_NEED" >> .env.prod
-echo "BETTER_AUTH_URL=NO_NEED" >> .env.prod
-echo "DATABASE_URL=NO_NEED" >> .env.prod
+echo "POLAR_WEBHOOK_SECRET=NO_NEED" >> .env
+echo "POLAR_ACCESS_TOKEN=NO_NEED" >> .env
+echo "BETTER_AUTH_SECRET=NO_NEED" >> .env
+echo "BETTER_AUTH_URL=NO_NEED" >> .env
+echo "DATABASE_URL=NO_NEED" >> .env
 
-touch apps/www/.env.local
-echo "UPSTASH_VECTOR_REST_URL=ADD_YOUR_KEY" >> apps/www/.env.local
-echo "UPSTASH_VECTOR_REST_TOKEN=ADD_YOUR_KEY" >> apps/www/.env.local
-echo "TOGETHER_API_KEY=ADD_YOUR_KEY" >> apps/www/.env.local
+touch apps/www/.env
+echo "UPSTASH_VECTOR_REST_URL=ADD_YOUR_KEY" >> apps/www/.env
+echo "UPSTASH_VECTOR_REST_TOKEN=ADD_YOUR_KEY" >> apps/www/.env
+echo "TOGETHER_API_KEY=ADD_YOUR_KEY" >> apps/www/.env
 
 # Install dependencies using Bun
 echo "Installing dependencies..."

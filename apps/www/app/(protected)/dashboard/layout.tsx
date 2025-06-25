@@ -13,7 +13,7 @@ export default function layout({ children }: { children: ReactNode }) {
                     "--header-height": "calc(var(--spacing) * 12)",
                 } as React.CSSProperties}
         >
-            <AppSidebar variant="inset" collapsible="icon" />
+            <AppSidebar variant="inset" collapsible="offcanvas" />
             <SidebarInset>
                 {/* <SiteHeader /> */}
                 <DashboardHeader/>

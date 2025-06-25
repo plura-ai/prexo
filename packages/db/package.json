@@ -3,17 +3,22 @@
     "version": "0.0.0",
     "private": false,
     "exports": {
-      ".": "./src/index.ts"
+        ".": "./src/index.ts"
     },
     "scripts": {
-    "db:push": "bunx drizzle-kit push",
-    "db:generate": "bunx drizzle-kit generate",
-    "db:migrate": "bunx drizzle-kit migrate",
-    "db:studio": "bun drizzle-kit studio --verbose"
+        "db:studio": "prisma studio",
+        "db:validate": "prisma validate",
+        "db:generate": "prisma generate --accelerate",
+        "db:push": "prisma db push --skip-generate",
+        "db:migrate": "pnpm db:validate && prisma migrate dev"
     },
     "dependencies": {
-        "@prexo/utils": "workspace:*"
+        "@prexo/utils": "workspace:*",
+        "@prisma/client": "^6.10.1",
+        "@prisma/extension-accelerate": "^2.0.1",
+        "drizzle-orm": "^0.44.2",
+        "postgres": "^3.4.7",
+        "prisma": "^6.10.1"
     },
-    "devDependencies": {
-    }
-  }
+    "devDependencies": {}
+}
