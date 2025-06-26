@@ -7,20 +7,24 @@ import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { MainNavbar } from "./main.nav";
 import { Icons } from "@/constants/icons";
+import { useAuth } from "@/context/auth.context";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const {user} = useAuth();
+  const loginURL = user ? "/dashboard" : "/auth";
+
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "l" || e.key === "L") {
         e.preventDefault();
-        redirect("/auth");
+        redirect(loginURL);
       }
     };
 
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
-  }, []);
+  }, [loginURL]);
 
   return (
     <header className="fixed top-5 w-5/6 z-[500] border border-border/60 bg-secondary/30 backdrop-blur-lg supports-[backdrop-filter]:bg-secondary/50 dark:border-border rounded-2xl">
@@ -77,8 +81,8 @@ export function Navbar() {
               <span className="sr-only">Discord</span>
             </div>
           </Link>
-          <Link href={"/auth"} className="hidden md:flex">
-            <Button variant={"secondary"} className="h-8 px-3">
+          <Link href={loginURL} className="hidden md:flex">
+            <Button variant={"secondary"} className="h-8 px-3 cursor-pointer">
               Log in
               <Badge className="px-2">L</Badge>
             </Button>

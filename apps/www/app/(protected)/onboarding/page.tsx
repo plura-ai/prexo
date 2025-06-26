@@ -1,16 +1,23 @@
 "use client";
+import NotFound from '@/app/not-found';
 import { useAuth } from '@/context/auth.context';
-import { redirect } from 'next/navigation';
-import React from 'react'
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function Onboarding() {
   const { user } = useAuth();
-  if (user) {
-    redirect('/dashboard');
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      console.log("User exists, redirecting to onboarding page");
+      router.replace(`/onboarding/${user.id}`);
+    }
+  }, [user, router]);
+
+  if (!user) {
+    return NotFound();
   }
-  return (
-    <div>
-      IDK BRO
-    </div>
-  )
+
+  return null;
 }
