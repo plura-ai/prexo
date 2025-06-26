@@ -14,12 +14,14 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const callbackUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000/onboarding" : "https://app.prexo.com/onboarding";
+
   const handleAuth = async (provider: "github" | "discord" | "google" | "passkey") => {
     switch (provider) {
       case "google":
         await authClient.signIn.social({
           provider: provider,
-          callbackURL: "/onboarding",
+          callbackURL: callbackUrl,
           fetchOptions: {
             onSuccess() {
               console.log("Successfully signed in with Google");
@@ -33,7 +35,7 @@ export function LoginForm({
       case "github":
         await authClient.signIn.social({
           provider: provider,
-          callbackURL: "/onboarding",
+          callbackURL: callbackUrl,
           fetchOptions: {
             onSuccess() {
               console.log("Successfully signed in with GitHub");
@@ -47,7 +49,7 @@ export function LoginForm({
       case "discord":
         await authClient.signIn.social({
           provider: provider,
-          callbackURL: "/onboarding",
+          callbackURL: callbackUrl,
           fetchOptions: {
             onSuccess() {
               console.log("Successfully signed in with Discord");

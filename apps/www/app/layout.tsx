@@ -2,6 +2,8 @@ import localFont from "next/font/local";
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { StoreProvider } from "@/context/store.context";
+import { AuthProvider } from "@/context/auth.context";
 // import { ChatComponent } from "@prexo/chat-sdk";
 
 const uxumGrotesque = localFont({
@@ -93,7 +95,9 @@ export default function RootLayout({
       <body
         className={`${uxumGrotesque.variable} ${untitledSans.variable} antialiased`}
       >
-        <ThemeProvider
+        <StoreProvider>
+          <AuthProvider>
+          <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
@@ -104,6 +108,8 @@ export default function RootLayout({
             </div>
             {/* <ChatComponent position="bottom-left"/> */}
           </ThemeProvider>
+          </AuthProvider>
+        </StoreProvider>
       </body>
     </html>
   );

@@ -1,0 +1,13 @@
+{
+  "name": "@prexo/store",
+  "version": "0.0.0",
+  "private": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./types": "./types.ts"
+  },
+  "dependencies": {
+    "zustand": "^5.0.5",
+    "@prexo/types": "workspace:*"
+  }
+}

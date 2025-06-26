@@ -73,6 +73,17 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
       },
     baseURL: process.env.BETTER_AUTH_UR!,
     secret: process.env.BETTER_AUTH_SECRET!,
+    user: {
+      additionalFields: {
+        role: {
+          type: "string",
+          nullable: false,
+          required: true,
+          input: false,
+          defaultValue: "user",
+        },
+      }
+    },
 })
 
 export type Session = typeof auth.$Infer.Session;

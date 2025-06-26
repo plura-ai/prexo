@@ -11,10 +11,10 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
-    "db:push": "bunx drizzle-kit push",
-    "db:generate": "bunx drizzle-kit generate",
-    "db:migrate": "bunx drizzle-kit migrate",
-    "db:studio": "bun drizzle-kit studio --verbose",
+    "db:push": "cd packages/db && bun db:push",
+    "db:generate": "cd packages/db && bun db:generate",
+    "db:migrate": "cd packages/db && bun db:migrate",
+    "db:studio":"cd packages/db && bun db:studio",
     "setup": "bash scripts/setup.sh",
     "envc": "bash scripts/envc.sh"
 
