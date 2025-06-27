@@ -7,4 +7,10 @@ type UserStore = {
     setUsers: (users: UserType[]) => void;
   };
 
-export type { UserStore };
+type MyProfileStore = {
+    myProfile: UserType | null;
+    addMyProfile: (user: UserType) => void;
+    removeMyProfile: (userId: string) => void;
+  };
+
+export type { UserStore, MyProfileStore };

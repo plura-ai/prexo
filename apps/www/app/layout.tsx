@@ -95,8 +95,8 @@ export default function RootLayout({
       <body
         className={`${uxumGrotesque.variable} ${untitledSans.variable} antialiased`}
       >
-        <StoreProvider>
           <AuthProvider>
+        <StoreProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -108,8 +108,8 @@ export default function RootLayout({
             </div>
             {/* <ChatComponent position="bottom-left"/> */}
           </ThemeProvider>
-          </AuthProvider>
         </StoreProvider>
+          </AuthProvider>
       </body>
     </html>
   );

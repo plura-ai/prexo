@@ -5,6 +5,8 @@ import { handle } from "hono/vercel";
 import health from "../routes/alive";
 import ai from "../routes/ai";
 import auth from "../routes/auth";
+import user from "../routes/user";
+import project from "../routes/project";
 
 export const runtime = "edge";
 const app = new Hono().basePath("/v1");
@@ -31,6 +33,8 @@ app.use(
 app.route("/health", health);
 app.route("/auth", auth);
 app.route("/ai", ai);
+app.route("/user", user);
+app.route("/project", project);
 
   const GET = handle(app);
   const POST = handle(app);

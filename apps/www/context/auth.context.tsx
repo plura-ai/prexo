@@ -1,5 +1,6 @@
 "use client";
 import { authClient } from "@prexo/auth/client";
+import { useMyProfileStore } from "@prexo/store";
 import { UserType } from "@prexo/types";
 import {
   createContext,
@@ -23,6 +24,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserType | null>(null);
   const [userIP, setUserIP] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const { myProfile, addMyProfile, removeMyProfile } = useMyProfileStore();
 
   useEffect(() => {
     async function getData() {
@@ -31,9 +33,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const session = await authClient.getSession();
         if (session.data?.user) {
           setUser(session.data.user);
+          // If the user is logged in, we check if their profile is already added
+          if (myProfile && myProfile.id === session.data.user.id) {
+            return;
+          }
+          // If the user is logged in and their profile is not added, we add it
+          addMyProfile(session.data.user);
           console.log("User fetched:", session.data.user);
         } else {
           setUser(null);
+          // If the user is not logged in, we remove their profile if it exists
+          if (myProfile) {
+            removeMyProfile(myProfile.id);
+            console.log("User profile removed:", myProfile.id);
+          }
           console.log("No user found in session.");
         }
 
@@ -51,7 +64,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     }
     getData();
-  }, []);
+  }, [addMyProfile, myProfile, removeMyProfile]);
 
   return (
     <AuthContext.Provider value={{ user, loading, setUser, userIP, setUserIP }}>

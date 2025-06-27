@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { UserStore } from "../types";
+import { MyProfileStore, UserStore } from "../types";
 
 const useUsersStore = create<UserStore>()(
     persist(
@@ -16,4 +16,19 @@ const useUsersStore = create<UserStore>()(
     ),
   );
 
-export {useUsersStore};
+  const useMyProfileStore = create<MyProfileStore>()(
+    persist(
+      (set) => ({
+        myProfile: null,
+        addMyProfile: (user) => set({ myProfile: user }),
+        removeMyProfile: (id) => set((state) => ({
+          myProfile: state.myProfile && state.myProfile.id === id ? null : state.myProfile
+        })),
+      }),
+      {
+        name: "@prexo-#myProfile",
+      },
+    ),
+  );
+
+export {useUsersStore, useMyProfileStore};

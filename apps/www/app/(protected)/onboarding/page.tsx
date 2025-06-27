@@ -1,21 +1,23 @@
 "use client";
 import NotFound from '@/app/not-found';
-import { useAuth } from '@/context/auth.context';
+import { useMyProfileStore } from '@prexo/store';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function Onboarding() {
-  const { user } = useAuth();
+  const { myProfile } = useMyProfileStore();
   const router = useRouter();
 
   useEffect(() => {
-    if (user) {
-      console.log("User exists, redirecting to onboarding page");
-      router.replace(`/onboarding/${user.id}`);
+    if (myProfile && myProfile?.role !== 'onboarded' && myProfile?.role === 'user') {
+      router.replace(`/onboarding/${myProfile.id}`);
+    } else {
+      // If the user is already onboarded, redirect to the dashboard or another appropriate page
+      router.replace('/dashboard');
     }
-  }, [user, router]);
+  }, [myProfile, router]);
 
-  if (!user) {
+  if (!myProfile) {
     return NotFound();
   }
 
