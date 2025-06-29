@@ -7,6 +7,7 @@ import ai from "../routes/ai";
 import auth from "../routes/auth";
 import user from "../routes/user";
 import project from "../routes/project";
+import api from "../routes/api";
 
 export const runtime = "edge";
 const app = new Hono().basePath("/v1");
@@ -35,6 +36,7 @@ app.route("/auth", auth);
 app.route("/ai", ai);
 app.route("/user", user);
 app.route("/project", project);
+app.route("/api", api);
 
   const GET = handle(app);
   const POST = handle(app);

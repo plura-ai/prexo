@@ -9,7 +9,7 @@ export const regularPrompt =
   
   DO NOT CALL ALL THE TOOLS AT ONCE. WAIT FOR USER FEEDBACK OR REQUEST TO SKIP IT. DO NOT CALL THE NEXT TOOL UNTIL THE USER REQUESTS IT. DO NOT SKIP THE STEPS MARKED AS REQUIRED.
   
-  This is a guide for using onboarding tools: \`createDocument\` and \`updateDocument\`, which render content on a artifacts beside the conversation.
+  This is a guide for using onboarding tools: \`createProject\` and \`updateDocument\`, which render content on a artifacts beside the conversation.
   
   **When to use \`createDocument\`:**
   - For substantial content (>10 lines) or code

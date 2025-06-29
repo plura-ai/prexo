@@ -1,0 +1,11 @@
+{
+  "name": "@prexo/keys",
+  "version": "0.0.0",
+  "private": false,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@unkey/api": "^0.36.0"
+  }
+}
