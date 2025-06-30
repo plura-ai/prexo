@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { MyProfileStore, UserStore } from "../types";
+import { MyProfileStore, ProjectStore, UserStore } from "../types";
 
 const useUsersStore = create<UserStore>()(
     persist(
@@ -12,6 +12,22 @@ const useUsersStore = create<UserStore>()(
       }),
       {
         name: "@prexo-#users",
+      },
+    ),
+  );
+
+const useProjectsStore = create<ProjectStore>()(
+    persist(
+      (set) => ({
+        projects: [],
+        addProject: (project) => set((state) => ({ projects: [...state.projects, project] })),
+        removeProject: (projectId) => set((state) => ({
+          projects: state.projects.filter((p) => p.id !== projectId)
+        })),
+        setProjects: (projects) => set({ projects }),
+      }),
+      {
+        name: "@prexo-#projects",
       },
     ),
   );
@@ -31,4 +47,4 @@ const useUsersStore = create<UserStore>()(
     ),
   );
 
-export {useUsersStore, useMyProfileStore};
+export {useUsersStore, useMyProfileStore, useProjectsStore};

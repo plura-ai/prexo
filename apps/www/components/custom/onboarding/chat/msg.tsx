@@ -8,7 +8,8 @@ import Logo from '../../site/logo';
 import { Markdown } from '../markdown';
 import equal from 'fast-deep-equal';
 import { useScrollToBottom } from '@/hooks/use-scroll-to-bottom';
-import { Weather } from '../../ai-ui/weather';
+import ProjectCardAiUi from '../../ai-ui/project.card';
+import ApiCardAiUi from '../../ai-ui/api.card';
 
 const PurePreviewMessage = ({
   message,
@@ -84,39 +85,54 @@ const PurePreviewMessage = ({
                 const { toolInvocation } = part;
                 const { toolName, toolCallId, state } = toolInvocation;
 
-                if (state === 'call') {
-                  const { args } = toolInvocation;
+                // if (state === 'call') {
+                //   const { args } = toolInvocation;
 
-                  return (
-                    <div
-                    key={toolCallId}
-                    className={cn({
-                      skeleton: ['getWeather'].includes(toolName),
-                    })}
-                  >
-                    {toolName === 'getWeather' && (
-                        <Weather {...args}/>
-                      )
-                    }
-                    </div>
-                  )
-                }
+                //   return (
+                //     <div
+                //     key={toolCallId}
+                //     className={cn({
+                //       skeleton: ['createProject'].includes(toolName),
+                //     })}
+                //   >
+                //     {toolName === 'createProject' && (
+                //         <ProjectCardAiUi {...args}/>
+                //       )
+                //     }
+                //     </div>
+                //   )
+                // }
 
                 if (state === 'result') {
-                  if (toolName === 'displayWeather') {
+                  if (toolName === 'createProject') {
                     const { result } = toolInvocation;
                     return (
                       <div key={toolCallId}>
-                        <Weather {...result} />
+                        <ProjectCardAiUi {...result} />
                       </div>
                     );
                   }
+
+                  if (toolName === 'createApiKey') {
+                    const { result } = toolInvocation;
+                    return (
+                      <div key={toolCallId}>
+                        <ApiCardAiUi {...result} />
+                      </div>
+                    );
+                  }
+
+
                 } else {
                   return (
                     <div key={toolCallId}>
-                      {toolName === 'displayWeather' ? (
-                        <div>Loading weather...</div>
-                      ) : null}
+                      {toolName === 'createProject' ? (
+                        <div>Creating project...</div>
+                      ) : toolName === 'createApiKey' ? (
+                        <div>Creating API key...</div>
+                      ) : (
+                        <div>Processing...</div>
+                      )}
                     </div>
                   );
                 }

@@ -8,16 +8,29 @@ export default function OnboardingChat() {
 
   const { messages, input, setInput, handleSubmit, status } = useChat({
     api: url,
-    onError: (error) => {
-      console.error("Chat API error:", error);
-      if (error instanceof Error) {
-        console.error("Message:", error.message);
-        console.error("Stack:", error.stack);
+    onFinish: (message, { usage, finishReason }) => {
+      console.log('Finished streaming message:', message);
+      console.log('Token usage:', usage);
+      console.log('Finish reason:', finishReason);
+    },
+    onError: error => {
+      console.error('An error occurred:', error);
+    },
+    onResponse: response => {
+      console.log('Received HTTP response from server:', response);
+    },
+    maxSteps: 5,
+    async onToolCall({ toolCall }) {
+      if (toolCall.toolName === 'getLocation') {
+        const cities = [
+          'New York',
+          'Los Angeles',
+          'Chicago',
+          'San Francisco',
+        ];
+        return cities[Math.floor(Math.random() * cities.length)];
       }
     },
-    onFinish: () => {
-      console.log("Chat session finished successfully.");
-    }
   });
   return (
     <div className="relative flex flex-col w-screen max-w-2xl mx-auto h-screen">

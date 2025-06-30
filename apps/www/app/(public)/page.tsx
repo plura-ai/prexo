@@ -1,3 +1,4 @@
+import ApiCardAiUi from "@/components/custom/ai-ui/api.card";
 
 export default function Home() {
   return (
@@ -14,7 +15,7 @@ export default function Home() {
       </section>
 
       <section id="about" className="flex flex-col items-center justify-center w-full h-full p-4 border-b border-dashed">
-        ok
+        <ApiCardAiUi name="Prexo" apiKey="oiok"/>
       </section>
 
       <section id="fuck" className="flex flex-col items-center justify-center w-full h-full p-4 border-b border-dashed">

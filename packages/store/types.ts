@@ -1,4 +1,4 @@
-import { UserType } from '@prexo/types';
+import { ProjectType, UserType } from '@prexo/types';
 
 type UserStore = {
     users: UserType[];
@@ -13,4 +13,11 @@ type MyProfileStore = {
     removeMyProfile: (userId: string) => void;
   };
 
-export type { UserStore, MyProfileStore };
+type ProjectStore = {
+    projects: ProjectType[];
+    addProject: (project: ProjectType) => void;
+    removeProject: (projectId: string) => void;
+    setProjects: (projects: ProjectType[]) => void;
+  };
+
+export type { UserStore, MyProfileStore, ProjectStore };
