@@ -1,6 +1,4 @@
 'use server';
-import { betterFetch } from "@better-fetch/fetch";
-import { ProjectType } from "@prexo/types";
 
 const BASE_API_URL = process.env.BASE_API_URL!;
 console.log('BASE_API_URL:', BASE_API_URL);
@@ -11,19 +9,19 @@ async function createProjectAction(name: string, description?: string | null, us
         method: 'POST',
         body: JSON.stringify({ name: name, userId: userId, description: description }),
     });
-
-    const project: ProjectType = await response.json();
+    console.log('Response from createProjectAction:', response);
+    const project = await response.json();
     return project;
 }
 
 async function createApiKeyAction(name: string, projectId: string, userId: string) {
 
-    const response = await betterFetch(`${BASE_API_URL}/api/create`, {
+    const response = await fetch(`${BASE_API_URL}/api/create`, {
         method: 'POST',
         body: JSON.stringify({ name, projectId, userId }),
     });
-   
-    const res = response.data as ProjectType;
+   console.log('Response from createApiKeyAction:', response);
+    const res = await response.json();
     return res;
 }
 

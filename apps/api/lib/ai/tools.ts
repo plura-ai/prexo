@@ -15,10 +15,16 @@ const sendCreateProjectForm = createTool({
   }),
 });
 
+const sendCreateApiFrom = createTool({
+  description: 'Send create API form to user. After confirmation.',
+  parameters: z.object({
+    message: z.string().describe('Message to send to user after confirmation.'),
+  }),
+});
+
 
 export const tools = {
-  // createProject: projectTool,
-  // createApiKey: apiKeyTool,
   askForConfirmation,
   sendCreateProjectForm,
+  sendCreateApiFrom,
 };

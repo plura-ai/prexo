@@ -36,12 +36,13 @@ export default function ProjectCardAiUi({isDisabled, addToolResult, append, call
     setLoading(true);
     try {
       const res = await createProjectAction(projectName, projectDescription, myProfile.id);
+      console.log('Response from createProjectAction:', res?.project);
       setProjects([])
-      addProject(res);
+      addProject(res?.project);
       console.log('Project created successfully:', res);
       addToolResult({
         toolCallId: callId,
-        result: 'Project created successfully! You can now create your own API key.',
+        result: 'Project created successfully!',
       });
       await new Promise(resolve => setTimeout(resolve, 1500));
       append({

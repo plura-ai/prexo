@@ -34,7 +34,7 @@ export default function CopyInput({value}: CopyInputProps) {
         <Input
           ref={inputRef}
           id={id}
-          className="pe-9"
+          className="pe-9 border-2 border-destructive"
           type="text"
           value={value}
           placeholder="Copy me"

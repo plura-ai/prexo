@@ -12,6 +12,7 @@ async function createApi(projectID:string, name:string, enabled:boolean) {
             byteLength: 16,
             externalId: projectID,
             roles: ["freemium.user"],
+            remaining: 100,
             ratelimit: {
                 async: true,
                 duration: 1000,
@@ -21,7 +22,6 @@ async function createApi(projectID:string, name:string, enabled:boolean) {
               refill: {
                 interval: "daily",
                 amount: 100,
-                refillDay: 1,
               },
               enabled: enabled,
         })

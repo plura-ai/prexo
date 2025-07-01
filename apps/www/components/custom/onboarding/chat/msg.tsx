@@ -228,28 +228,28 @@ const PurePreviewMessage = ({
                               {part.toolInvocation.result}
                             </div>
                           );
-                        case 'call':
-                          return (
-                            <div key={callId}>
-                              <div>Creating project...</div>
-                            </div>
-                          );
                         default:
                           return null;
                       }
                     }
-                    case 'createApiKey': {
+                    case 'sendCreateApiFrom': {
                       switch (state) {
                         case 'result':
                           return (
                             <div key={callId}>
-                              <ApiCardAiUi {...part.toolInvocation.result} />
+                              <div className='flex flex-col mb-5'>
+                                {part.toolInvocation.result}
+                              </div>
+                              <ApiCardAiUi addToolResult={addToolResult} append={append} callId={callId}/>
                             </div>
                           );
                         case 'call':
                           return (
                             <div key={callId}>
-                              <div>Creating API key...</div>
+                              <div className='flex flex-col mb-5'>
+                                {part.toolInvocation.args.message}
+                              </div>
+                              <ApiCardAiUi addToolResult={addToolResult} append={append} callId={callId}/>
                             </div>
                           );
                         default:

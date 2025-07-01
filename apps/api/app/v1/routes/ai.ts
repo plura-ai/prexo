@@ -14,10 +14,6 @@ const togetherai = createTogetherAI({
   apiKey: process.env.TOGETHER_API_KEY!,
 });
 
-const openai = createOpenAI({
-  apiKey: process.env.OPENAI_API_KEY!,
-});
-
 ai.post("/stream", async (c) => {
   const { messages } = await c.req.json();
 
@@ -37,7 +33,7 @@ ai.post("/stream", async (c) => {
 
   const result = streamText({
     model: togetherai('meta-llama/Llama-3.3-70B-Instruct-Turbo-Free'),
-    system: 'Ask anything you want to know about User. You are a helpful assistant. Prompt the user to show create project form. You can call the tool after user confirmation.',
+    system: systemPrompt(),
     messages: filteredMessages,
     maxSteps: 5,
     tools: tools,
