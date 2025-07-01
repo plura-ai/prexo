@@ -216,16 +216,16 @@ const PurePreviewMessage = ({
                                 {part.toolInvocation.args.message}
                               </div>
                               <ProjectCardAiUi
-                                id={part.toolInvocation.args.id}
-                                name={part.toolInvocation.args.name}
-                                description={part.toolInvocation.args.description}
+                              callId={callId}
+                              addToolResult={addToolResult}
+                              append={append}
                               />
                             </div>
                           );
                         case 'result':
                           return (
                             <div key={callId}>
-                              <ProjectCardAiUi {...part.toolInvocation.result} />
+                              {part.toolInvocation.result}
                             </div>
                           );
                         case 'call':
