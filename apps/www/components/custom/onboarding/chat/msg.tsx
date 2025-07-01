@@ -10,13 +10,18 @@ import equal from 'fast-deep-equal';
 import { useScrollToBottom } from '@/hooks/use-scroll-to-bottom';
 import ProjectCardAiUi from '../../ai-ui/project.card';
 import ApiCardAiUi from '../../ai-ui/api.card';
+import { Button } from '@/components/ui/button';
 
 const PurePreviewMessage = ({
   message,
   requiresScrollPadding,
+  addToolResult,
+  append,
 }: {
   message: UIMessage;
   requiresScrollPadding: boolean;
+  addToolResult: (result: { toolCallId: string; result: string }) => void;
+  append: (message: UIMessage) => void;
 }) => {
   const { containerRef, scrollToBottom } = useScrollToBottom();
   const contentRef = React.useRef<HTMLDivElement>(null);
@@ -63,81 +68,201 @@ const PurePreviewMessage = ({
             })}
           >
             {message.parts?.map((part, index) => {
-              const { type } = part;
-              const key = `message-${message.id}-part-${index}`;
-
-              if (type === 'text') {
-                return (
-                  <div key={key} className="flex flex-row gap-2 items-start">
-                    <div
-                      data-testid="message-content"
-                      className={cn('flex flex-col gap-4', {
-                        'bg-primary text-primary-foreground px-3 py-2 rounded-xl': message.role === 'user',
-                      })}
-                    >
-                      <Markdown>{sanitizeText(part.text)}</Markdown>
-                    </div>
-                  </div>
-                );
-              } 
-
-              if (type === 'tool-invocation') {
-                const { toolInvocation } = part;
-                const { toolName, toolCallId, state } = toolInvocation;
-
-                // if (state === 'call') {
-                //   const { args } = toolInvocation;
-
-                //   return (
-                //     <div
-                //     key={toolCallId}
-                //     className={cn({
-                //       skeleton: ['createProject'].includes(toolName),
-                //     })}
-                //   >
-                //     {toolName === 'createProject' && (
-                //         <ProjectCardAiUi {...args}/>
-                //       )
-                //     }
-                //     </div>
-                //   )
-                // }
-
-                if (state === 'result') {
-                  if (toolName === 'createProject') {
-                    const { result } = toolInvocation;
-                    return (
-                      <div key={toolCallId}>
-                        <ProjectCardAiUi {...result} />
-                      </div>
-                    );
-                  }
-
-                  if (toolName === 'createApiKey') {
-                    const { result } = toolInvocation;
-                    return (
-                      <div key={toolCallId}>
-                        <ApiCardAiUi {...result} />
-                      </div>
-                    );
-                  }
-
-
-                } else {
+              switch (part.type) {
+                case 'text':
                   return (
-                    <div key={toolCallId}>
-                      {toolName === 'createProject' ? (
-                        <div>Creating project...</div>
-                      ) : toolName === 'createApiKey' ? (
-                        <div>Creating API key...</div>
-                      ) : (
-                        <div>Processing...</div>
-                      )}
+                    <div key={`message-${message.id}-part-${index}`} className="flex flex-row gap-2 items-start">
+                      <div
+                        data-testid="message-content"
+                        className={cn('flex flex-col gap-4', {
+                          'bg-primary text-primary-foreground px-3 py-2 rounded-xl': message.role === 'user',
+                        })}
+                      >
+                        <Markdown>{sanitizeText(part.text)}</Markdown>
+                      </div>
                     </div>
                   );
+
+                case 'tool-invocation': {
+                  const callId = part.toolInvocation.toolCallId;
+                  const toolName = part.toolInvocation.toolName;
+                  const state = part.toolInvocation.state;
+
+                  switch (toolName) {
+                    case 'askForConfirmation': {
+                      switch (state) {
+                        case 'call':
+                          return (
+                            <div key={callId}>
+                              {part.toolInvocation.args.message}
+                              <div className="flex gap-2 mt-2">
+                                <Button
+                                  variant={'outline'}
+                                  onClick={() => {
+                                    scrollToBottom('auto');
+                                    append({
+                                      id: callId,
+                                      role: 'user',
+                                      content: 'Yes, confirmed.',
+                                      parts: [
+                                        {
+                                          type: 'text',
+                                          text: 'Yes, confirmed.',
+                                        },
+                                      ],
+                                    });
+                                    addToolResult({
+                                      toolCallId: callId,
+                                      result: 'Yes, confirmed.',
+                                    });
+                                  }}
+                          
+                                >
+                                  Yes
+                                </Button>
+                                <Button
+                                  variant={'outline'}
+                                  onClick={() => {
+                                    scrollToBottom('auto');
+                                    append({
+                                      id: callId,
+                                      role: 'user',
+                                      content: 'No, denied',
+                                      parts: [
+                                        {
+                                          type: 'text',
+                                          text: 'No, denied',
+                                        },
+                                      ],
+                                    });
+                                    addToolResult({
+                                      toolCallId: callId,
+                                      result: 'No, denied',
+                                    });
+                                  }}
+                                >
+                                  No
+                                </Button>
+                              </div>
+                            </div>
+                          );
+                          case 'result':
+                            return (
+                              <div key={callId}>
+                                {part.toolInvocation.args.message}
+                                <div className="flex gap-2 mt-2">
+                                  <Button
+                                    variant={'outline'}
+                                    disabled
+                                    onClick={() => {
+                                      scrollToBottom('auto');
+                                      append({
+                                        id: callId,
+                                        role: 'user',
+                                        content: 'Yes, confirmed.',
+                                        parts: [
+                                          {
+                                            type: 'text',
+                                            text: 'Yes, confirmed.',
+                                          },
+                                        ],
+                                      });
+                                      addToolResult({
+                                        toolCallId: callId,
+                                        result: 'Yes, confirmed.',
+                                      });
+                                    }}
+                            
+                                  >
+                                    Yes
+                                  </Button>
+                                  <Button
+                                    variant={'outline'}
+                                    disabled
+                                    onClick={() => {
+                                      scrollToBottom('auto');
+                                      append({
+                                        id: callId,
+                                        role: 'user',
+                                        content: 'No, denied',
+                                        parts: [
+                                          {
+                                            type: 'text',
+                                            text: 'No, denied',
+                                          },
+                                        ],
+                                      });
+                                      addToolResult({
+                                        toolCallId: callId,
+                                        result: 'No, denied',
+                                      });
+                                    }}
+                                  >
+                                    No
+                                  </Button>
+                                </div>
+                              </div>
+                            );
+                        default:
+                          return null;
+                      }
+                    }
+                    case 'sendCreateProjectForm': {
+                      switch (state) {
+                        case 'call':
+                          return (
+                            <div key={callId}>
+                              <div className='flex flex-col mb-5'>
+                                {part.toolInvocation.args.message}
+                              </div>
+                              <ProjectCardAiUi
+                                id={part.toolInvocation.args.id}
+                                name={part.toolInvocation.args.name}
+                                description={part.toolInvocation.args.description}
+                              />
+                            </div>
+                          );
+                        case 'result':
+                          return (
+                            <div key={callId}>
+                              <ProjectCardAiUi {...part.toolInvocation.result} />
+                            </div>
+                          );
+                        case 'call':
+                          return (
+                            <div key={callId}>
+                              <div>Creating project...</div>
+                            </div>
+                          );
+                        default:
+                          return null;
+                      }
+                    }
+                    case 'createApiKey': {
+                      switch (state) {
+                        case 'result':
+                          return (
+                            <div key={callId}>
+                              <ApiCardAiUi {...part.toolInvocation.result} />
+                            </div>
+                          );
+                        case 'call':
+                          return (
+                            <div key={callId}>
+                              <div>Creating API key...</div>
+                            </div>
+                          );
+                        default:
+                          return null;
+                      }
+                    }
+                    default:
+                      return null;
+                  }
                 }
+                default:
+                  return null;
               }
-              return null;
             })}
           </div>
         </div>
@@ -159,34 +284,34 @@ export const PreviewMessage = memo(
 );
 
 export const ThinkingMessage = () => {
-    const role = 'assistant';
-  
-    return (
-      <motion.div
-        data-testid="message-assistant-loading"
-        className="w-full mx-auto max-w-3xl px-4 group/message min-h-96"
-        initial={{ y: 5, opacity: 0 }}
-        animate={{ y: 0, opacity: 1, transition: { delay: 1 } }}
-        data-role={role}
+  const role = 'assistant';
+
+  return (
+    <motion.div
+      data-testid="message-assistant-loading"
+      className="w-full mx-auto max-w-3xl px-4 group/message min-h-96"
+      initial={{ y: 5, opacity: 0 }}
+      animate={{ y: 0, opacity: 1, transition: { delay: 1 } }}
+      data-role={role}
+    >
+      <div
+        className={cn(
+          'flex gap-4 group-data-[role=user]/message:px-3 w-full group-data-[role=user]/message:w-fit group-data-[role=user]/message:ml-auto group-data-[role=user]/message:max-w-2xl group-data-[role=user]/message:py-2 rounded-xl',
+          {
+            'group-data-[role=user]/message:bg-muted': true,
+          },
+        )}
       >
-        <div
-          className={cn(
-            'flex gap-4 group-data-[role=user]/message:px-3 w-full group-data-[role=user]/message:w-fit group-data-[role=user]/message:ml-auto group-data-[role=user]/message:max-w-2xl group-data-[role=user]/message:py-2 rounded-xl',
-            {
-              'group-data-[role=user]/message:bg-muted': true,
-            },
-          )}
-        >
-          <div className="size-8 flex items-center rounded-full justify-center ring-1 shrink-0 ring-border">
+        <div className="size-8 flex items-center rounded-full justify-center ring-1 shrink-0 ring-border">
           <Logo isTextVisible={false} />
-          </div>
-  
-          <div className="flex flex-col gap-2 w-full">
-            <div className="flex flex-col gap-4 text-muted-foreground">
-              Hmm...
-            </div>
+        </div>
+
+        <div className="flex flex-col gap-2 w-full">
+          <div className="flex flex-col gap-4 text-muted-foreground">
+            Hmm...
           </div>
         </div>
-      </motion.div>
-    );
-  };
+      </div>
+    </motion.div>
+  );
+};

@@ -11,12 +11,16 @@ interface MessagesProps {
   chatId: string;
   status: UseChatHelpers['status'];
   messages: Array<UIMessage>;
+  addToolResult: (result: { toolCallId: string; result: string }) => void;
+  append: (message: UIMessage) => void;
 }
 
 function PureMessages({
   chatId,
   status,
   messages,
+  addToolResult,
+  append,
 }: MessagesProps) {
   const {
     containerRef: messagesContainerRef,
@@ -43,6 +47,8 @@ function PureMessages({
           requiresScrollPadding={
             hasSentMessage && index === messages.length - 1
           }
+          addToolResult={addToolResult}
+          append={append}
         />
       ))}
 

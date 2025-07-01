@@ -20,6 +20,7 @@
       "version": "0.1.0",
       "dependencies": {
         "@ai-sdk/togetherai": "^0.2.14",
+        "@better-fetch/fetch": "^1.1.18",
         "@prexo/keys": "workspace:*",
         "@prexo/store": "workspace:*",
         "@unkey/api": "^0.36.0",

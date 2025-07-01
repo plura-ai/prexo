@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import { MainNavbar } from "./main.nav";
 import { Icons } from "@/constants/icons";
 import { useAuth } from "@/context/auth.context";
+import { constants } from "@/constants";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -34,7 +35,7 @@ export function Navbar() {
         </div>
         <nav className="flex items-center gap-2">
           <Link
-            href={'#'}
+            href={constants.links.github}
             target="_blank"
             rel="noreferrer"
             className="hidden md:flex"
@@ -51,7 +52,7 @@ export function Navbar() {
               <span className="sr-only">GitHub</span>
             </div>
           </Link>
-          <Link href={'#'} target="_blank" rel="noreferrer">
+          <Link href={constants.links.x} target="_blank" rel="noreferrer">
             <div
               className={cn(
                 buttonVariants({
@@ -65,7 +66,7 @@ export function Navbar() {
             </div>
           </Link>
           <Link
-            href={'#'}
+            href={constants.links.discord}
             target="_blank"
             rel="noreferrer"
           >

@@ -14,6 +14,6 @@ export default function Onboarding() {
     return NotFound();
   }
   return (
-    <OnboardingChat />
+    <OnboardingChat chatId={uID} />
   )
 }

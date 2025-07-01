@@ -1,9 +1,9 @@
 import { ProjectType } from '@prexo/types';
 import { tool as createTool } from 'ai';
 import { z } from 'zod';
-import {useProjectsStore, useMyProfileStore} from "@prexo/store";
+import {useProjectsStore} from "@prexo/store";
+import { createApiKeyAction, createProjectAction } from './actions';
 
-const BASE_API_URL = process.env.BASE_API_URL;
 
 const projectTool = createTool({
   description: 'Create a project with a name and description for user.',
@@ -12,29 +12,15 @@ const projectTool = createTool({
     description: z.string().describe('The description of the project').nullable().optional(),
   }),
   execute: async function ({ name, description }) {
-    if (!BASE_API_URL) {
-      throw new Error('BASE_API_URL is not defined');
-    }
     if (!name) {
       throw new Error('Project name is required');
     }
     if (description && description.length > 500) { 
       throw new Error('Project description should not exceed 500 characters');
     }
-    const {myProfile} = useMyProfileStore();
     const {addProject} = useProjectsStore();
-    const response = await fetch(`${BASE_API_URL}/project/create`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, userId: myProfile?.id, description }),
-    });
+    const project: ProjectType = await createProjectAction(name, description ?? undefined);
 
-    const project: ProjectType = await response.json();
-    if (!response.ok) {
-      throw new Error(`Failed to create project.`);
-    }
     console.log('Created new project:', project);
     addProject(project);
     return { id: project.id, name: project.name, description: project.description };
@@ -47,9 +33,6 @@ const apiKeyTool = createTool({
     name: z.string().describe('The name of the API key'),
   }),
   execute: async function ({ name }) {
-    if (!BASE_API_URL) {
-      throw new Error('BASE_API_URL is not defined');
-    }
     if (!name) {
       throw new Error('API key name is required');
     }
@@ -60,24 +43,39 @@ const apiKeyTool = createTool({
       throw new Error('No projects available. Please create a project first.');
     }
     const {projects} = useProjectsStore();
-    const response = await fetch(`${BASE_API_URL}/api/create`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, projectId: projects[0]?.id }),
-    });
-    const res: ProjectType = await response.json();
-    if (!response.ok) {
-      throw new Error(`Failed to create API key.`);
+
+    const res: ProjectType = await createApiKeyAction(
+      name,
+      projects[0].id, // Assuming we create API key for the first project
+    );
+
+    if (!res.apiKey) {
+      throw new Error('Failed to create API key. Please try again.');
     }
+
     console.log('Created new API key:', res);
     return { apiKey: res.apiKey, projectName: res.name };
   },
 });
 
+const askForConfirmation = createTool({
+  description: 'Ask the user for onboarding confirmation.',
+  parameters: z.object({
+    message: z.string().describe('Onboarding message to ask for confirmation.'),
+  }),
+});
+
+const sendCreateProjectForm = createTool({
+  description: 'Send create project form to user. After confirmation.',
+  parameters: z.object({
+    message: z.string().describe('Message to send to user after confirmation.'),
+  }),
+});
+
 
 export const tools = {
-  createProject: projectTool,
-  createApiKey: apiKeyTool,
+  // createProject: projectTool,
+  // createApiKey: apiKeyTool,
+  askForConfirmation,
+  sendCreateProjectForm,
 };

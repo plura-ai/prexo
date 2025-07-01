@@ -20,10 +20,25 @@ const openai = createOpenAI({
 
 ai.post("/stream", async (c) => {
   const { messages } = await c.req.json();
+
+  // Filter out any tool invocations that are in 'call' state and do not have a result.
+  // This prevents the AI_MessageConversionError when the tool call is not yet resolved.
+  const filteredMessages = messages.map((msg: any) => {
+    if (!msg.parts) return msg;
+    return {
+      ...msg,
+      parts: msg.parts.filter((part: any) => {
+        if (part.type !== "tool-invocation") return true;
+        // Only include tool-invocation parts that are in 'result' state
+        return part.toolInvocation?.state !== "call";
+      }),
+    };
+  });
+
   const result = streamText({
-    model: togetherai('meta-llama/Llama-3.3-70B-Instruct-Turbo'),
-    system: systemPrompt(),
-    messages,
+    model: togetherai('meta-llama/Llama-3.3-70B-Instruct-Turbo-Free'),
+    system: 'Ask anything you want to know about User. You are a helpful assistant. Prompt the user to show create project form. You can call the tool after user confirmation.',
+    messages: filteredMessages,
     maxSteps: 5,
     tools: tools,
     onStepFinish: (step) => {
