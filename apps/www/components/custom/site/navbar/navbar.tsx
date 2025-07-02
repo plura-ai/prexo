@@ -12,7 +12,7 @@ import { constants } from "@/constants";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
-  const {user} = useAuth();
+  const { user } = useAuth();
   const loginURL = user ? "/dashboard" : "/auth";
 
   useEffect(() => {
@@ -65,11 +65,7 @@ export function Navbar() {
               <span className="sr-only">Twitter</span>
             </div>
           </Link>
-          <Link
-            href={constants.links.discord}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <Link href={constants.links.discord} target="_blank" rel="noreferrer">
             <div
               className={cn(
                 buttonVariants({

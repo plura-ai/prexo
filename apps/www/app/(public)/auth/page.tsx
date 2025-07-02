@@ -1,12 +1,12 @@
 "use client";
 
-import { LoginForm } from "@/components/login-form"
+import { LoginForm } from "@/components/login-form";
 import { useAuth } from "@/context/auth.context";
 import { redirect } from "next/navigation";
 
 export default function LoginPage() {
-  const {user} = useAuth();
-  if(user) {
+  const { user } = useAuth();
+  if (user) {
     redirect("/dashboard");
   }
   return (
@@ -15,5 +15,5 @@ export default function LoginPage() {
         <LoginForm />
       </div>
     </div>
-  )
+  );
 }

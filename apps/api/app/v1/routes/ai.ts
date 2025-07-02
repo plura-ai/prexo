@@ -1,7 +1,12 @@
 import { Hono } from "hono";
 import { createTogetherAI } from "@ai-sdk/togetherai";
 import { createOpenAI } from "@ai-sdk/openai";
-import { NoSuchToolError, InvalidToolArgumentsError, streamText, ToolExecutionError } from "ai";
+import {
+  NoSuchToolError,
+  InvalidToolArgumentsError,
+  streamText,
+  ToolExecutionError,
+} from "ai";
 import { systemPrompt } from "@/lib/configs";
 import { tools } from "@/lib/ai/tools";
 
@@ -32,14 +37,14 @@ ai.post("/stream", async (c) => {
   });
 
   const result = streamText({
-    model: togetherai('meta-llama/Llama-3.3-70B-Instruct-Turbo-Free'),
+    model: togetherai("meta-llama/Llama-3.3-70B-Instruct-Turbo-Free"),
     system: systemPrompt(),
     messages: filteredMessages,
     maxSteps: 5,
     tools: tools,
     onStepFinish: (step) => {
-      console.log('Step finished:', step);
-    }
+      console.log("Step finished:", step);
+    },
   });
 
   return result.toDataStreamResponse({
@@ -47,18 +52,17 @@ ai.post("/stream", async (c) => {
       "Content-Type": "application/octet-stream",
       "Content-Encoding": "none",
     },
-    getErrorMessage: error => {
+    getErrorMessage: (error) => {
       if (NoSuchToolError.isInstance(error)) {
-        return 'The model tried to call a unknown tool.';
+        return "The model tried to call a unknown tool.";
       } else if (InvalidToolArgumentsError.isInstance(error)) {
-        return 'The model called a tool with invalid arguments.';
+        return "The model called a tool with invalid arguments.";
       } else if (ToolExecutionError.isInstance(error)) {
-        return 'An error occurred during tool execution.';
+        return "An error occurred during tool execution.";
       } else {
-        return 'An unknown error occurred.';
+        return "An unknown error occurred.";
       }
     },
-    
   });
 });
 

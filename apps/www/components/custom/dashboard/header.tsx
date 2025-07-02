@@ -1,39 +1,45 @@
 "use client";
-import { Select as SelectPrimitive } from "radix-ui"
+import { Select as SelectPrimitive } from "radix-ui";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectValue,
-} from "@/components/ui/select"
-import { ChevronsUpDown, HouseIcon, InboxIcon, SparklesIcon, ZapIcon } from "lucide-react"
+} from "@/components/ui/select";
+import {
+  ChevronsUpDown,
+  HouseIcon,
+  InboxIcon,
+  SparklesIcon,
+  ZapIcon,
+} from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Button } from "@/components/ui/button"
+} from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from "@/components/ui/navigation-menu"
+} from "@/components/ui/navigation-menu";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { SidebarTrigger } from "@/components/ui/sidebar"
-import { Separator } from "@/components/ui/separator"
+} from "@/components/ui/popover";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Separator } from "@/components/ui/separator";
 
 // Navigation links array
 const navigationLinks = [
   { href: "#", label: "Home", icon: HouseIcon, active: true },
   { href: "#", label: "Inbox", icon: InboxIcon },
   { href: "#", label: "Insights", icon: ZapIcon },
-]
+];
 
 export default function DashboardHeader() {
   return (
@@ -85,7 +91,7 @@ export default function DashboardHeader() {
               <NavigationMenu className="max-w-none *:w-full">
                 <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
                   {navigationLinks.map((link, index) => {
-                    const Icon = link.icon
+                    const Icon = link.icon;
                     return (
                       <NavigationMenuItem key={index} className="w-full">
                         <NavigationMenuLink
@@ -101,7 +107,7 @@ export default function DashboardHeader() {
                           <span>{link.label}</span>
                         </NavigationMenuLink>
                       </NavigationMenuItem>
-                    )
+                    );
                   })}
                 </NavigationMenuList>
               </NavigationMenu>
@@ -182,5 +188,5 @@ export default function DashboardHeader() {
         </div>
       </div>
     </header>
-  )
+  );
 }

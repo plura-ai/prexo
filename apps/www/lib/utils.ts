@@ -1,10 +1,10 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export function sanitizeText(text: string) {
-  return text.replace('<has_function_call>', '');
+  return text.replace("<has_function_call>", "");
 }

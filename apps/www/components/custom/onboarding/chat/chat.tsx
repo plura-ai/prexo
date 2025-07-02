@@ -1,34 +1,59 @@
-import React from 'react'
-import ChatInput from './input'
-import { useChat } from '@ai-sdk/react';
-import { Messages } from './messages';
+import React from "react";
+import ChatInput from "./input";
+import { useChat } from "@ai-sdk/react";
+import { Messages } from "./messages";
+import { SuggestedActions } from "../suggested.actions";
 
-export default function OnboardingChat({chatId}: { chatId: string }) {
+export default function OnboardingChat({ chatId }: { chatId: string }) {
   const url = `http://localhost:3001/v1/ai/stream`;
 
-  const { messages, input, setInput, handleSubmit, status, addToolResult, append} = useChat({
+  const {
+    messages,
+    input,
+    setInput,
+    handleSubmit,
+    status,
+    addToolResult,
+    append,
+  } = useChat({
     api: url,
     onFinish: (message, { usage, finishReason }) => {
-      console.log('Finished streaming message:', message);
-      console.log('Token usage:', usage);
-      console.log('Finish reason:', finishReason);
+      console.log("Finished streaming message:", message);
+      console.log("Token usage:", usage);
+      console.log("Finish reason:", finishReason);
     },
-    onError: error => {
-      console.error('An error occurred:', error);
+    onError: (error) => {
+      console.error("An error occurred:", error);
     },
-    onResponse: response => {
-      console.log('Received HTTP response from server:', response);
+    onResponse: (response) => {
+      console.log("Received HTTP response from server:", response);
     },
     maxSteps: 5,
   });
   return (
     <div className="relative flex flex-col w-screen max-w-2xl mx-auto h-screen">
       <div className="flex-1 overflow-y-auto pt-4">
-        <Messages chatId={chatId} status={status} messages={messages} addToolResult={addToolResult} append={append}/>
+        <Messages
+          chatId={chatId}
+          status={status}
+          messages={messages}
+          addToolResult={addToolResult}
+          append={append}
+        />
       </div>
       <div className="sticky bottom-0 bg-background z-10 px-2 pb-2">
-        <ChatInput status={status} input={input} setInput={setInput} handleSubmit={handleSubmit} />
+        {messages.length === 0 && (
+          <div className="mb-5">
+            <SuggestedActions append={append} />
+          </div>
+        )}
+        <ChatInput
+          status={status}
+          input={input}
+          setInput={setInput}
+          handleSubmit={handleSubmit}
+        />
       </div>
     </div>
-  )
+  );
 }

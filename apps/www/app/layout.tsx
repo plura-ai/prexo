@@ -95,21 +95,21 @@ export default function RootLayout({
       <body
         className={`${uxumGrotesque.variable} ${untitledSans.variable} antialiased`}
       >
-          <AuthProvider>
-        <StoreProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <div className="flex flex-col items-center bg-background">
-              {children}
-            </div>
-            {/* <ChatComponent position="bottom-left"/> */}
-          </ThemeProvider>
-        </StoreProvider>
-          </AuthProvider>
+        <AuthProvider>
+          <StoreProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <div className="flex flex-col items-center bg-background">
+                {children}
+              </div>
+              {/* <ChatComponent position="bottom-left"/> */}
+            </ThemeProvider>
+          </StoreProvider>
+        </AuthProvider>
       </body>
     </html>
   );

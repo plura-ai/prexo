@@ -1,15 +1,15 @@
-import type { UIMessage } from 'ai';
-import { memo } from 'react';
-import equal from 'fast-deep-equal';
-import type { UseChatHelpers } from '@ai-sdk/react';
-import { motion } from 'framer-motion';
-import { useMessages } from '@/hooks/use-messages';
-import { GreetingMsg } from '../greeting';
-import { PreviewMessage, ThinkingMessage } from './msg';
+import type { UIMessage } from "ai";
+import { memo } from "react";
+import equal from "fast-deep-equal";
+import type { UseChatHelpers } from "@ai-sdk/react";
+import { motion } from "framer-motion";
+import { useMessages } from "@/hooks/use-messages";
+import { GreetingMsg } from "../greeting";
+import { PreviewMessage, ThinkingMessage } from "./msg";
 
 interface MessagesProps {
   chatId: string;
-  status: UseChatHelpers['status'];
+  status: UseChatHelpers["status"];
   messages: Array<UIMessage>;
   addToolResult: (result: { toolCallId: string; result: string }) => void;
   append: (message: UIMessage) => void;
@@ -38,7 +38,7 @@ function PureMessages({
       ref={messagesContainerRef}
       className="flex flex-col min-w-full gap-6 flex-1 overflow-y-scroll pt-10 relative"
     >
-      {messages.length === 0 && <GreetingMsg name='Saidev'/>}
+      {messages.length === 0 && <GreetingMsg />}
 
       {messages.map((message, index) => (
         <PreviewMessage
@@ -52,9 +52,9 @@ function PureMessages({
         />
       ))}
 
-      {status === 'submitted' &&
+      {status === "submitted" &&
         messages.length > 0 &&
-        messages[messages.length - 1].role === 'user' && <ThinkingMessage />}
+        messages[messages.length - 1].role === "user" && <ThinkingMessage />}
 
       <motion.div
         ref={messagesEndRef}
@@ -67,7 +67,6 @@ function PureMessages({
 }
 
 export const Messages = memo(PureMessages, (prevProps, nextProps) => {
-
   if (prevProps.status !== nextProps.status) return false;
   if (prevProps.status && nextProps.status) return false;
   if (prevProps.messages.length !== nextProps.messages.length) return false;
