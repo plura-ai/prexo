@@ -1,4 +1,6 @@
 "use client";
+import ApiCardAiUi from "@/components/custom/ai-ui/api.card";
+import AgentsSec from "@/components/custom/hero/agents.sec";
 
 export default function Home() {
   return (
@@ -23,20 +25,13 @@ export default function Home() {
           across your Website, WhatsApp, and Telegram with zero coding required.
         </p>
       </section>
-
-      <section
+<!--       <section
         id="about"
         className="flex flex-col items-center justify-center w-full h-full p-4 border-b border-dashed"
       >
         ok
-      </section>
-
-      <section
-        id="fuck"
-        className="flex flex-col items-center justify-center w-full h-full p-4 border-b border-dashed"
-      >
-        ok
-      </section>
+      </section> -->
+      <AgentsSec />
     </main>
   );
 }
