@@ -1,4 +1,5 @@
 import ApiCardAiUi from "@/components/custom/ai-ui/api.card";
+import AgentsSec from "@/components/custom/hero/agents.sec";
 
 export default function Home() {
   return (
@@ -18,10 +19,7 @@ export default function Home() {
         <ApiCardAiUi name="Prexo" apiKey="oiok"/>
       </section>
 
-      <section id="fuck" className="flex flex-col items-center justify-center w-full h-full p-4 border-b border-dashed">
-ok
-      </section>
-      
+      <AgentsSec />
     </main>
   );
 }
