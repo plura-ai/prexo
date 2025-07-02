@@ -18,12 +18,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [contentLoading, setContentLoading] = useState(false);
 
   const { users, setUsers } = useUsersStore();
-  
+
   const USER_API_ENDPOINT =
     process.env.NODE_ENV == "development"
       ? "http://localhost:3001/v1/user/public"
       : "https://api.indexflow.site/v1/user/public";
-  
+
   useEffect(() => {
     async function fetchUsers() {
       setContentLoading(true);

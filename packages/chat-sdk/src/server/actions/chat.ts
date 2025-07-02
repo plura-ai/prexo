@@ -1,25 +1,24 @@
 "use server";
 
-import { Index } from "@upstash/vector"
-import { createOpenAI } from "@ai-sdk/openai"
-import { streamText } from "ai"
+import { Index } from "@upstash/vector";
+import { createOpenAI } from "@ai-sdk/openai";
+import { streamText } from "ai";
 import { createStreamableValue, type StreamableValue } from "ai/rsc";
 import { DEFAULT_PROMPT } from "../constants";
 import type { Message } from "../lib/types";
 import { getHistoryClient } from "../lib/history/get-client";
 
 type StreamMessage = {
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   content: string;
-}
+};
 
-const vectorIndex = new Index()
+const vectorIndex = new Index();
 
 const together = createOpenAI({
   apiKey: process.env.TOGETHER_API_KEY ?? "",
   baseURL: "https://api.together.xyz/v1",
-
-})
+});
 
 const searchSimilarDocs = async (data: string, topK: number) => {
   const results = await vectorIndex.query({
@@ -29,10 +28,10 @@ const searchSimilarDocs = async (data: string, topK: number) => {
     includeData: true,
   });
 
-  return results
-}
+  return results;
+};
 
-const history = getHistoryClient()
+const history = getHistoryClient();
 
 export const serverChat = async ({
   messages,
@@ -41,27 +40,31 @@ export const serverChat = async ({
   messages: Message[];
   sessionId: string;
 }): Promise<{ output: StreamableValue<string> }> => {
-  const userMessage = messages[messages.length - 1]
+  const userMessage = messages[messages.length - 1];
 
   await history.addMessage({
     message: userMessage,
-    sessionId
-  })
+    sessionId,
+  });
 
   const serverMessages = messages
-    .filter(msg => msg.role !== 'error')
-    .map(msg => ({
+    .filter((msg) => msg.role !== "error")
+    .map((msg) => ({
       role: msg.role,
-      content: msg.content
+      content: msg.content,
     })) as StreamMessage[];
 
-  const similarDocs = await searchSimilarDocs(userMessage.content, 5)
+  const similarDocs = await searchSimilarDocs(userMessage.content, 5);
 
-  const context = similarDocs.map(doc => doc.data).join("\n")
+  const context = similarDocs.map((doc) => doc.data).join("\n");
 
-  const chatMessages = messages.map(message => message.content).join("\n")
+  const chatMessages = messages.map((message) => message.content).join("\n");
 
-  const system = DEFAULT_PROMPT({ context, question: userMessage.content, chatMessages })
+  const system = DEFAULT_PROMPT({
+    context,
+    question: userMessage.content,
+    chatMessages,
+  });
 
   const stream = createStreamableValue("");
 
@@ -78,11 +81,10 @@ export const serverChat = async ({
             content: text,
             id: Date.now().toString(),
           },
-          sessionId
-        })
+          sessionId,
+        });
       },
-
-    })
+    });
 
     for await (const delta of textStream) {
       stream.update(delta);
@@ -91,5 +93,5 @@ export const serverChat = async ({
     stream.done();
   })();
 
-  return { output: stream.value }
+  return { output: stream.value };
 };

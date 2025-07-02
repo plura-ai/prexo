@@ -1,16 +1,12 @@
 "use client";
-import React, { useState } from 'react'
-import {
-    Card,
-    CardContent,
-    CardFooter,
-  } from "@/components/ui/card"
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { createProjectAction } from '@/lib/actions';
-import { useMyProfileStore, useProjectsStore } from '@prexo/store';
-import type { UIMessage } from 'ai';
+import React, { useState } from "react";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { createProjectAction } from "@/lib/actions";
+import { useMyProfileStore, useProjectsStore } from "@prexo/store";
+import type { UIMessage } from "ai";
 
 type ProjectCardAiUiProps = {
   isDisabled?: boolean;
@@ -18,41 +14,50 @@ type ProjectCardAiUiProps = {
   append: (message: UIMessage) => void;
   callId: string;
 };
-export default function ProjectCardAiUi({isDisabled, addToolResult, append, callId}: ProjectCardAiUiProps) {
-  const [projectName, setProjectName] = useState('');
-  const [projectDescription, setProjectDescription] = useState('');
+export default function ProjectCardAiUi({
+  isDisabled,
+  addToolResult,
+  append,
+  callId,
+}: ProjectCardAiUiProps) {
+  const [projectName, setProjectName] = useState("");
+  const [projectDescription, setProjectDescription] = useState("");
   const [loading, setLoading] = useState(false);
-  const {addProject, setProjects} = useProjectsStore();
-  const {myProfile} = useMyProfileStore();
+  const { addProject, setProjects } = useProjectsStore();
+  const { myProfile } = useMyProfileStore();
 
   const handleSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!projectName.trim() || !myProfile?.id) {
-      console.error('Name and UserId are required');
+      console.error("Name and UserId are required");
       return;
     }
 
     setLoading(true);
     try {
-      const res = await createProjectAction(projectName, projectDescription, myProfile.id);
-      console.log('Response from createProjectAction:', res?.project);
-      setProjects([])
+      const res = await createProjectAction(
+        projectName,
+        projectDescription,
+        myProfile.id,
+      );
+      console.log("Response from createProjectAction:", res?.project);
+      setProjects([]);
       addProject(res?.project);
-      console.log('Project created successfully:', res);
+      console.log("Project created successfully:", res);
       addToolResult({
         toolCallId: callId,
-        result: 'Project created successfully!',
+        result: "Project created successfully!",
       });
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise((resolve) => setTimeout(resolve, 1500));
       append({
         id: myProfile.id,
-        role: 'user',
-        content: 'Lets create the API key.',
+        role: "user",
+        content: "Lets create the API key.",
         parts: [
           {
-            type: 'text',
-            text: 'Lets procced to the next step.',
+            type: "text",
+            text: "Lets procced to the next step.",
           },
         ],
       });
@@ -75,7 +80,7 @@ export default function ProjectCardAiUi({isDisabled, addToolResult, append, call
                 type="text"
                 placeholder="Prexo"
                 value={projectName}
-                onChange={e => setProjectName(e.target.value)}
+                onChange={(e) => setProjectName(e.target.value)}
                 disabled={isDisabled || loading}
               />
             </div>
@@ -88,7 +93,7 @@ export default function ProjectCardAiUi({isDisabled, addToolResult, append, call
                 type="text"
                 placeholder="Prexo is an Ai support..."
                 value={projectDescription}
-                onChange={e => setProjectDescription(e.target.value)}
+                onChange={(e) => setProjectDescription(e.target.value)}
                 disabled={isDisabled || loading}
               />
             </div>
@@ -102,9 +107,9 @@ export default function ProjectCardAiUi({isDisabled, addToolResult, append, call
           form="project-form"
           disabled={isDisabled || loading}
         >
-          {loading ? 'Creating...' : 'Create Project'}
+          {loading ? "Creating..." : "Create Project"}
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

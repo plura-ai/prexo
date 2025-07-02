@@ -112,17 +112,6 @@ export function MainNavbar() {
           </NavigationMenuList>
         </NavigationMenu> */}
 
-        <Link
-          href="/methods"
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/methods")
-              ? "text-foreground"
-              : "text-foreground/60",
-          )}
-        >
-          Methods
-        </Link>
         {/* <Link
           href="/integrations"
           className={cn(
@@ -145,19 +134,7 @@ export function MainNavbar() {
         >
           Pricing
         </Link>
-        <Link
-          href="https://status.plura.pro"
-          target="_blank"
-          rel="noreferrer"
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/status")
-              ? "text-foreground"
-              : "text-foreground/60",
-          )}
-        >
-          Status
-        </Link>
+
         <Link
           href="/contact"
           className={cn(

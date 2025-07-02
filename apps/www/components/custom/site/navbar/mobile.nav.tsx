@@ -1,9 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function MobileNav() {
-  return (
-    <div>
-      Ops
-    </div>
-  )
+  return <div>Ops</div>;
 }

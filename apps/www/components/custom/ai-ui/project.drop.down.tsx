@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
+import * as React from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -12,35 +12,39 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { useProjectsStore } from "@prexo/store"
+} from "@/components/ui/popover";
+import { useProjectsStore } from "@prexo/store";
 
-export function ProjectDropDownAiUi({ onProjectSelect }: { onProjectSelect: (value: string) => void }) {
-  const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
-  const { projects } = useProjectsStore()
+export function ProjectDropDownAiUi({
+  onProjectSelect,
+}: {
+  onProjectSelect: (value: string) => void;
+}) {
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState("");
+  const { projects } = useProjectsStore();
 
   React.useEffect(() => {
     if (value) {
-      onProjectSelect(value)
+      onProjectSelect(value);
     } else {
-      onProjectSelect("")
+      onProjectSelect("");
     }
-  }, [value, onProjectSelect])
+  }, [value, onProjectSelect]);
 
   const proj = Array.isArray(projects)
     ? projects.map((project) => ({
         value: project.id as string,
         label: project.name as string,
       }))
-    : []
+    : [];
 
-  const selectedProject = proj.find((project) => project.value === value)
+  const selectedProject = proj.find((project) => project.value === value);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -67,8 +71,8 @@ export function ProjectDropDownAiUi({ onProjectSelect }: { onProjectSelect: (val
                     key={project.value}
                     value={project.value}
                     onSelect={(currentValue) => {
-                      setValue(currentValue === value ? "" : currentValue)
-                      setOpen(false)
+                      setValue(currentValue === value ? "" : currentValue);
+                      setOpen(false);
                     }}
                     className="cursor-pointer"
                   >
@@ -77,7 +81,7 @@ export function ProjectDropDownAiUi({ onProjectSelect }: { onProjectSelect: (val
                       <Check
                         className={cn(
                           "ml-auto",
-                          value === project.value ? "opacity-100" : "opacity-0"
+                          value === project.value ? "opacity-100" : "opacity-0",
                         )}
                       />
                     </div>
@@ -88,5 +92,5 @@ export function ProjectDropDownAiUi({ onProjectSelect }: { onProjectSelect: (val
         </Command>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

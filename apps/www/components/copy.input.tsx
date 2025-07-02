@@ -1,32 +1,32 @@
-"use client"
+"use client";
 
-import { useId, useRef, useState } from "react"
-import { CheckIcon, CopyIcon } from "lucide-react"
+import { useId, useRef, useState } from "react";
+import { CheckIcon, CopyIcon } from "lucide-react";
 
-import { cn } from "@/lib/utils"
-import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/ui/tooltip";
 
 type CopyInputProps = {
-  value: string
-}
-export default function CopyInput({value}: CopyInputProps) {
-  const id = useId()
-  const [copied, setCopied] = useState<boolean>(false)
-  const inputRef = useRef<HTMLInputElement>(null)
+  value: string;
+};
+export default function CopyInput({ value }: CopyInputProps) {
+  const id = useId();
+  const [copied, setCopied] = useState<boolean>(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleCopy = () => {
     if (inputRef.current) {
-      navigator.clipboard.writeText(inputRef.current.value)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1500)
+      navigator.clipboard.writeText(inputRef.current.value);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
     }
-  }
+  };
 
   return (
     <div className="*:not-first:mt-2">
@@ -52,7 +52,7 @@ export default function CopyInput({value}: CopyInputProps) {
                 <div
                   className={cn(
                     "transition-all",
-                    copied ? "scale-100 opacity-100" : "scale-0 opacity-0"
+                    copied ? "scale-100 opacity-100" : "scale-0 opacity-0",
                   )}
                 >
                   <CheckIcon
@@ -64,7 +64,7 @@ export default function CopyInput({value}: CopyInputProps) {
                 <div
                   className={cn(
                     "absolute transition-all",
-                    copied ? "scale-0 opacity-0" : "scale-100 opacity-100"
+                    copied ? "scale-0 opacity-0" : "scale-100 opacity-100",
                   )}
                 >
                   <CopyIcon size={16} aria-hidden="true" />
@@ -78,5 +78,5 @@ export default function CopyInput({value}: CopyInputProps) {
         </TooltipProvider>
       </div>
     </div>
-  )
+  );
 }

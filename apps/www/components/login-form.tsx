@@ -1,12 +1,12 @@
 "use client";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   IconBrandGoogle,
   IconBrandGithub,
   IconBrandDiscord,
-  IconFingerprint
+  IconFingerprint,
 } from "@tabler/icons-react";
 import { authClient } from "@prexo/auth/client";
 
@@ -14,9 +14,14 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const callbackUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000/onboarding" : "https://app.prexo.com/onboarding";
+  const callbackUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000/onboarding"
+      : "https://app.prexo.com/onboarding";
 
-  const handleAuth = async (provider: "github" | "discord" | "google" | "passkey") => {
+  const handleAuth = async (
+    provider: "github" | "discord" | "google" | "passkey",
+  ) => {
     switch (provider) {
       case "google":
         await authClient.signIn.social({
@@ -28,7 +33,7 @@ export function LoginForm({
             },
             onError(error) {
               console.error("Error signing in with Google:", error);
-            }
+            },
           },
         });
         break;
@@ -66,7 +71,6 @@ export function LoginForm({
           console.log("PassKey added successfully:", data);
         } catch (error) {
           console.error("Error signing in with PassKey:", error);
-          
         }
       default:
         break;
@@ -81,24 +85,44 @@ export function LoginForm({
             <p className="text-white/75">Log in to your prexo account</p>
           </div>
           <div className="flex flex-col gap-3">
-            <Button variant="outline" type="button" className="w-full cursor-pointer" onClick={() => handleAuth("google")}>
-              <IconBrandGoogle size="10"/>
+            <Button
+              variant="outline"
+              type="button"
+              className="w-full cursor-pointer"
+              onClick={() => handleAuth("google")}
+            >
+              <IconBrandGoogle size="10" />
               Continue with Google
             </Button>
-            <Button variant="outline" type="button" className="w-full cursor-pointer" onClick={() => handleAuth("github")}>
-              <IconBrandGithub size="10"/>
+            <Button
+              variant="outline"
+              type="button"
+              className="w-full cursor-pointer"
+              onClick={() => handleAuth("github")}
+            >
+              <IconBrandGithub size="10" />
               Continue with Github
             </Button>
-            <Button variant="outline" type="button" className="w-full cursor-pointer" onClick={() => handleAuth("discord")}>
-              <IconBrandDiscord size="10"/>
+            <Button
+              variant="outline"
+              type="button"
+              className="w-full cursor-pointer"
+              onClick={() => handleAuth("discord")}
+            >
+              <IconBrandDiscord size="10" />
               Continue with Discord
             </Button>
           </div>
-          <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t"/>
-          <Button variant="outline" type="button" className="w-full cursor-pointer" onClick={() => handleAuth("passkey")}>
-              <IconFingerprint size="10"/>
-              Continue with PassKey
-            </Button>
+          <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t" />
+          <Button
+            variant="outline"
+            type="button"
+            className="w-full cursor-pointer"
+            onClick={() => handleAuth("passkey")}
+          >
+            <IconFingerprint size="10" />
+            Continue with PassKey
+          </Button>
         </div>
       </form>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
@@ -106,5 +130,5 @@ export function LoginForm({
         and <a href="#">Privacy Policy</a>.
       </div>
     </div>
-  )
+  );
 }

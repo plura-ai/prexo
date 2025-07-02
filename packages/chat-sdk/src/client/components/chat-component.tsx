@@ -22,7 +22,10 @@ type ChatComponentProps = {
   position?: "bottom-left" | "bottom-right";
 };
 
-export const ChatComponent = ({ theme, position = "bottom-right" }: ChatComponentProps) => {
+export const ChatComponent = ({
+  theme,
+  position = "bottom-right",
+}: ChatComponentProps) => {
   const [conversation, setConversation] = useState<Message[]>([]);
   const [sessionId, setSessionId] = useState<string>("");
   const [input, setInput] = useState<string>("");
@@ -223,7 +226,7 @@ export const ChatComponent = ({ theme, position = "bottom-right" }: ChatComponen
           "flex items-center justify-center p-0",
           "rounded-full text-white shadow-xl",
           "transition-all duration-300 ease-in-out",
-          position === "bottom-left" ? "left-4" : "right-4"
+          position === "bottom-left" ? "left-4" : "right-4",
         )}
         style={{
           backgroundColor: theme?.triggerButtonColor ?? "#10b981", // default: emerald-500
@@ -242,8 +245,10 @@ export const ChatComponent = ({ theme, position = "bottom-right" }: ChatComponen
           "sm:rounded-2xl sm:border-2",
           "bg-white text-left text-black shadow-2xl",
           "transition-all duration-300",
-          position === "bottom-left" ? "sm:left-4 sm:right-auto" : "sm:right-4 sm:left-auto",
-          isOpen ? "block opacity-100" : "hidden opacity-0"
+          position === "bottom-left"
+            ? "sm:left-4 sm:right-auto"
+            : "sm:right-4 sm:left-auto",
+          isOpen ? "block opacity-100" : "hidden opacity-0",
         )}
       >
         {/* Chat Header */}

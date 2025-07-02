@@ -1,15 +1,21 @@
-import Image from 'next/image'
-import React, { useState, useEffect } from 'react'
+import Image from "next/image";
+import React, { useState, useEffect } from "react";
 
 interface LogoProps {
-    height?: number;
-    width?: number;
-    alt?: string;
-    isCollapsed?: boolean;
-    isTextVisible?: boolean;
-    }
+  height?: number;
+  width?: number;
+  alt?: string;
+  isCollapsed?: boolean;
+  isTextVisible?: boolean;
+}
 
-export default function Logo({ height, width, alt, isCollapsed, isTextVisible = true }: LogoProps) {
+export default function Logo({
+  height,
+  width,
+  alt,
+  isCollapsed,
+  isTextVisible = true,
+}: LogoProps) {
   const [displayText, setDisplayText] = useState("");
   const fullText = "PREXO AI";
 
@@ -34,12 +40,16 @@ export default function Logo({ height, width, alt, isCollapsed, isTextVisible = 
 
   return (
     <div className="flex flex-row items-center gap-2 cursor-pointer">
-      <Image src={"/logo.png"} height={height || 50} width={width || 40} alt={alt || "logo"} className="invert"/>
+      <Image
+        src={"/logo.png"}
+        height={height || 50}
+        width={width || 40}
+        alt={alt || "logo"}
+        className="invert"
+      />
       {!isCollapsed && isTextVisible && (
-        <span className="text-2xl font-uxum font-bold p-2">
-          {displayText}
-        </span>
+        <span className="text-2xl font-uxum font-bold p-2">{displayText}</span>
       )}
     </div>
-  )
+  );
 }
