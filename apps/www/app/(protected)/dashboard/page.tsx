@@ -13,10 +13,7 @@ export default function Page() {
   const router = useRouter();
 
   useEffect(() => {
-    if (
-      myProfile &&
-      myProfile?.role !== "onboarded"
-    ) {
+    if (myProfile && myProfile?.role !== "onboarded") {
       router.replace(`/onboarding/${myProfile.id}`);
     }
   }, [myProfile, router]);

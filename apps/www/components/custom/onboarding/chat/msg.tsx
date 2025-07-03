@@ -237,13 +237,17 @@ const PurePreviewMessage = ({
                     }
                     case "sendCreateApiFrom": {
                       switch (state) {
-                        case 'result':
+                        case "result":
                           return (
-                            <div key={callId + 'result'}>
-                              <div className='flex flex-col mb-5'>
+                            <div key={callId + "result"}>
+                              <div className="flex flex-col mb-5">
                                 {part.toolInvocation.result}
                               </div>
-                              <ApiCardAiUi addToolResult={addToolResult} append={append} callId={callId}/>
+                              <ApiCardAiUi
+                                addToolResult={addToolResult}
+                                append={append}
+                                callId={callId}
+                              />
                             </div>
                           );
                         case "call":

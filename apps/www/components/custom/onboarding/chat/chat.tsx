@@ -36,7 +36,7 @@ export default function OnboardingChat({ chatId }: { chatId: string }) {
     <div className="relative flex flex-col w-screen max-w-2xl mx-auto h-screen">
       {messages.length > 0 && (
         <div className="mx-2">
-          <AiBanner/>
+          <AiBanner />
         </div>
       )}
       <div className="flex-1 overflow-y-auto pt-4">

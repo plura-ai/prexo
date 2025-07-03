@@ -6,8 +6,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import React from 'react'
+} from "@/components/ui/card";
+import React from "react";
 import type { UIMessage } from "ai";
 import { useMyProfileStore } from "@prexo/store";
 import { completeOnboardingAction } from "@/lib/actions";
@@ -18,7 +18,11 @@ type OnboardingCardAiUiProps = {
   append: (message: UIMessage) => void;
   callId: string;
 };
-export default function OnboardingCardAiUi({addToolResult, append, callId}: OnboardingCardAiUiProps) {
+export default function OnboardingCardAiUi({
+  addToolResult,
+  append,
+  callId,
+}: OnboardingCardAiUiProps) {
   const { myProfile, addMyProfile, removeMyProfile } = useMyProfileStore();
   const [loading, setLoading] = React.useState(false);
   const router = useRouter();
@@ -37,12 +41,14 @@ export default function OnboardingCardAiUi({addToolResult, append, callId}: Onbo
       addMyProfile(user);
       addToolResult({
         toolCallId: callId,
-        result: "Onboarding process completed successfully! Redirecting you to the dashboard...",
+        result:
+          "Onboarding process completed successfully! Redirecting you to the dashboard...",
       });
       append({
         id: `${myProfile.id}-${Date.now()}`,
         role: "assistant",
-        content: "Onboarding process completed successfully! Redirecting you to the dashboard...",
+        content:
+          "Onboarding process completed successfully! Redirecting you to the dashboard...",
         parts: [
           {
             type: "text",
@@ -52,8 +58,8 @@ export default function OnboardingCardAiUi({addToolResult, append, callId}: Onbo
       });
       setLoading(false);
       setTimeout(() => {
-        router.push("/dashboard")
-      }, 1500)
+        router.push("/dashboard");
+      }, 1500);
     } catch (error) {
       console.error("Error completing onboarding process:", error);
       setLoading(false);
@@ -98,20 +104,30 @@ export default function OnboardingCardAiUi({addToolResult, append, callId}: Onbo
   };
   return (
     <Card className="w-full max-w-sm">
-    <CardHeader>
-      <CardTitle>Are you sure?</CardTitle>
-      <CardDescription>
-        Are you sure you want to complete the onboarding process? This action cannot be undone.
-      </CardDescription>
-    </CardHeader>
-    <CardFooter className="flex-col gap-2">
-      <Button className="w-full" onClick={handleOnComplete} disabled={loading}>
-        {loading ? "Completing..." : "Complete Onboarding"}
-      </Button>
-      <Button variant="outline" className="w-full" onClick={handleOnCancle} disabled={loading}>
-        {loading ? "Cancelling..." : "Cancel Onboarding"}
-      </Button>
-    </CardFooter>
-  </Card>
-  )
+      <CardHeader>
+        <CardTitle>Are you sure?</CardTitle>
+        <CardDescription>
+          Are you sure you want to complete the onboarding process? This action
+          cannot be undone.
+        </CardDescription>
+      </CardHeader>
+      <CardFooter className="flex-col gap-2">
+        <Button
+          className="w-full"
+          onClick={handleOnComplete}
+          disabled={loading}
+        >
+          {loading ? "Completing..." : "Complete Onboarding"}
+        </Button>
+        <Button
+          variant="outline"
+          className="w-full"
+          onClick={handleOnCancle}
+          disabled={loading}
+        >
+          {loading ? "Cancelling..." : "Cancel Onboarding"}
+        </Button>
+      </CardFooter>
+    </Card>
+  );
 }

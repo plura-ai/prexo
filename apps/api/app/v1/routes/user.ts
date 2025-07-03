@@ -38,10 +38,7 @@ user.get("/self", async (c) => {
 user.post("/onboarded", async (c) => {
   const { userId } = await c.req.json();
   if (!userId) {
-    return c.json(
-      { message: "UserId is required", status: 401 },
-      401,
-    );
+    return c.json({ message: "UserId is required", status: 401 }, 401);
   }
   const user = await prisma.user.update({
     where: {

@@ -35,7 +35,7 @@ async function createApiKeyAction(
   return res;
 }
 
-async function completeOnboardingAction(userId:string) {
+async function completeOnboardingAction(userId: string) {
   try {
     const res = await fetch(`${BASE_API_URL}/user/onboarded`, {
       method: "POST",

@@ -9,7 +9,11 @@ import {
 } from "@tabler/icons-react";
 // import { siteConfig } from "@/config/site.config";
 import { cn } from "@/lib/utils";
-import { SectionHeader, SectionHeaderHeading, SectionHeaderDescription } from "../text-wrappers";
+import {
+  SectionHeader,
+  SectionHeaderHeading,
+  SectionHeaderDescription,
+} from "../text-wrappers";
 import { aiCode } from "@/images/image";
 
 const agentCards = [
@@ -48,11 +52,11 @@ export default function AgentsSec() {
       {/* <div className="absolute inset-0 mx-auto h-full w-full bg-[radial-gradient(circle,rgba(211,211,211,0.1),rgba(18,20,22,0.05),rgba(18,20,22,0))] opacity-60" /> */}
       <div className="px-8 md:px-14">
         <SectionHeader className="flex flex-col z-50 mb-16">
-          <SectionHeaderHeading>
-            Build your own AI Agents
-          </SectionHeaderHeading>
+          <SectionHeaderHeading>Build your own AI Agents</SectionHeaderHeading>
           <SectionHeaderDescription>
-            Linear is shaped by the practices and principles that distinguish world-class product teams from the rest: relentless focus, fast execution, and a commitment to the quality of craft.
+            Linear is shaped by the practices and principles that distinguish
+            world-class product teams from the rest: relentless focus, fast
+            execution, and a commitment to the quality of craft.
           </SectionHeaderDescription>
         </SectionHeader>
 

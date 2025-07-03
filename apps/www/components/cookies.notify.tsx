@@ -1,6 +1,6 @@
-import { XIcon } from "lucide-react"
+import { XIcon } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 export default function CookiesConsent() {
   return (
@@ -35,5 +35,5 @@ export default function CookiesConsent() {
         </Button>
       </div>
     </div>
-  )
+  );
 }
