@@ -7,13 +7,16 @@ import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import { MainNavbar } from "./main.nav";
 import { Icons } from "@/constants/icons";
-import { useAuth } from "@/context/auth.context";
 import { constants } from "@/constants";
+import { useMyProfileStore } from "@prexo/store";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
-  const { user } = useAuth();
-  const loginURL = user ? "/dashboard" : "/auth";
+  const { myProfile } = useMyProfileStore();
+  let loginURL = "/auth";
+  if (myProfile) {
+    loginURL = myProfile.role === "onboarded" ? "/dashboard" : "/onboarding";
+  }
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {

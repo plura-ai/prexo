@@ -11,6 +11,7 @@ import { useScrollToBottom } from "@/hooks/use-scroll-to-bottom";
 import ProjectCardAiUi from "../../ai-ui/project.card";
 import ApiCardAiUi from "../../ai-ui/api.card";
 import { Button } from "@/components/ui/button";
+import OnboardingCardAiUi from "../../ai-ui/onboarding.card";
 
 const PurePreviewMessage = ({
   message,
@@ -236,15 +237,15 @@ const PurePreviewMessage = ({
                     }
                     case "sendCreateApiFrom": {
                       switch (state) {
-                        // case 'result':
-                        //   return (
-                        //     <div key={callId}>
-                        //       <div className='flex flex-col mb-5'>
-                        //         {part.toolInvocation.result}
-                        //       </div>
-                        //       <ApiCardAiUi addToolResult={addToolResult} append={append} callId={callId}/>
-                        //     </div>
-                        //   );
+                        case 'result':
+                          return (
+                            <div key={callId + 'result'}>
+                              <div className='flex flex-col mb-5'>
+                                {part.toolInvocation.result}
+                              </div>
+                              <ApiCardAiUi addToolResult={addToolResult} append={append} callId={callId}/>
+                            </div>
+                          );
                         case "call":
                           return (
                             <div key={callId}>
@@ -252,6 +253,22 @@ const PurePreviewMessage = ({
                                 {part.toolInvocation.args.message}
                               </div>
                               <ApiCardAiUi
+                                addToolResult={addToolResult}
+                                append={append}
+                                callId={callId}
+                              />
+                            </div>
+                          );
+                        default:
+                          return null;
+                      }
+                    }
+                    case "completeOnboarding": {
+                      switch (state) {
+                        case "call":
+                          return (
+                            <div key={callId}>
+                              <OnboardingCardAiUi
                                 addToolResult={addToolResult}
                                 append={append}
                                 callId={callId}

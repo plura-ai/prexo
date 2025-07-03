@@ -36,18 +36,16 @@ user.get("/self", async (c) => {
 });
 
 user.post("/onboarded", async (c) => {
-  const session = await auth.api.getSession({
-    headers: c.req.raw.headers,
-  });
-  if (!session?.user.id) {
+  const { userId } = await c.req.json();
+  if (!userId) {
     return c.json(
-      { message: "Oops! seems like your session is expired", status: 401 },
+      { message: "UserId is required", status: 401 },
       401,
     );
   }
   const user = await prisma.user.update({
     where: {
-      id: session.user.id,
+      id: userId,
     },
     data: {
       role: "onboarded",

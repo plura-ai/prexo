@@ -35,4 +35,17 @@ async function createApiKeyAction(
   return res;
 }
 
-export { createProjectAction, createApiKeyAction };
+async function completeOnboardingAction(userId:string) {
+  try {
+    const res = await fetch(`${BASE_API_URL}/user/onboarded`, {
+      method: "POST",
+      body: JSON.stringify({ userId }),
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error completing onboarding process:", error);
+    throw error;
+  }
+}
+export { createProjectAction, createApiKeyAction, completeOnboardingAction };

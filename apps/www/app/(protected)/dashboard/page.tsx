@@ -1,10 +1,26 @@
+"use client";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 import { DataTable } from "@/components/data-table";
 import { SectionCards } from "@/components/section-cards";
 
 import data from "./data.json";
+import { useMyProfileStore } from "@prexo/store";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Page() {
+  const { myProfile } = useMyProfileStore();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (
+      myProfile &&
+      myProfile?.role !== "onboarded"
+    ) {
+      router.replace(`/onboarding/${myProfile.id}`);
+    }
+  }, [myProfile, router]);
+
   return (
     <div className="flex flex-1 flex-col">
       <div className="@container/main flex flex-1 flex-col gap-2">

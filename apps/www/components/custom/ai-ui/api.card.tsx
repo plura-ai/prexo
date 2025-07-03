@@ -59,7 +59,7 @@ export default function ApiCardAiUi({
       });
       await new Promise((resolve) => setTimeout(resolve, 1500));
       append({
-        id: myProfile.id,
+        id: `${myProfile.id}-${Date.now()}`,
         role: "user",
         content: "Thanks, Lets complete the onboarding.",
         parts: [

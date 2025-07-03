@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { StoreProvider } from "@/context/store.context";
 import { AuthProvider } from "@/context/auth.context";
+// import CookiesConsent from "@/components/cookies.notify";
 // import { ChatComponent } from "@prexo/chat-sdk";
 
 const uxumGrotesque = localFont({
@@ -107,6 +108,7 @@ export default function RootLayout({
                 {children}
               </div>
               {/* <ChatComponent position="bottom-left"/> */}
+              {/* <CookiesConsent /> */}
             </ThemeProvider>
           </StoreProvider>
         </AuthProvider>

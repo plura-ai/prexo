@@ -45,15 +45,13 @@ const agentCards = [
 export default function AgentsSec() {
   return (
     <div className="relative w-full items-center justify-center py-10">
-      {/* <div className="absolute inset-0 mx-auto h-full w-full bg-[linear-gradient(to_bottom,rgba(18,20,22,1),rgba(18,20,22,0.8),rgba(18,20,22,0))]" /> */}
+      {/* <div className="absolute inset-0 mx-auto h-full w-full bg-[radial-gradient(circle,rgba(211,211,211,0.1),rgba(18,20,22,0.05),rgba(18,20,22,0))] opacity-60" /> */}
       <div className="px-8 md:px-14">
         <SectionHeader className="flex flex-col z-50 mb-16">
           <SectionHeaderHeading>
-            {/* {siteConfig.homePage.sections.agents.heading} */}
             Build your own AI Agents
           </SectionHeaderHeading>
           <SectionHeaderDescription>
-            {/* {siteConfig.homePage.sections.agents.description} */}
             Linear is shaped by the practices and principles that distinguish world-class product teams from the rest: relentless focus, fast execution, and a commitment to the quality of craft.
           </SectionHeaderDescription>
         </SectionHeader>
@@ -64,10 +62,9 @@ export default function AgentsSec() {
               key={index}
               className={cn(
                 card.class,
-                "relative group overflow-hidden backdrop-blur-sm rounded-3xl p-8 hover:bg-accent/10 transition-all duration-300 border-2 border-accent/50",
+                "relative group overflow-hidden backdrop-blur-sm rounded-3xl p-8 hover:bg-accent/10 transition-all duration-300 border-2 border-accent/50 cursor-pointer",
               )}
             >
-              {/* <card.icon className="w-10 h-10 text-primary mb-4" /> */}
               {card.image && (
                 <div className="w-full absolute bottom-[-10rem] right-[-10rem] h-auto mb-4 rounded-lg">
                   <Image

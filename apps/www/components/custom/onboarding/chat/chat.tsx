@@ -3,9 +3,11 @@ import ChatInput from "./input";
 import { useChat } from "@ai-sdk/react";
 import { Messages } from "./messages";
 import { SuggestedActions } from "../suggested.actions";
+import AiBanner from "@/components/ai.banner";
 
 export default function OnboardingChat({ chatId }: { chatId: string }) {
-  const url = `http://localhost:3001/v1/ai/stream`;
+  const BASE_API_URL = "http://localhost:3001/v1";
+  const url = `${BASE_API_URL}/ai/stream`;
 
   const {
     messages,
@@ -32,6 +34,11 @@ export default function OnboardingChat({ chatId }: { chatId: string }) {
   });
   return (
     <div className="relative flex flex-col w-screen max-w-2xl mx-auto h-screen">
+      {messages.length > 0 && (
+        <div className="mx-2">
+          <AiBanner/>
+        </div>
+      )}
       <div className="flex-1 overflow-y-auto pt-4">
         <Messages
           chatId={chatId}

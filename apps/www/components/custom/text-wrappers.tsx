@@ -97,7 +97,7 @@ function SectionHeaderHeading({
   return (
     <h1
       className={cn(
-        "text-5xl md:text-6xl font-semibold tracking-tighter drop-shadow-sm max-w-3xl select-none",
+        "text-5xl font-uxum md:text-6xl font-semibold tracking-tighter drop-shadow-sm max-w-3xl select-none",
         className,
       )}
       {...props}
@@ -112,7 +112,7 @@ function SectionHeaderDescription({
   return (
     <p
       className={cn(
-        "text-start text-lg text-muted-foreground max-w-xl font-medium mt-auto z-50 select-none",
+        "text-start font-uxum text-lg text-muted-foreground max-w-xl font-medium mt-auto z-50 select-none",
         className,
       )}
       {...props}

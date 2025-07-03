@@ -7,7 +7,6 @@ export default function SiteFooter() {
       <span>
         © {new Date().getFullYear()} PREXO AI. All rights reserved.
       </span>
-        
     </footer>
   )
 }
