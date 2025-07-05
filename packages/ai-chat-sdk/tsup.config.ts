@@ -20,5 +20,5 @@ export default defineConfig([
     treeshake: false,
     injectStyle: true,
     esbuildPlugins: [fixExtensionsPlugin()],
-  }
+  },
 ]);

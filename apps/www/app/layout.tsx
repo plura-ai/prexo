@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { StoreProvider } from "@/context/store.context";
 import { AuthProvider } from "@/context/auth.context";
-import {ChatWidget} from "@prexo/ai-chat-sdk"
+import { ChatWidget } from "@prexo/ai-chat-sdk";
 // import CookiesConsent from "@/components/cookies.notify";
 // import { ChatComponent } from "@prexo/chat-sdk";
 
@@ -118,10 +118,7 @@ export default function RootLayout({
                 bubbleText="Chat with us!"
                 bubbleIcon="💬"
                 position="bottom-right"
-                theme="light"
-                title="Demo Support"
-                botName="Demo Bot"
-      />
+              />
             </ThemeProvider>
           </StoreProvider>
         </AuthProvider>

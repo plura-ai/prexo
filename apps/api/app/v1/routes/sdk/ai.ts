@@ -11,34 +11,36 @@ import { verifyApiKey } from "@/lib/middleware";
 
 const aiSdk = new Hono<{ Variables: { verifyApiKey: UnkeyContext } }>();
 
-
 export const maxDuration = 30;
 
 const togetherai = createTogetherAI({
   apiKey: process.env.TOGETHER_API_KEY!,
 });
 
-aiSdk.use("*", verifyApiKey(
-  {
-    apiId: process.env.UNKEY_API_ID!,
-    tags: ['/sdk/ai'],
-    handleInvalidKey: (c, result) => {
-        console.log("Invalid API key!", result)
+aiSdk.use(
+  "*",
+  verifyApiKey(
+    {
+      apiId: process.env.UNKEY_API_ID!,
+      tags: ["/sdk/ai"],
+      handleInvalidKey: (c, result) => {
+        console.log("Invalid API key!", result);
         return c.json(
           {
             error: "unauthorized",
             reason: result?.code,
           },
-          401
+          401,
         );
       },
-    onError: (c, err) => {
-        console.log("Unkey Error:", err.message)
+      onError: (c, err) => {
+        console.log("Unkey Error:", err.message);
         return c.text("unauthorized", 401);
       },
-},
-0
-));
+    },
+    0,
+  ),
+);
 
 aiSdk.post("/stream", async (c) => {
   const { messages } = await c.req.json();

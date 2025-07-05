@@ -1,13 +1,25 @@
-import type React from "react"
+import type React from "react";
 
 interface TypingIndicatorProps {
-  botName: string
+  botName: string;
 }
 
-export const TypingIndicator: React.FC<TypingIndicatorProps> = ({ botName }) => {
+export const TypingIndicator: React.FC<TypingIndicatorProps> = ({
+  botName,
+}) => {
   return (
     <div className="message bot typing">
-      <div className="bot-avatar">{botName.charAt(0)}</div>
+      <div className="bot-avatar">
+        <img
+          src="https://raw.githubusercontent.com/plura-ai/prexo/refs/heads/main/apps/www/public/logo.png"
+          className="w-10 h-10 rounded-lg object-cover invert"
+          alt="Chat bot avatar"
+          onError={(e) => {
+            console.error("Failed to load image:", e);
+            e.currentTarget.style.display = "none";
+          }}
+        />
+      </div>
       <div className="message-content">
         <div className="message-bubble typing-bubble">
           <div className="typing-dots">
@@ -18,5 +30,5 @@ export const TypingIndicator: React.FC<TypingIndicatorProps> = ({ botName }) => 
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

@@ -1,18 +1,16 @@
 .chat-widget {
     position: fixed;
-    bottom: 20px;
+    bottom: 40px;
     right: 20px;
     width: 350px;
     height: 500px;
     background: white;
-    border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
     display: flex;
     flex-direction: column;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     z-index: 10000;
-    transition: all 0.3s ease;
-    border: 1px solid #e1e5e9;
+    transition: all 0.6s ease;
   }
   
   .chat-widget.minimized {
@@ -21,7 +19,6 @@
   
   .chat-widget.dark {
     background: #1a1a1a;
-    border-color: #333;
     color: white;
   }
   
@@ -31,9 +28,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 16px 20px;
-    background: #4f46e5;
+    background: #171717;
     color: white;
-    border-radius: 12px 12px 0 0;
+    border-radius: 12px;
     min-height: 28px;
   }
   
@@ -46,7 +43,7 @@
     align-items: center;
     gap: 8px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 16px;
   }
   
   .status-indicator {
@@ -106,13 +103,6 @@
     background: #1a1a1a;
   }
   
-  .welcome-message {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    margin-bottom: 8px;
-  }
-  
   .message {
     display: flex;
     align-items: flex-start;
@@ -129,11 +119,10 @@
     align-self: flex-start;
   }
   
-  .bot-avatar,
-  .user-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+  .bot-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 30%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -143,19 +132,8 @@
   }
   
   .bot-avatar {
-    background: #4f46e5;
+    background: #171717;
     color: white;
-  }
-  
-  .user-avatar {
-    background: #e5e7eb;
-    color: #374151;
-    font-size: 10px;
-  }
-  
-  .chat-widget.dark .user-avatar {
-    background: #374151;
-    color: #e5e7eb;
   }
   
   .message-content {
@@ -173,11 +151,11 @@
   
   .message.bot .message-bubble {
     background: #f3f4f6;
-    color: #374151;
+    color: #171717;
   }
   
   .message.user .message-bubble {
-    background: #4f46e5;
+    background: #171717;
     color: white;
   }
   
@@ -247,10 +225,15 @@
   
   /* Input */
   .chat-input {
-    padding: 16px;
+    padding: 10px;
     border-top: 1px solid #e5e7eb;
     background: white;
     border-radius: 0 0 12px 12px;
+    display: flex;
+    gap: 5;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   
   .chat-widget.dark .chat-input {
@@ -262,7 +245,26 @@
     display: flex;
     gap: 8px;
     align-items: flex-end;
+    width: 100%;
+    justify-content: center;
   }
+
+.chat-input-watermark {
+  display: flex;
+  font-size: 13px;
+  color: #171717;
+  background-color: transparent;
+  padding: 2px 8px;
+  align-items: center;
+  cursor: pointer;
+  font-style: italic;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.chat-input-watermark:hover {
+  opacity: 1;
+}
   
   .message-input {
     flex: 1;
@@ -272,6 +274,7 @@
     outline: none;
     font-size: 14px;
     resize: none;
+    color: #0a0a0a;
     background: white;
   }
   
@@ -282,13 +285,12 @@
   }
   
   .message-input:focus {
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    border-color: #171717;
   }
   
   .send-button {
     padding: 12px;
-    background: #4f46e5;
+    background: #171717;
     color: white;
     border: none;
     border-radius: 50%;
@@ -302,12 +304,12 @@
   }
   
   .send-button:hover:not(:disabled) {
-    background: #4338ca;
+    background: #262626;
     transform: scale(1.05);
   }
   
   .send-button:disabled {
-    background: #9ca3af;
+    background: #404040;
     cursor: not-allowed;
     transform: none;
   }

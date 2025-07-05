@@ -23,8 +23,7 @@ export default function Home() {
       <section
         id="about"
         className="flex flex-col items-center justify-center w-full h-full p-4 border-b border-dashed"
-      >
-      </section>
+      ></section>
       <AgentsSec />
     </main>
   );
