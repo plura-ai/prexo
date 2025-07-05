@@ -1,0 +1,48 @@
+{
+  "name": "@prexo/ai-chat-sdk",
+  "type": "module",
+  "version": "0.1.5",
+  "description": "AI Chat Component with Persistent History",
+  "exports": {
+    ".": {
+      "import": "./dist/client/index.js"
+    }
+  },
+  "main": "./dist/client/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "postbuild": "rm -rf dist/client/styles && cpx 'src/**/*.css' dist",
+    "pre-publish": "bun run build",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": ["react", "chat", "widget", "sdk", "typescript", "embeddable"],
+  "author": "Saidev Dhal",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "cpx": "^1.5.0",
+    "tsup": "^8.5.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.2.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.525.0",
+    "tailwind-merge": "^3.3.1",
+    "tw-animate-css": "^1.3.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/react-chat-widget-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/react-chat-widget-sdk/issues"
+  },
+  "homepage": "https://github.com/yourusername/react-chat-widget-sdk#readme"
+}

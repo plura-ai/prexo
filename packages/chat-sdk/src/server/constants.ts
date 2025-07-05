@@ -15,6 +15,6 @@ export const DEFAULT_PROMPT: Prompt = ({ context, question, chatMessages }) =>
   Q: ${question}
   A:`;
 
-export const DEFAULT_CHAT_SESSION_ID = "upstash-rag-chat-session";
+export const DEFAULT_CHAT_SESSION_ID = "prexo-chat-session";
 
 export const DEFAULT_HISTORY_LENGTH = 5;

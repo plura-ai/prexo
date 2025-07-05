@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { unkey, UnkeyContext } from "@unkey/hono";
 import { createTogetherAI } from "@ai-sdk/togetherai";
 import {
   NoSuchToolError,
@@ -6,10 +7,10 @@ import {
   streamText,
   ToolExecutionError,
 } from "ai";
-import { systemPrompt } from "@/lib/configs";
-import { tools } from "@/lib/ai/tools";
+import { verifyApiKey } from "@/lib/middleware";
 
-const ai = new Hono();
+const aiSdk = new Hono<{ Variables: { verifyApiKey: UnkeyContext } }>();
+
 
 export const maxDuration = 30;
 
@@ -17,25 +18,35 @@ const togetherai = createTogetherAI({
   apiKey: process.env.TOGETHER_API_KEY!,
 });
 
-ai.post("/stream", async (c) => {
+aiSdk.use("*", verifyApiKey(
+  {
+    apiId: process.env.UNKEY_API_ID!,
+    tags: ['/sdk/ai'],
+    handleInvalidKey: (c, result) => {
+        console.log("Invalid API key!", result)
+        return c.json(
+          {
+            error: "unauthorized",
+            reason: result?.code,
+          },
+          401
+        );
+      },
+    onError: (c, err) => {
+        console.log("Unkey Error:", err.message)
+        return c.text("unauthorized", 401);
+      },
+},
+0
+));
+
+aiSdk.post("/stream", async (c) => {
   const { messages } = await c.req.json();
-  const filteredMessages = messages.map((msg: any) => {
-    if (!msg.parts) return msg;
-    return {
-      ...msg,
-      parts: msg.parts.filter((part: any) => {
-        if (part.type !== "tool-invocation") return true;
-        return part.toolInvocation?.state !== "call";
-      }),
-    };
-  });
 
   const result = streamText({
     model: togetherai("meta-llama/Llama-3.3-70B-Instruct-Turbo-Free"),
-    system: systemPrompt(),
-    messages: filteredMessages,
+    messages: messages,
     maxSteps: 5,
-    tools: tools,
     onStepFinish: (step) => {
       console.log("Step finished:", step);
     },
@@ -60,4 +71,4 @@ ai.post("/stream", async (c) => {
   });
 });
 
-export default ai;
+export default aiSdk;

@@ -8,6 +8,8 @@ import auth from "../routes/auth";
 import user from "../routes/user";
 import project from "../routes/project";
 import api from "../routes/api";
+import configs from "../routes/sdk/configs";
+import aiSdk from "../routes/sdk/ai";
 
 export const runtime = "edge";
 const app = new Hono().basePath("/v1");
@@ -35,6 +37,10 @@ app.route("/ai", ai);
 app.route("/user", user);
 app.route("/project", project);
 app.route("/api", api);
+
+// SDK Routes
+app.route("/sdk/configs", configs);
+app.route("/sdk/ai", aiSdk);
 
 const GET = handle(app);
 const POST = handle(app);

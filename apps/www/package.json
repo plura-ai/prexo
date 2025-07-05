@@ -17,6 +17,7 @@
     "@prexo/auth": "workspace:*",
     "@prexo/chat-sdk": "workspace:*",
     "@prexo/store": "workspace:*",
+    "@prexo/ai-chat-sdk": "workspace:*",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-checkbox": "^1.3.2",
     "@radix-ui/react-dialog": "^1.1.14",

@@ -37,22 +37,24 @@ async function createApi(projectID: string, name: string, enabled: boolean) {
   }
 }
 
-async function verifyApi(apiKey: string) {
+async function verifyApi(apiKey: string, tags?: string[], cost?: number) {
   try {
-    const { result, error } = await verifyKey({ key: apiKey, apiId: apiID });
+    const { result, error } = await verifyKey({ key: apiKey, apiId: apiID, tags: tags, 
+     ...(cost !== undefined ? { remaining: { cost: cost } } : {}),
+     });
     if (error) {
       console.error("Error verifying API key:", error);
-      throw new Error("Invalid API key");
+      return { error };
     }
     if (!result.valid) {
       // do not grant access
-      return;
+      return { error: { message: "Invalid API key", code: "INVALID_KEY", result } };
     }
     console.log("API key verified successfully:", result);
-    return result;
+    return { result };
   } catch (error) {
     console.error("Error verifying API:", error);
-    throw new Error("Failed to verify API");
+    return { error };
   }
 }
 

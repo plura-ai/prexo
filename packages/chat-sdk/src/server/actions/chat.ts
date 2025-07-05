@@ -16,7 +16,7 @@ type StreamMessage = {
 const vectorIndex = new Index();
 
 const together = createOpenAI({
-  apiKey: process.env.TOGETHER_API_KEY ?? "",
+  apiKey: process.env.TOGETHER_API_KEY!,
   baseURL: "https://api.together.xyz/v1",
 });
 
@@ -70,7 +70,7 @@ export const serverChat = async ({
 
   (async () => {
     const { textStream } = streamText({
-      model: together(process.env.TOGETHER_MODEL ?? "deepseek-ai/DeepSeek-V3"),
+      model: together("meta-llama/Llama-3.3-70B-Instruct-Turbo-Free"),
       system,
       messages: serverMessages,
 

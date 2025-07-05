@@ -24,7 +24,6 @@ export default function Home() {
         id="about"
         className="flex flex-col items-center justify-center w-full h-full p-4 border-b border-dashed"
       >
-        ok
       </section>
       <AgentsSec />
     </main>

@@ -14,10 +14,9 @@
     "db:push": "cd packages/db && bun db:push",
     "db:generate": "cd packages/db && bun db:generate",
     "db:migrate": "cd packages/db && bun db:migrate",
-    "db:studio":"cd packages/db && bun db:studio",
+    "db:studio": "cd packages/db && bun db:studio",
     "setup": "bash scripts/setup.sh",
     "envc": "bash scripts/envc.sh"
-
   },
   "devDependencies": {
     "drizzle-kit": "^0.31.1",
@@ -36,6 +35,7 @@
   ],
   "dependencies": {
     "dotenv": "^16.5.0",
-    "drizzle-orm": "^0.44.2"
+    "drizzle-orm": "^0.44.2",
+    "prexo": "."
   }
 }
