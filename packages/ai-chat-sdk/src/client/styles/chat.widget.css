@@ -364,16 +364,12 @@
   .bubble-button {
     display: flex;
     align-items: center;
-    padding: 5px 10px;
     background: rgba(23 23 23);
-    color: white;
     border: none;
+    padding: 0%;
     border-radius: 50px;
     cursor: pointer;
     font-family: inherit;
-    font-size: 14px;
-    gap: 10;
-    font-weight: 600;
     box-shadow: 0 4px 20px rgba(10 10 10);
     transition: all 0.3s ease;
     max-width: 200px;

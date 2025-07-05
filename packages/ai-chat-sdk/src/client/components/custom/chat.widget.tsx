@@ -164,15 +164,14 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
         <div className={`chat-bubble ${theme} ${getPositionClasses()}`}>
           <button type="button" onClick={handleOpen} className="bubble-button">
 <img 
-  src="https://media.discordapp.net/attachments/1073772195458850926/1390985906785091625/image-removebg-preview_4.png"
-  className="w-10 h-10 rounded-full object-cover"
+  src="https://raw.githubusercontent.com/plura-ai/prexo/refs/heads/main/apps/www/public/img/chat-icon.png"
+  className="w-12 h-12 rounded-2xl object-cover"
   alt="Chat bot avatar"
   onError={(e) => {
     console.error('Failed to load image:', e);
     e.currentTarget.style.display = 'none';
   }}
 />
-          {bubbleText}
           </button>
         </div>
       )}
