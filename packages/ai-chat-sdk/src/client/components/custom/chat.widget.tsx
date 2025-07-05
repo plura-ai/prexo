@@ -165,7 +165,7 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
           <button type="button" onClick={handleOpen} className="bubble-button">
 <img 
   src="https://raw.githubusercontent.com/plura-ai/prexo/refs/heads/main/apps/www/public/img/chat-icon.png"
-  className="w-12 h-12 rounded-2xl object-cover"
+  className="w-12 h-12 rounded-lg object-cover"
   alt="Chat bot avatar"
   onError={(e) => {
     console.error('Failed to load image:', e);

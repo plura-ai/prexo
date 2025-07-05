@@ -362,30 +362,23 @@
   }
   
   .bubble-button {
-    display: flex;
-    align-items: center;
-    background: rgba(23 23 23);
-    border: none;
-    padding: 0%;
-    border-radius: 50px;
-    cursor: pointer;
-    font-family: inherit;
-    box-shadow: 0 4px 20px rgba(10 10 10);
-    transition: all 0.3s ease;
-    max-width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
+      display: flex;
+      align-items: center;
+      border: none;
+      padding: 5px 5px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.3s ease;
+      max-width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: floatY 3s ease-in-out infinite;
   }
   
   .bubble-button:hover {
-    background: rgba(10 10 10);
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(10 10 10);
   }
   
-  .bubble-button:active {
-    transform: translateY(0);
-  }
   
   .chat-bubble.dark .bubble-button {
     background: #2563eb;
@@ -526,3 +519,14 @@
     }
   }
   
+@keyframes floatY {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
