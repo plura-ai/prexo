@@ -1,3 +1,3 @@
-import aiCode from "../assests/ai-assistant.ts.png";
+import aiCode from "../assets/ai-assistant.ts.png";
 
 export { aiCode };

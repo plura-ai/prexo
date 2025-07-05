@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function test() {
   return (
-    <div className='flex min-h-screen w-full items-center justify-center'>
+    <div className='flex min-h-screen w-full items-center justify-center bg-white'>
       {/* <PrexoAiChatbot
         documentId="demo-page-001"
         position="bottom-right"

@@ -111,16 +111,16 @@ export default function RootLayout({
               {/* <ChatComponent position="bottom-left"/> */}
               {/* <CookiesConsent /> */}
               <ChatWidget
-        sessionId="demo-session-123"
-        documentId="demo-page"
-        width={380}
-        height={550}
-        bubbleText="Chat with us!"
-        bubbleIcon="💬"
-        position="bottom-right"
-        theme="light"
-        title="Demo Support"
-        botName="Demo Bot"
+                sessionId="demo-session-123"
+                documentId="demo-page"
+                width={380}
+                height={550}
+                bubbleText="Chat with us!"
+                bubbleIcon="💬"
+                position="bottom-right"
+                theme="light"
+                title="Demo Support"
+                botName="Demo Bot"
       />
             </ThemeProvider>
           </StoreProvider>
