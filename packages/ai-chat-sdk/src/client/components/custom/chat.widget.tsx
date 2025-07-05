@@ -5,6 +5,7 @@ import "../../styles/chat.widget.css"
 import { Message } from "./message"
 import { TypingIndicator } from "./typing.indicator"
 import { ChatInput } from "./chat.msg"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const BOT_RESPONSES = [
   "Hello! How can I assist you today?",
@@ -161,9 +162,17 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
       {/* Floating Bubble Button */}
       {!isOpen && (
         <div className={`chat-bubble ${theme} ${getPositionClasses()}`}>
-          <button className="bubble-button" onClick={handleOpen} aria-label="Open chat">
-            <span className="bubble-icon">{bubbleIcon}</span>
-            <span className="bubble-text">{bubbleText}</span>
+          <button type="button" onClick={handleOpen} className="bubble-button">
+<img 
+  src="https://media.discordapp.net/attachments/1073772195458850926/1390985906785091625/image-removebg-preview_4.png"
+  className="w-10 h-10 rounded-full object-cover"
+  alt="Chat bot avatar"
+  onError={(e) => {
+    console.error('Failed to load image:', e);
+    e.currentTarget.style.display = 'none';
+  }}
+/>
+          {bubbleText}
           </button>
         </div>
       )}
