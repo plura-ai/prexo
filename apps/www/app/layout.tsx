@@ -4,9 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { StoreProvider } from "@/context/store.context";
 import { AuthProvider } from "@/context/auth.context";
-import { PrexoAiChatBot } from "@prexo/ai-chat-sdk";
 // import CookiesConsent from "@/components/cookies.notify";
-// import { ChatComponent } from "@prexo/chat-sdk";
 
 const uxumGrotesque = localFont({
   src: [
@@ -108,14 +106,7 @@ export default function RootLayout({
               <div className="flex flex-col items-center bg-background">
                 {children}
               </div>
-              {/* <ChatComponent position="bottom-left"/> */}
               {/* <CookiesConsent /> */}
-              <PrexoAiChatBot
-                width={380}
-                height={550}
-                apiKey={process.env.PREXO_API_KEY!}
-                position="bottom-right"
-              />
             </ThemeProvider>
           </StoreProvider>
         </AuthProvider>

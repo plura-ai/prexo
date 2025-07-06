@@ -17,7 +17,6 @@ import {
   IconSettings,
   IconUsers,
 } from "@tabler/icons-react";
-
 import { NavDocuments } from "@/components/nav-documents";
 import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
@@ -32,6 +31,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import Logo from "./custom/site/logo";
+import { useMyProfileStore } from "@prexo/store";
 
 const data = {
   user: {
@@ -152,6 +152,8 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar();
+  const { myProfile } = useMyProfileStore();
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -167,7 +169,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter className="cursor-pointer">
-        <NavUser user={data.user} />
+        <NavUser user={myProfile!} />
       </SidebarFooter>
     </Sidebar>
   );

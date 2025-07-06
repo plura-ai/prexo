@@ -1,6 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import DashboardHeader from "@/components/custom/dashboard/header";
-// import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { ReactNode } from "react";
 
@@ -16,7 +15,6 @@ export default function layout({ children }: { children: ReactNode }) {
     >
       <AppSidebar variant="inset" collapsible="offcanvas" />
       <SidebarInset>
-        {/* <SiteHeader /> */}
         <DashboardHeader />
         {children}
       </SidebarInset>
