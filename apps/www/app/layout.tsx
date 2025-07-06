@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { StoreProvider } from "@/context/store.context";
 import { AuthProvider } from "@/context/auth.context";
-import { ChatWidget } from "@prexo/ai-chat-sdk";
+import { PrexoAiChatBot } from "@prexo/ai-chat-sdk";
 // import CookiesConsent from "@/components/cookies.notify";
 // import { ChatComponent } from "@prexo/chat-sdk";
 
@@ -110,13 +110,10 @@ export default function RootLayout({
               </div>
               {/* <ChatComponent position="bottom-left"/> */}
               {/* <CookiesConsent /> */}
-              <ChatWidget
-                sessionId="demo-session-123"
-                documentId="demo-page"
+              <PrexoAiChatBot
                 width={380}
                 height={550}
-                bubbleText="Chat with us!"
-                bubbleIcon="💬"
+                apiKey={process.env.PREXO_API_KEY!}
                 position="bottom-right"
               />
             </ThemeProvider>

@@ -38,7 +38,7 @@ aiSdk.use(
         return c.text("unauthorized", 401);
       },
     },
-    0,
+    2,3,60
   ),
 );
 

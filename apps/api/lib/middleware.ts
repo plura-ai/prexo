@@ -2,10 +2,13 @@ import { verifyApi } from "@prexo/keys";
 import { UnkeyConfig } from "@unkey/hono";
 import { MiddlewareHandler } from "hono";
 import { HTTPException } from "hono/http-exception";
+import { computeCost } from "./compute.cal";
 
 export function verifyApiKey(
   config: UnkeyConfig,
   cost?: number,
+  requests?: number,
+  timeFrame?: number,
 ): MiddlewareHandler {
   return async (c, next) => {
     const key = config.getKey
@@ -17,8 +20,9 @@ export function verifyApiKey(
     if (typeof key !== "string") {
       return key;
     }
-
-    const res = await verifyApi(key, config.tags, cost);
+    const dynamicCost = computeCost(key, timeFrame ?? 60, requests ?? 10000, cost ?? 0)
+    console.info("THIS REQS COSTS:", dynamicCost)
+    const res = await verifyApi(key, config.tags, dynamicCost);
 
     if (res.error) {
       const { code, requestId, message, docs } = res.error as {

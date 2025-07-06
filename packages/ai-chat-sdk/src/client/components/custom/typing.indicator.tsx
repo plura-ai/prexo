@@ -1,12 +1,5 @@
-import type React from "react";
 
-interface TypingIndicatorProps {
-  botName: string;
-}
-
-export const TypingIndicator: React.FC<TypingIndicatorProps> = ({
-  botName,
-}) => {
+export const TypingIndicator = () => {
   return (
     <div className="message bot typing">
       <div className="bot-avatar">

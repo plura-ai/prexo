@@ -1,19 +1,18 @@
 import type React from "react";
-import type { ChatMessage } from "./chat.widget";
+import type { UIMessage } from "ai";
 
 interface MessageProps {
-  message: ChatMessage;
-  botName: string;
+  message: UIMessage;
 }
 
-export const Message: React.FC<MessageProps> = ({ message, botName }) => {
+export const Message: React.FC<MessageProps> = ({ message }) => {
   const formatTime = (date: Date) => {
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
   return (
-    <div className={`message ${message.sender}`}>
-      {message.sender === "bot" && (
+    <div className={`message ${message.role === "user" ? "user" : "bot"}`}>
+      {message.role === "assistant" && (
         <div className="bot-avatar">
           <img
             src="https://raw.githubusercontent.com/plura-ai/prexo/refs/heads/main/apps/www/public/logo.png"
@@ -30,9 +29,10 @@ export const Message: React.FC<MessageProps> = ({ message, botName }) => {
         <div className="message-bubble">
           <p>{message.content}</p>
         </div>
-        <div className="message-time">{formatTime(message.timestamp)}</div>
+        <div className="message-time">
+        {formatTime(new Date())}
+        </div>
       </div>
-      {/* {message.sender === "user" && <div className="user-avatar">You</div>} */}
     </div>
   );
 };

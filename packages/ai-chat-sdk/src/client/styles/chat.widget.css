@@ -16,6 +16,57 @@
   .chat-widget.minimized {
     height: 60px;
   }
+
+.chat-widget.open.right {
+  animation: slideInRightCorner 0.5s ease-out forwards;
+}
+
+.chat-widget.open.left {
+  animation: slideInLeftCorner 0.5s ease-out forwards;
+}
+
+.chat-widget.close {
+  animation: slideOutCorner 0.9s ease-in forwards;
+}
+
+@keyframes slideInRightCorner {
+  0% {
+    transform: translate(100%, 100%) scale(0.9);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(0, 0) scale(1.03);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes slideInLeftCorner {
+  0% {
+    transform: translate(-100%, 100%) scale(0.9);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(0, 0) scale(1.03);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes slideOutCorner {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(100%, 100%) scale(0.9);
+    opacity: 0;
+  }
+}
   
   .chat-widget.dark {
     background: #1a1a1a;

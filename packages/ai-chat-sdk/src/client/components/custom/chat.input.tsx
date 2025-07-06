@@ -1,29 +1,24 @@
 "use client";
 import type React from "react";
-import { useState, useRef, type KeyboardEvent } from "react";
+import { useRef, type KeyboardEvent } from "react";
+import type { UseChatHelpers } from "@ai-sdk/react";
 
 interface ChatInputProps {
-  onSendMessage: (message: string) => void;
+  input: UseChatHelpers["input"];
+  status: UseChatHelpers["status"];
+  handleSubmit: UseChatHelpers["handleSubmit"];
+  handleInputChange: UseChatHelpers["handleInputChange"];
   placeholder: string;
-  disabled?: boolean;
 }
 
 export const ChatInput: React.FC<ChatInputProps> = ({
-  onSendMessage,
+  input,
+  status,
+  handleSubmit,
+  handleInputChange,
   placeholder,
-  disabled = false,
 }) => {
-  const [message, setMessage] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (message.trim() && !disabled) {
-      onSendMessage(message.trim());
-      setMessage("");
-      inputRef.current?.focus();
-    }
-  };
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -38,16 +33,16 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         <input
           ref={inputRef}
           type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          value={input}
+          onChange={handleInputChange}
           onKeyPress={handleKeyPress}
           placeholder={placeholder}
-          disabled={disabled}
+          disabled={status === 'streaming'}
           className="message-input"
         />
         <button
           type="submit"
-          disabled={!message.trim() || disabled}
+          disabled={status === 'streaming'}
           className="send-button"
           aria-label="Send message"
         >

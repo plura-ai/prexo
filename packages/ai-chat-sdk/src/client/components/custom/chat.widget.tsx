@@ -1,71 +1,65 @@
 "use client";
 import type React from "react";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import "../../styles/chat.widget.css";
 import { Message } from "./message";
 import { TypingIndicator } from "./typing.indicator";
-import { ChatInput } from "./chat.msg";
+import { ChatInput } from "./chat.input";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   Maximize,
   Minimize,
-  PanelLeftOpen,
-  PanelRightOpen,
   X,
 } from "lucide-react";
+import { useLocalStorage } from "../../../hooks/use.local.store";
+import { useChat } from "ai/react";
+import { BASE_API_ENDPOINT } from "../../../lib/utils";
 
-const BOT_RESPONSES = [
-  "Hello! How can I assist you today?",
-  "I'm here to help. What do you need?",
-  "Just a moment, I'm processing your request.",
-  "Thank you for your message. I'll get back to you soon.",
-  "I'm sorry, I didn't understand that. Could you please rephrase?",
-];
 
-export interface ChatMessage {
-  id: string;
-  content: string;
-  sender: "user" | "bot";
-  timestamp: Date;
-}
-
-export interface ChatWidgetProps {
-  sessionId: string;
-  documentId: string;
+export interface PrexoAiChatBotProps {
+  apiKey: string;
   onClose?: () => void;
-  onNewMessage?: (message: ChatMessage) => void;
   theme?: "light" | "dark";
-  title?: string;
+  user?: {
+    name: string | "Prexo Ai",
+    pfp: string | "https://raw.githubusercontent.com/plura-ai/prexo/refs/heads/main/apps/www/public/logo.png",
+    lastSeen: Date;
+  };
   placeholder?: string;
-  botName?: string;
   className?: string;
   width?: number | string;
   height?: number | string;
-  bubbleText?: string;
-  bubbleIcon?: string;
-  position?: "bottom-right" | "bottom-left" | "top-right" | "top-left";
+  position?: "bottom-right" | "bottom-left";
 }
 
-export const ChatWidget: React.FC<ChatWidgetProps> = ({
-  sessionId,
-  documentId,
+export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
+  apiKey,
   onClose,
-  onNewMessage,
-  theme = "light",
-  title = "Alex Zend",
+  user,
+  theme,
   placeholder = "Type your message...",
-  botName = "Assistant",
   className = "",
   width = 350,
   height = 500,
   position = "bottom-right",
 }) => {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [isTyping, setIsTyping] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useLocalStorage("@prexo-chat-bot-#isOpen", false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const [isMinimized, setIsMinimized] = useLocalStorage("@prexo-chat-bot-#isMinimized", false);
+
+  if(apiKey.length === 0) {
+    throw new Error("API key is required for PrexoAiChatBot to function properly");
+  }
+
+  const { messages, input, handleInputChange, handleSubmit, status} = useChat({
+    api: `${BASE_API_ENDPOINT}/ai/stream`,
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+    },
+  });
+
+  const isTyping = status === 'submitted';
 
   const scrollToBottom = useCallback(() => {
     if (messagesEndRef.current) {
@@ -77,54 +71,6 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
     scrollToBottom();
   }, [messages, isTyping, scrollToBottom]);
 
-  const generateBotResponse = useCallback(() => {
-    const randomResponse =
-      BOT_RESPONSES[Math.floor(Math.random() * BOT_RESPONSES.length)];
-    const botMessage: ChatMessage = {
-      id: `bot-${Date.now()}`,
-      content: randomResponse!,
-      sender: "bot",
-      timestamp: new Date(),
-    };
-
-    setMessages((prev) => [...prev, botMessage]);
-
-    // Only call onNewMessage if it exists
-    if (onNewMessage) {
-      onNewMessage(botMessage);
-    }
-  }, [onNewMessage]);
-
-  const handleSendMessage = useCallback(
-    (content: string) => {
-      const userMessage: ChatMessage = {
-        id: `user-${Date.now()}`,
-        content,
-        sender: "user",
-        timestamp: new Date(),
-      };
-
-      setMessages((prev) => [...prev, userMessage]);
-
-      // Only call onNewMessage if it exists
-      if (onNewMessage) {
-        onNewMessage(userMessage);
-      }
-
-      // Simulate bot typing and response
-      setIsTyping(true);
-      setTimeout(
-        () => {
-          setIsTyping(false);
-          setTimeout(() => {
-            generateBotResponse();
-          }, 200);
-        },
-        1000 + Math.random() * 2000,
-      );
-    },
-    [onNewMessage, generateBotResponse],
-  );
 
   const handleMinimize = () => {
     setIsMinimized(!isMinimized);
@@ -147,10 +93,6 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
     switch (position) {
       case "bottom-left":
         return "bottom-left";
-      case "top-right":
-        return "top-right";
-      case "top-left":
-        return "top-left";
       default:
         return "bottom-right";
     }
@@ -192,22 +134,38 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
       {/* Chat Widget */}
       {isOpen && (
         <div
-          className={`chat-widget ${theme} ${isMinimized ? "minimized" : ""} ${getPositionClasses()} ${className}`}
-          data-session-id={sessionId}
-          data-document-id={documentId}
+          className={`chat-widget ${theme} ${isMinimized ? "minimized" : ""} ${isOpen && position === 'bottom-right' ? "open right" : "open left"} ${!isOpen && "close"} ${getPositionClasses()} ${className}`}
           style={getWidgetStyle()}
         >
           <div className="chat-header">
-            <div className="chat-title">
+            {user ? (
+              <div className="chat-title">
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src={user.pfp} />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <div className="flex flex-col">
-                <span>{title}</span>
-                <div className="message-time">{formatTime(new Date())}</div>
+                <span>{user.name}</span>
+                <div className="message-time">Last seen {formatTime(user.lastSeen)}</div>
               </div>
             </div>
+            ) : (
+              <div className="chat-title">
+             <img
+                        src="https://raw.githubusercontent.com/plura-ai/prexo/refs/heads/main/apps/www/public/logo.png"
+                        className="w-9 h-9 rounded-lg object-cover invert"
+                        alt="Chat bot avatar"
+                        onError={(e) => {
+                          console.error("Failed to load image:", e);
+                          e.currentTarget.style.display = "none";
+                        }}
+                      />
+              <div className="flex flex-col">
+                <span>Prexo Ai</span>
+                <div className="message-time">Last seen {formatTime(new Date())}</div>
+              </div>
+            </div>
+            )}
             <div className="chat-controls">
               {/* <button
                 className="control-btn minimize-btn"
@@ -255,7 +213,7 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
                     </div>
                     <div className="message-content">
                       <div className="message-bubble">
-                        <p>Hello! I'm {botName}. How can I help you today?</p>
+                        <p>Hello! I'm Prexo Ai. How can I help you today?</p>
                       </div>
                     </div>
                   </div>
@@ -265,18 +223,19 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({
                   <Message
                     key={message.id}
                     message={message}
-                    botName={botName}
                   />
                 ))}
 
-                {isTyping && <TypingIndicator botName={botName} />}
+                {isTyping && <TypingIndicator />}
                 <div ref={messagesEndRef} />
               </div>
 
               <ChatInput
-                onSendMessage={handleSendMessage}
-                placeholder={placeholder}
-                disabled={isTyping}
+              input={input}
+              handleInputChange={handleInputChange}
+              handleSubmit={handleSubmit}
+              status={status}
+              placeholder={placeholder}
               />
             </>
           )}
