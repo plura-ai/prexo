@@ -7,6 +7,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build", "^db:generate"],
+      "env": [".env*"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
@@ -24,6 +25,7 @@
     },
     "dev": {
       "dependsOn": ["^db:generate"],
+      "env": [".env*"],
       "cache": false,
       "persistent": true
     }

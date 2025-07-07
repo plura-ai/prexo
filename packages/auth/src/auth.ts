@@ -71,7 +71,7 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     },
   },
-  baseURL: process.env.BETTER_AUTH_UR!,
+  baseURL: process.env.BETTER_AUTH_URL!,
   secret: process.env.BETTER_AUTH_SECRET!,
   user: {
     additionalFields: {
