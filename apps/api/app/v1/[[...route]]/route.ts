@@ -14,7 +14,7 @@ import aiSdk from "../routes/sdk/ai";
 export const runtime = "edge";
 const app = new Hono().basePath("/v1");
 
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = ["http://localhost:3000", "https://prexoai.xyz", "https://www.prexoai.xyz"];
 
 app.use(
   "*",

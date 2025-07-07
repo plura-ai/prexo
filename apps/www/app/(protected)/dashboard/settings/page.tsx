@@ -1,5 +1,11 @@
-import React from "react";
+"use client"; 
 
-export default function page() {
-  return <div>page</div>;
+import React from 'react'
+
+export default function Settings() {
+  return (
+    <div>
+      Settings
+    </div>
+  )
 }
