@@ -2,7 +2,7 @@
   "name": "prexo",
   "private": true,
   "scripts": {
-    "build": "turbo run db:push && turbo build",
+    "build": "turbo run db:generate && turbo build",
     "build:www": "turbo --filter=www build",
     "build:api": "turbo --filter=api build",
     "dev": "turbo run dev",
