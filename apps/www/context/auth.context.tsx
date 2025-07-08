@@ -12,17 +12,14 @@ import {
 
 interface AuthContextType {
   user: UserType | null;
-  userIP: string | null;
   loading: boolean;
   setUser: (user: UserType | null) => void;
-  setUserIP: (userIP: string | null) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserType | null>(null);
-  const [userIP, setUserIP] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const { myProfile, addMyProfile, removeMyProfile } = useMyProfileStore();
 
@@ -49,14 +46,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           }
           console.log("No user found in session.");
         }
-
-        if (session.data?.session) {
-          setUserIP(session.data.session.ipAddress!);
-          console.log("User IP fetched:", session.data.session.ipAddress);
-        } else {
-          setUserIP(null);
-          console.log("No user IP found in session.");
-        }
       } catch (error) {
         console.error("Error fetching user:", error);
       } finally {
@@ -67,7 +56,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [addMyProfile, myProfile, removeMyProfile]);
 
   return (
-    <AuthContext.Provider value={{ user, loading, setUser, userIP, setUserIP }}>
+    <AuthContext.Provider value={{ user, loading, setUser }}>
       {children}
     </AuthContext.Provider>
   );
