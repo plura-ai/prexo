@@ -154,6 +154,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar();
   const { myProfile } = useMyProfileStore();
 
+  if(!myProfile) return null;
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -169,7 +171,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter className="cursor-pointer">
-        <NavUser user={myProfile!} />
+        <NavUser user={myProfile} />
       </SidebarFooter>
     </Sidebar>
   );

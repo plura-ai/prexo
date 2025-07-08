@@ -13,16 +13,14 @@ export default function Page() {
   const router = useRouter();
 
   useEffect(() => {
-    // Prevent redirect and rendering if myProfile is null or undefined
     if (!myProfile) return;
     if (myProfile.role !== "onboarded") {
       router.replace(`/onboarding/${myProfile.id}`);
     }
   }, [myProfile, router]);
 
-  // If myProfile is null or undefined, don't render the dashboard
-  if (!myProfile) {
-    return null;
+  if (typeof window !== "undefined" && !myProfile) {
+    return null; 
   }
 
   return (
