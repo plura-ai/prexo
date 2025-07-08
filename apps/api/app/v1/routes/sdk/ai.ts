@@ -38,7 +38,7 @@ aiSdk.use(
         return c.text("unauthorized", 401);
       },
     },
-    2,3,60
+    3,3,60
   ),
 );
 
@@ -48,6 +48,7 @@ aiSdk.post("/stream", async (c) => {
   const result = streamText({
     model: togetherai("meta-llama/Llama-3.3-70B-Instruct-Turbo-Free"),
     messages: messages,
+    system: "Your name is Prexo Ai. And here is the context about RDS (Real Dev Squad): Real Dev Squad is a rag-tag team of professionals and students, learning and collaborating together. Built by Ankush Dharkar.",
     maxSteps: 5,
     onStepFinish: (step) => {
       console.log("Step finished:", step);

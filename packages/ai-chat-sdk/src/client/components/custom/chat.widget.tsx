@@ -13,11 +13,14 @@ import {
 } from "lucide-react";
 import { useLocalStorage } from "../../../hooks/use.local.store";
 import { useChat } from "ai/react";
-import { BASE_API_ENDPOINT } from "../../../lib/utils";
+import { BASE_API_ENDPOINT, cn } from "../../../lib/utils";
+import { SuggestedActions } from "./suggested.actions";
+import type { SuggestedActionsT } from "../../../../src/lib/types";
 
 
 export interface PrexoAiChatBotProps {
   apiKey: string;
+  suggestedActions?: SuggestedActionsT[];
   onClose?: () => void;
   theme?: "light" | "dark";
   user?: {
@@ -34,6 +37,7 @@ export interface PrexoAiChatBotProps {
 
 export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
   apiKey,
+  suggestedActions,
   onClose,
   user,
   theme,
@@ -52,7 +56,11 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
     throw new Error("API key is required for PrexoAiChatBot to function properly");
   }
 
-  const { messages, input, handleInputChange, handleSubmit, status} = useChat({
+  if( suggestedActions && suggestedActions.length > 3) {
+    throw new Error("You can only add max 3 suggested actions!")
+  }
+
+  const { messages, input, handleInputChange, handleSubmit, status, append} = useChat({
     api: `${BASE_API_ENDPOINT}/ai/stream`,
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -230,6 +238,11 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
                 <div ref={messagesEndRef} />
               </div>
 
+              {messages.length === 0 && suggestedActions && suggestedActions.length < 3 && (
+         <div className="message-content p-2">
+            <SuggestedActions append={append} suggestedActions={suggestedActions} />
+          </div>
+        )}
               <ChatInput
               input={input}
               handleInputChange={handleInputChange}
