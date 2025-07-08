@@ -1,12 +1,12 @@
 "use client";
 
 import { LoginForm } from "@/components/login-form";
-import { useMyProfileStore } from "@prexo/store";
+import { useAuth } from "@/context/auth.context";
 import { redirect } from "next/navigation";
 
 export default function LoginPage() {
-  const { myProfile } = useMyProfileStore();
-  if (myProfile) {
+  const { user } = useAuth();
+  if (user) {
     redirect("/dashboard");
   }
 

@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { MainNavbar } from "./main.nav";
 import { Icons } from "@/constants/icons";
 import { constants } from "@/constants";
@@ -13,6 +13,8 @@ import { useMyProfileStore } from "@prexo/store";
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const { myProfile } = useMyProfileStore();
+  const router = useRouter();
+
   let loginURL = "/auth";
   if (myProfile) {
     loginURL = myProfile.role === "onboarded" ? "/dashboard" : "/onboarding";
@@ -22,13 +24,13 @@ export function Navbar() {
     const down = (e: KeyboardEvent) => {
       if (e.key === "l" || e.key === "L") {
         e.preventDefault();
-        redirect(loginURL);
+        router.push(loginURL);
       }
     };
 
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
-  }, [loginURL]);
+  }, [loginURL, router]);
 
   return (
     <header className="fixed top-5 w-5/6 z-[500] border border-border/60 bg-secondary/30 backdrop-blur-lg supports-[backdrop-filter]:bg-secondary/50 dark:border-border rounded-2xl">
