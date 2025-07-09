@@ -80,6 +80,25 @@ export const onboardingToolsPrompt = `
   **Your goal is to finish onboarding efficiently and decisively using tools. Be proactive. Lead the process.**
 `;
 
+import type { Message } from "ai";
+
 export const systemPrompt = () => {
   return `${regularPrompt}\n\n${onboardingToolsPrompt}`;
 };
+
+type PromptParameters = {
+  chatHistory?: Message[];
+  question: string;
+  context?: string;
+};
+
+type Prompt = ({ question, chatHistory, context }: PromptParameters) => string;
+
+export const SDK_SYSTEM_PROMPT: Prompt = ({ context, question, chatHistory }) =>
+  `You are a concise AI assistant helping users on a website. Provide brief, clear answers in 1-2 sentences when possible.
+  
+  Context and chat history are provided to help you answer questions accurately. Only use information from these sources.
+  
+  ${context ? `Context: "${context}"\n` : ""}${chatHistory ? `Previous messages: "${chatHistory}"\n` : ""}
+  Question: "${question}"
+  Answer:`;

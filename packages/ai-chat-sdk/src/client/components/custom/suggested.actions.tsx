@@ -3,15 +3,19 @@
 import { memo } from "react";
 import type { UseChatHelpers } from "@ai-sdk/react";
 import { Button } from "../../components/ui/button";
-import type { SuggestedActionsT } from "../../../../src/lib/types";
+import type { BaseMessageHistory, SuggestedActionsT } from "../../../../src/lib/types";
 import { motion } from "framer-motion";
 
 interface SuggestedActionsProps {
   append: UseChatHelpers["append"];
   suggestedActions: SuggestedActionsT[];
+  sessionId?: string;
+  sessionTTL?: number;
+  history?: BaseMessageHistory;
 }
 
-function PureSuggestedActions({ append, suggestedActions }: SuggestedActionsProps) {
+function PureSuggestedActions({ append, suggestedActions, sessionId, sessionTTL, history }: SuggestedActionsProps) {
+
   return (
     <div
       data-testid="suggested-actions"
@@ -33,6 +37,18 @@ function PureSuggestedActions({ append, suggestedActions }: SuggestedActionsProp
                 role: "user",
                 content: suggestedAction.action,
               });
+              if(history){
+                await history.addMessage({
+                  message: {
+                    id: Date.now().toString(),
+                    role: "user",
+                    content: suggestedAction.action,
+                  },
+                  sessionId: sessionId!,
+                  sessionTTL: sessionTTL!
+                }
+                )
+              }
             }}
             className="text-left border rounded-xl px-3 py-2 text-sm gap-1 flex flex-col w-auto h-auto justify-start items-start cursor-pointer ml-auto
               "

@@ -6,7 +6,7 @@ import {
   streamText,
   ToolExecutionError,
 } from "ai";
-import { systemPrompt } from "@/lib/configs";
+import { systemPrompt } from "@/lib/constants";
 import { tools } from "@/lib/ai/tools";
 
 const ai = new Hono();

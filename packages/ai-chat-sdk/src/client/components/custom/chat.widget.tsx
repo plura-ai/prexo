@@ -13,14 +13,17 @@ import {
 } from "lucide-react";
 import { useLocalStorage } from "../../../hooks/use.local.store";
 import { useChat } from "ai/react";
-import { BASE_API_ENDPOINT, cn } from "../../../lib/utils";
+import { BASE_API_ENDPOINT } from "../../../lib/utils";
 import { SuggestedActions } from "./suggested.actions";
 import type { SuggestedActionsT } from "../../../../src/lib/types";
+import { getHistoryClient } from "../../../../src/history/client";
 
 
 export interface PrexoAiChatBotProps {
   apiKey: string;
   suggestedActions?: SuggestedActionsT[];
+  sessionId?: string;
+  sessionTTL?: number;
   onClose?: () => void;
   theme?: "light" | "dark";
   user?: {
@@ -33,11 +36,17 @@ export interface PrexoAiChatBotProps {
   width?: number | string;
   height?: number | string;
   position?: "bottom-right" | "bottom-left";
+  redis?: {
+    url: string,
+    token: string
+  }
 }
 
 export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
   apiKey,
   suggestedActions,
+  sessionId,
+  sessionTTL,
   onClose,
   user,
   theme,
@@ -46,11 +55,13 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
   width = 350,
   height = 500,
   position = "bottom-right",
+  redis
 }) => {
   const [isOpen, setIsOpen] = useLocalStorage("@prexo-chat-bot-#isOpen", false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [isMinimized, setIsMinimized] = useLocalStorage("@prexo-chat-bot-#isMinimized", false);
+  const history = getHistoryClient({redis});
 
   if(apiKey.length === 0) {
     throw new Error("API key is required for PrexoAiChatBot to function properly");
@@ -59,11 +70,39 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
   if( suggestedActions && suggestedActions.length > 3) {
     throw new Error("You can only add max 3 suggested actions!")
   }
-
+  
   const { messages, input, handleInputChange, handleSubmit, status, append} = useChat({
     api: `${BASE_API_ENDPOINT}/ai/stream`,
     headers: {
       Authorization: `Bearer ${apiKey}`,
+    },
+    body: async () => {
+      try {
+        const chatHistory = await history.getMessages({ sessionId: sessionId! });
+        console.log("Chat History:", chatHistory, "\n\n");
+        return {
+          history: chatHistory
+        };
+      } catch (error) {
+        console.error("Failed to fetch chat history:", error);
+        return {
+          history: []
+        };
+      }
+    },
+    async onFinish(message) {
+      await history.addMessage({
+        message: {
+          id: message.id,
+          role: message.role,
+          content: message.content
+        },
+        sessionId: sessionId!,
+        sessionTTL: sessionTTL!
+      })
+    },
+    onError(error) {
+        console.log("ERROR OCCURED: ", error)
     },
   });
 
@@ -240,7 +279,8 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
 
               {messages.length === 0 && suggestedActions && suggestedActions.length < 3 && (
          <div className="message-content p-2">
-            <SuggestedActions append={append} suggestedActions={suggestedActions} />
+            <SuggestedActions append={append} suggestedActions={suggestedActions} history={history} sessionId={sessionId!} 
+              sessionTTL={sessionTTL} />
           </div>
         )}
               <ChatInput
@@ -249,6 +289,9 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
               handleSubmit={handleSubmit}
               status={status}
               placeholder={placeholder}
+              sessionId={sessionId}
+              sessionTTL={sessionTTL}
+              history={history}
               />
             </>
           )}

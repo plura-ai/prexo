@@ -6,6 +6,9 @@
   "exports": {
     ".": {
       "import": "./src/client/index.ts"
+    },
+    "./history": {
+      "import": "./src/history/client.ts"
     }
   },
   "main": "./dist/client/index.js",

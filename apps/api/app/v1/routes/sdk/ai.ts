@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { unkey, UnkeyContext } from "@unkey/hono";
+import { UnkeyContext } from "@unkey/hono";
 import { createTogetherAI } from "@ai-sdk/togetherai";
 import {
   NoSuchToolError,
@@ -8,6 +8,8 @@ import {
   ToolExecutionError,
 } from "ai";
 import { verifyApiKey } from "@/lib/middleware";
+
+import { SDK_SYSTEM_PROMPT } from "@/lib/constants";
 
 const aiSdk = new Hono<{ Variables: { verifyApiKey: UnkeyContext } }>();
 
@@ -43,16 +45,23 @@ aiSdk.use(
 );
 
 aiSdk.post("/stream", async (c) => {
-  const { messages } = await c.req.json();
+  const { messages, history } = await c.req.json();
+  const userQuestion = messages[messages.length - 1]
+  console.log("Chat History:", history, "\n\n");
+  const sysPrompt = SDK_SYSTEM_PROMPT({
+    question: userQuestion.content,
+    chatHistory: history
+  });
+  console.log("PROMPT: ", sysPrompt)
 
   const result = streamText({
     model: togetherai("meta-llama/Llama-3.3-70B-Instruct-Turbo-Free"),
     messages: messages,
-    system: "Your name is Prexo Ai. And here is the context about RDS (Real Dev Squad): Real Dev Squad is a rag-tag team of professionals and students, learning and collaborating together. Built by Ankush Dharkar.",
+    system: sysPrompt,
     maxSteps: 5,
-    onStepFinish: (step) => {
-      console.log("Step finished:", step);
-    },
+    // onStepFinish: (step) => {
+    //   console.log("Step finished:", step);
+    // },
   });
 
   return result.toDataStreamResponse({

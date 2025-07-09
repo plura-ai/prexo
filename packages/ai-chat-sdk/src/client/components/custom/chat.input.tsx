@@ -1,7 +1,7 @@
 "use client";
-import type React from "react";
-import { useRef, type KeyboardEvent } from "react";
+import React, { useRef, type KeyboardEvent, memo } from "react";
 import type { UseChatHelpers } from "@ai-sdk/react";
+import type { BaseMessageHistory } from "../../../../src/lib/types";
 
 interface ChatInputProps {
   input: UseChatHelpers["input"];
@@ -9,26 +9,67 @@ interface ChatInputProps {
   handleSubmit: UseChatHelpers["handleSubmit"];
   handleInputChange: UseChatHelpers["handleInputChange"];
   placeholder: string;
+  sessionId?: string;
+  sessionTTL?: number
+  history?: BaseMessageHistory;
 }
 
-export const ChatInput: React.FC<ChatInputProps> = ({
+function ChatInputComponent({
   input,
   status,
   handleSubmit,
   handleInputChange,
   placeholder,
-}) => {
+  sessionId,
+  sessionTTL,
+  history
+}: ChatInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPress = async (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
+    try {
+      if (history) {
+        await history.addMessage({
+          message: {
+            id: Date.now().toString(),
+            role: "user",
+            content: input
+          },
+          sessionId: sessionId!,
+          sessionTTL: sessionTTL!
+        });
+      }
+    } catch (err) {
+      console.error("addMessage error:", err);
+    }
       handleSubmit(e);
     }
   };
 
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      if (history) {
+        await history.addMessage({
+          message: {
+            id: Date.now().toString(),
+            role: "user",
+            content: input
+          },
+          sessionId: sessionId!,
+          sessionTTL: sessionTTL!
+        });
+      }
+    } catch (err) {
+      console.error("addMessage error:", err);
+    }
+    handleSubmit(e);
+  };
+
   return (
-    <form className="chat-input" onSubmit={handleSubmit}>
+    <form className="chat-input" onSubmit={handleFormSubmit}>
       <div className="input-container">
         <input
           ref={inputRef}
@@ -52,7 +93,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         </button>
       </div>
       <a
-        href="https://prexo.ai"
+        href="https://prexoai.xyz"
         target="_blank"
         rel="noopener noreferrer"
         className="chat-input-watermark"
@@ -61,4 +102,6 @@ export const ChatInput: React.FC<ChatInputProps> = ({
       </a>
     </form>
   );
-};
+}
+
+export const ChatInput = memo(ChatInputComponent);

@@ -19,6 +19,9 @@ const suggestedActions = [
   },
 ];
 
+const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
+const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+
 export default function PublicLayout({ children }: PublicLayoutProps) {
   return (
     <div className="flex flex-col items-center w-full min-h-screen border-border/40 dark:border-border min-[1800px]:max-w-[1536px] min-[1800px]:border-x">
@@ -31,6 +34,10 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
                 apiKey={process.env.PREXO_API_KEY!}
                 suggestedActions={suggestedActions}
                 position="bottom-right"
+                sessionId="1234"
+                {...(redisUrl && redisToken
+                  && { redis: { url: redisUrl, token: redisToken } }
+                )}
               />
     </div>
   );
