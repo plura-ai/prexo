@@ -136,15 +136,15 @@ export function MainNavbar() {
         </Link>
 
         <Link
-          href="/contact"
+          href="/support"
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/contact")
+            pathname?.startsWith("/support")
               ? "text-foreground"
               : "text-foreground/60",
           )}
         >
-          Contact
+          Support
         </Link>
       </nav>
     </div>

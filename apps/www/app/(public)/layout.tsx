@@ -1,4 +1,4 @@
-import SiteFooter from "@/components/custom/site/footer/footer";
+import { SiteFooter } from "@/components/custom/site/footer/footer";
 import { Navbar } from "@/components/custom/site/navbar/navbar";
 import { PrexoAiChatBot } from "@prexo/ai-chat-sdk";
 
@@ -16,7 +16,7 @@ const suggestedActions = [
   {
     label: "What RDS even does?",
     action: "Hii, Prexo Ai. Tell me what RDS is.",
-  },
+  }
 ];
 
 const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
@@ -29,16 +29,16 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
       {children}
       <SiteFooter />
       <PrexoAiChatBot
-                width={380}
-                height={550}
-                apiKey={process.env.PREXO_API_KEY!}
-                suggestedActions={suggestedActions}
-                position="bottom-right"
-                sessionId="1234"
-                {...(redisUrl && redisToken
-                  && { redis: { url: redisUrl, token: redisToken } }
-                )}
-              />
+        width={380}
+        height={550}
+        apiKey={process.env.PREXO_API_KEY!}
+        suggestedActions={suggestedActions}
+        position="bottom-right"
+        sessionId="1234"
+        {...(redisUrl && redisToken
+          && { redis: { url: redisUrl, token: redisToken } }
+        )}
+      />
     </div>
   );
 }
