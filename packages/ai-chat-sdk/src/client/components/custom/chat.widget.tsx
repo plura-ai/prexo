@@ -1,6 +1,6 @@
 "use client";
 import type React from "react";
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import "../../styles/chat.widget.css";
 import { Message } from "./message";
 import { TypingIndicator } from "./typing.indicator";
@@ -17,6 +17,7 @@ import { BASE_API_ENDPOINT } from "../../../lib/utils";
 import { SuggestedActions } from "./suggested.actions";
 import type { SuggestedActionsT } from "../../../../src/lib/types";
 import { getHistoryClient } from "../../../../src/history/client";
+import type { Message as MessageT } from "ai";
 
 
 export interface PrexoAiChatBotProps {
@@ -58,10 +59,13 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
   redis
 }) => {
   const [isOpen, setIsOpen] = useLocalStorage("@prexo-chat-bot-#isOpen", false);
+  const [loading, setLoading] = useState(false);
+  const [convo, setConvo] = useState<MessageT[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [isMinimized, setIsMinimized] = useLocalStorage("@prexo-chat-bot-#isMinimized", false);
   const history = getHistoryClient({redis});
+  const [historyFetched, setHistoryFetched] = useState(false);
 
   if(apiKey.length === 0) {
     throw new Error("API key is required for PrexoAiChatBot to function properly");
@@ -70,25 +74,15 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
   if( suggestedActions && suggestedActions.length > 3) {
     throw new Error("You can only add max 3 suggested actions!")
   }
-  
+
   const { messages, input, handleInputChange, handleSubmit, status, append} = useChat({
     api: `${BASE_API_ENDPOINT}/ai/stream`,
     headers: {
       Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
     },
-    body: async () => {
-      try {
-        const chatHistory = await history.getMessages({ sessionId: sessionId! });
-        console.log("Chat History:", chatHistory, "\n\n");
-        return {
-          history: chatHistory
-        };
-      } catch (error) {
-        console.error("Failed to fetch chat history:", error);
-        return {
-          history: []
-        };
-      }
+    body: {
+      history: convo
     },
     async onFinish(message) {
       await history.addMessage({
@@ -105,6 +99,29 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
         console.log("ERROR OCCURED: ", error)
     },
   });
+
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        setLoading(true);
+        const chatHistory: MessageT[] = await history.getMessages({ sessionId: sessionId! });
+        if (chatHistory.length > 0) {
+          setConvo([]);
+          setConvo(chatHistory);
+        }
+        setHistoryFetched(true);
+      } catch (error) {
+        console.error("Error fetching chat history:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (input.length > 0 && convo.length === 0 && !historyFetched) {
+      fetchHistory();
+      console.log("History is set!")
+    }
+  }, [input]);
 
   const isTyping = status === 'submitted';
 
@@ -291,6 +308,7 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
               placeholder={placeholder}
               sessionId={sessionId}
               sessionTTL={sessionTTL}
+              isLoading={loading}
               history={history}
               />
             </>

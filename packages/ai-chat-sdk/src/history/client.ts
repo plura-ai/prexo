@@ -1,4 +1,4 @@
-
+"use client";
 import type { BaseMessageHistory } from "../lib/types";
 import { InMemoryHistory } from "./in-memory";
 import { InRedisHistory } from "./in-redis";
@@ -7,7 +7,7 @@ export type GetHistoryClientParams = {
   redis?: {
     url: string;
     token: string;
-  };
+  }
 };
 
 export const getHistoryClient = (
@@ -21,7 +21,7 @@ export const getHistoryClient = (
       config: {
         url: redisUrl,
         token: redisToken,
-      },
+      }
     });
   }
 

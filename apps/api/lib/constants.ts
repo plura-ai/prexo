@@ -99,6 +99,6 @@ export const SDK_SYSTEM_PROMPT: Prompt = ({ context, question, chatHistory }) =>
   
   Context and chat history are provided to help you answer questions accurately. Only use information from these sources.
   
-  ${context ? `Context: "${context}"\n` : ""}${chatHistory ? `Previous messages: "${chatHistory}"\n` : ""}
+  ${context ? `Context: "${context}"\n` : ""}${chatHistory ? `Previous messages:\n${chatHistory.map(m => `${m.role}: ${m.content}`).join('\n')}\n` : ""}
   Question: "${question}"
   Answer:`;

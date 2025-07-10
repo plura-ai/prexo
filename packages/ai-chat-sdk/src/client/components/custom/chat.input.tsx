@@ -11,6 +11,7 @@ interface ChatInputProps {
   placeholder: string;
   sessionId?: string;
   sessionTTL?: number
+  isLoading?: boolean;
   history?: BaseMessageHistory;
 }
 
@@ -22,6 +23,7 @@ function ChatInputComponent({
   placeholder,
   sessionId,
   sessionTTL,
+  isLoading,
   history
 }: ChatInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -83,7 +85,7 @@ function ChatInputComponent({
         />
         <button
           type="submit"
-          disabled={status === 'streaming'}
+          disabled={status === 'streaming' || isLoading}
           className="send-button"
           aria-label="Send message"
         >

@@ -51,19 +51,17 @@ export class InRedisHistory implements BaseMessageHistory {
     amount = DEFAULT_HISTORY_LENGTH,
     startIndex = 0,
   }: {
-    sessionId?: string;
+    sessionId: string;
     amount?: number;
     startIndex?: number;
   }): Promise<Message[]> {
     const sessionID = DEFAULT_CHAT_SESSION_ID(sessionId)
-    console.log("session: ", sessionID)
     const endIndex = startIndex + amount - 1;
     const messages = await this.client.lrange<Message>(
       sessionID,
       startIndex,
       endIndex,
     );
-    console.log(messages)
     return messages.reverse();
   }
 }

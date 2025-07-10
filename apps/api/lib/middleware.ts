@@ -8,7 +8,7 @@ export function verifyApiKey(
   config: UnkeyConfig,
   cost?: number,
   requests?: number,
-  timeFrame?: number,
+  timeFrame?: number
 ): MiddlewareHandler {
   return async (c, next) => {
     const key = config.getKey
@@ -20,7 +20,10 @@ export function verifyApiKey(
     if (typeof key !== "string") {
       return key;
     }
-    const dynamicCost = computeCost(key, timeFrame ?? 60, requests ?? 10000, cost ?? 0)
+    if(!config.tags) {
+      return c.json({ error: "tags needed!" }, { status: 401 });
+    }
+    const dynamicCost = computeCost(key, config?.tags[0], timeFrame ?? 60, requests ?? 10000, cost ?? 0)
     console.info("THIS REQS COSTS:", dynamicCost)
     const res = await verifyApi(key, config.tags, dynamicCost);
 

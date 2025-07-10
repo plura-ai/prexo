@@ -47,12 +47,10 @@ aiSdk.use(
 aiSdk.post("/stream", async (c) => {
   const { messages, history } = await c.req.json();
   const userQuestion = messages[messages.length - 1]
-  console.log("Chat History:", history, "\n\n");
   const sysPrompt = SDK_SYSTEM_PROMPT({
     question: userQuestion.content,
     chatHistory: history
   });
-  console.log("PROMPT: ", sysPrompt)
 
   const result = streamText({
     model: togetherai("meta-llama/Llama-3.3-70B-Instruct-Turbo-Free"),

@@ -31,7 +31,7 @@ const searchSimilarDocs = async (data: string, topK: number) => {
   return results;
 };
 
-const history = getHistoryClient({redis});;
+const history = getHistoryClient();;
 
 export const serverChat = async ({
   messages,
