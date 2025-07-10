@@ -121,6 +121,7 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
       fetchHistory();
       console.log("History is set!")
     }
+    console.log("CHAT HISTORY: ",  convo)
   }, [input]);
 
   const isTyping = status === 'submitted';
@@ -140,9 +141,9 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
     setIsMinimized(!isMinimized);
   };
 
-  const handleClose = () => {
+  const handleClose = async () => {
+    await history.deleteMessages({sessionId: sessionId!});
     setIsOpen(false);
-    // Only call onClose if it exists
     if (onClose) {
       onClose();
     }

@@ -5,36 +5,60 @@ import {
 } from "../lib/constants";
 import type { BaseMessageHistory } from "../lib/types";
 
-declare global {
-  var store: Record<string, { messages: Message[] }>;
+function getSessionKey(sessionId: string) {
+  return DEFAULT_CHAT_SESSION_ID(sessionId);
 }
-export class InMemoryHistory implements BaseMessageHistory {
-  constructor() {
-    if (!global.store) global.store = {};
+
+function isLocalStorageAvailable() {
+  try {
+    return (
+      typeof window !== "undefined" &&
+      typeof window.localStorage !== "undefined"
+    );
+  } catch {
+    return false;
   }
+}
+
+function handleStorageError(error: unknown, context: string) {
+  console.warn(`[InMemoryHistory] ${context}:`, error);
+}
+
+export class InMemoryHistory implements BaseMessageHistory {
+  constructor() {}
 
   async addMessage(params: {
     message: Message;
     sessionId: string;
     sessionTTL?: number;
   }): Promise<void> {
-    const { message, sessionId} = params;
-    const sessionID = DEFAULT_CHAT_SESSION_ID(sessionId)
-
-    if (!global.store[sessionID]) {
-      global.store[sessionID] = { messages: [] };
+    if (!isLocalStorageAvailable()) {
+      handleStorageError("localStorage not available", "addMessage");
+      return;
     }
-
-    const oldMessages = global.store[sessionID].messages || [];
-    const newMessages = [message, ...oldMessages];
-    global.store[sessionID].messages = newMessages;
+    const { message, sessionId } = params;
+    const sessionKey = getSessionKey(sessionId);
+    try {
+      const item = window.localStorage.getItem(sessionKey);
+      const oldMessages: Message[] = item ? JSON.parse(item) : [];
+      const newMessages = [message, ...oldMessages];
+      window.localStorage.setItem(sessionKey, JSON.stringify(newMessages));
+    } catch (error) {
+      handleStorageError(error, "addMessage");
+    }
   }
 
   async deleteMessages({ sessionId }: { sessionId: string }): Promise<void> {
-    if (!global.store[sessionId]) {
+    if (!isLocalStorageAvailable()) {
+      handleStorageError("localStorage not available", "deleteMessages");
       return;
     }
-    global.store[sessionId].messages = [];
+    const sessionKey = getSessionKey(sessionId);
+    try {
+      window.localStorage.setItem(sessionKey, JSON.stringify([]));
+    } catch (error) {
+      handleStorageError(error, "deleteMessages");
+    }
   }
 
   async getMessages({
@@ -46,14 +70,19 @@ export class InMemoryHistory implements BaseMessageHistory {
     amount?: number;
     startIndex?: number;
   }): Promise<Message[]> {
-    const sessionID = DEFAULT_CHAT_SESSION_ID(sessionId)
-
-    if (!global.store[sessionID]) {
-      global.store[sessionID] = { messages: [] };
+    if (!isLocalStorageAvailable()) {
+      handleStorageError("localStorage not available", "getMessages");
+      return [];
     }
-
-    const messages = global.store[sessionID]?.messages ?? [];
-    const slicedMessages = messages.slice(startIndex, startIndex + amount);
-    return slicedMessages.reverse();
+    const sessionKey = getSessionKey(sessionId || "");
+    try {
+      const item = window.localStorage.getItem(sessionKey);
+      const messages: Message[] = item ? JSON.parse(item) : [];
+      const slicedMessages = messages.slice(startIndex, startIndex + amount);
+      return slicedMessages.reverse();
+    } catch (error) {
+      handleStorageError(error, "getMessages");
+      return [];
+    }
   }
 }
