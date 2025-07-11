@@ -15,9 +15,10 @@ import { useLocalStorage } from "../../../hooks/use.local.store";
 import { useChat } from "ai/react";
 import { BASE_API_ENDPOINT } from "../../../lib/utils";
 import { SuggestedActions } from "./suggested.actions";
-import type { SuggestedActionsT } from "../../../../src/lib/types";
-import { getHistoryClient } from "../../../../src/history/client";
+import type { SuggestedActionsT, VectorContextResult } from "../../../../src/lib/types";
+import { getHistoryClient } from "../../../services/history/client";
 import type { Message as MessageT } from "ai";
+import { getContextClient } from "../../../services/context/client";
 
 
 export interface PrexoAiChatBotProps {
@@ -61,11 +62,14 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
   const [isOpen, setIsOpen] = useLocalStorage("@prexo-chat-bot-#isOpen", false);
   const [loading, setLoading] = useState(false);
   const [convo, setConvo] = useState<MessageT[]>([]);
+  const [cntxt, setCntxt] = useState<VectorContextResult[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [isMinimized, setIsMinimized] = useLocalStorage("@prexo-chat-bot-#isMinimized", false);
   const history = getHistoryClient({redis});
+  const context = getContextClient({namespace: "1234"})
   const [historyFetched, setHistoryFetched] = useState(false);
+  const [contextFetched, setContextFetched] = useState(false);
 
   if(apiKey.length === 0) {
     throw new Error("API key is required for PrexoAiChatBot to function properly");
@@ -117,11 +121,36 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
       }
     };
 
-    if (input.length > 0 && convo.length === 0 && !historyFetched) {
-      fetchHistory();
-      console.log("History is set!")
+    const fetchContext = async () => {
+      try {
+        setLoading(true);
+        const contextResults = await context.getContext({ question: messages[messages.length - 1]?.content! });
+        if (cntxt.length > 0) {
+          setCntxt([]);
+          setCntxt(contextResults);
+        }
+        setContextFetched(true);
+      } catch (error) {
+        console.error("Error fetching context:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (
+      input.length > 0 &&
+      convo.length === 0 &&
+      !historyFetched &&
+      cntxt.length === 0 &&
+      !contextFetched
+    ) {
+      // Run both in parallel
+      Promise.all([fetchHistory(), fetchContext()]).then(() => {
+        console.log("History and Context are set!");
+      });
     }
-    console.log("CHAT HISTORY: ",  convo)
+
+    console.log("YOUR CONTEXT: ", cntxt);
   }, [input]);
 
   const isTyping = status === 'submitted';

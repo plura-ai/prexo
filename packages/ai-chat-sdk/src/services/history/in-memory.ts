@@ -2,8 +2,8 @@ import type { Message } from "ai";
 import {
   DEFAULT_CHAT_SESSION_ID,
   DEFAULT_HISTORY_LENGTH,
-} from "../lib/constants";
-import type { BaseMessageHistory } from "../lib/types";
+} from "../../lib/constants";
+import type { BaseMessageHistory } from "../../lib/types";
 
 function getSessionKey(sessionId: string) {
   return DEFAULT_CHAT_SESSION_ID(sessionId);
