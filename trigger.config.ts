@@ -5,7 +5,7 @@ export default defineConfig({
   project: "proj_zqfxzidlrnyrsvmyknsn",
   build: {
     extensions: [
-      additionalPackages({ packages: ["papaparse", "fs", "path", "pdf-parse", "puppeteer"] }),
+      additionalPackages({ packages: ["papaparse", "fs", "path", "puppeteer"] }),
       additionalFiles({ files: ["triggers/lib/extract-text.ts"] }),
     ],
   },

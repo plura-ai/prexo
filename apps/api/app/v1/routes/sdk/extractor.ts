@@ -4,7 +4,7 @@ import { tasks, runs } from "@trigger.dev/sdk/v3";
 import { textExtractor } from "../../../../../../triggers/extractor";
 const extractor = new Hono();
 
-export const maxDuration = 30;
+export const maxDuration = 60;
 
 extractor.use(
   "*",
@@ -43,6 +43,12 @@ extractor.post("/", async (c) => {
         status: "ok",
         output: run.output,
       });
+    }
+    if(run.error) {
+        return c.json({
+            status: run.error.name,
+            message: run.error.message,
+          });
     }
   }
   // If no output was found, return an error
