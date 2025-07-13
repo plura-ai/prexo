@@ -9,7 +9,7 @@ import {
 } from "ai";
 import { verifyApiKey } from "@/lib/middleware";
 
-import { SDK_SYSTEM_PROMPT } from "@/lib/constants";
+import { BodyParameters, SDK_RAG_SYSTEM_PROMPT, SDK_SYSTEM_PROMPT } from "@/lib/constants";
 
 const aiSdk = new Hono<{ Variables: { verifyApiKey: UnkeyContext } }>();
 
@@ -45,12 +45,20 @@ aiSdk.use(
 );
 
 aiSdk.post("/stream", async (c) => {
-  const { messages, history } = await c.req.json();
+  const { messages, history, context, RAGDisabled }: BodyParameters = await c.req.json();
   const userQuestion = messages[messages.length - 1]
-  const sysPrompt = SDK_SYSTEM_PROMPT({
+
+  const sysPrompt = RAGDisabled ? SDK_SYSTEM_PROMPT({
     question: userQuestion.content,
-    chatHistory: history
-  });
+    chatHistory: history,
+  }) : SDK_RAG_SYSTEM_PROMPT({
+    question: userQuestion.content,
+    chatHistory: history,
+    context: context
+  })
+  ;
+
+  console.log(sysPrompt);
 
   const result = streamText({
     model: togetherai("meta-llama/Llama-3.3-70B-Instruct-Turbo-Free"),
@@ -68,6 +76,18 @@ aiSdk.post("/stream", async (c) => {
       "Content-Encoding": "none",
     },
     getErrorMessage: (error) => {
+      if (error == null) {
+        return 'unknown error';
+      }
+
+      if (typeof error === 'string') {
+        return error;
+      }
+
+      if (error instanceof Error) {
+        return error.message;
+      }
+
       if (NoSuchToolError.isInstance(error)) {
         return "The model tried to call a unknown tool.";
       } else if (InvalidToolArgumentsError.isInstance(error)) {

@@ -12,7 +12,7 @@ import {
   X,
 } from "lucide-react";
 import { useLocalStorage } from "../../../hooks/use.local.store";
-import { useChat } from "ai/react";
+import { useChat, type UseChatHelpers } from "ai/react";
 import { BASE_API_ENDPOINT } from "../../../lib/utils";
 import { SuggestedActions } from "./suggested.actions";
 import type { SuggestedActionsT, VectorContextResult } from "../../../../src/lib/types";
@@ -42,6 +42,17 @@ export interface PrexoAiChatBotProps {
     url: string,
     token: string
   }
+  vector?: {
+    url: string,
+    token: string,
+    namespace: string
+  }
+  RAGDisabled?: boolean
+}
+
+// Helper to combine context data
+function combineContextData(contextArr: VectorContextResult[]): string {
+  return contextArr.map(obj => obj.data).join("\n");
 }
 
 export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
@@ -57,36 +68,42 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
   width = 350,
   height = 500,
   position = "bottom-right",
-  redis
+  redis,
+  vector,
+  RAGDisabled = false,
 }) => {
+  // State and refs
   const [isOpen, setIsOpen] = useLocalStorage("@prexo-chat-bot-#isOpen", false);
   const [loading, setLoading] = useState(false);
   const [convo, setConvo] = useState<MessageT[]>([]);
-  const [cntxt, setCntxt] = useState<VectorContextResult[]>([]);
+  const [cntxt, setCntxt] = useLocalStorage<VectorContextResult[]>("@prexo-chat-bot-#cntxt", []);
+  const [cleanCntxt, setCleanCntxt] = useLocalStorage<string>("@prexo-chat-bot-#cleanCntxt", "");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [isMinimized, setIsMinimized] = useLocalStorage("@prexo-chat-bot-#isMinimized", false);
   const history = getHistoryClient({redis});
-  const context = getContextClient({namespace: "1234"})
+  const context = getContextClient({vector});
   const [historyFetched, setHistoryFetched] = useState(false);
-  const [contextFetched, setContextFetched] = useState(false);
 
+  // Error checks
   if(apiKey.length === 0) {
     throw new Error("API key is required for PrexoAiChatBot to function properly");
   }
-
-  if( suggestedActions && suggestedActions.length > 3) {
+  if(suggestedActions && suggestedActions.length > 3) {
     throw new Error("You can only add max 3 suggested actions!")
   }
 
-  const { messages, input, handleInputChange, handleSubmit, status, append} = useChat({
+  // useChat hook
+  const { messages, input, handleInputChange, status, append: realAppend, setInput } = useChat({
     api: `${BASE_API_ENDPOINT}/ai/stream`,
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
     body: {
-      history: convo
+      history: convo,
+      context: cleanCntxt, // always use the latest context
+      RAGDisabled: RAGDisabled,
     },
     async onFinish(message) {
       await history.addMessage({
@@ -100,10 +117,76 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
       })
     },
     onError(error) {
-        console.log("ERROR OCCURED: ", error)
+      console.log("ERROR OCCURED: ", error)
     },
   });
 
+  // Unified append function for all user messages
+  const customAppend: UseChatHelpers["append"] = async (message) => {
+    setLoading(true);
+    let combinedContext = "";
+    if (context && !RAGDisabled) {
+      const contextResults = await context.getContext({ question: message.content });
+      if (contextResults.length > 0) {
+        combinedContext = combineContextData(contextResults);
+        setCntxt(contextResults); // for UI
+        setCleanCntxt(combinedContext); // persist in localStorage
+      }
+    }
+    setLoading(false);
+    return realAppend(
+      {
+        id: message.id,
+        role: message.role,
+        content: message.content,
+      },
+      {
+        body: {
+          history: convo,
+          context: combinedContext, // always use the latest context
+          RAGDisabled: RAGDisabled,
+        },
+      }
+    );
+  };
+
+  // Handler for manual input submit
+  const handleCustomSubmit: UseChatHelpers["handleSubmit"] = async (event) => {
+    event?.preventDefault?.();
+    setLoading(true);
+    await customAppend({
+      id: Date.now().toString(),
+      role: "user",
+      content: input,
+    });
+    setLoading(false);
+  };
+
+  // Handler for suggested actions
+  const handleSuggestedAction = async (content: string) => {
+    setLoading(true);
+    await customAppend({
+      id: Date.now().toString(),
+      role: "user",
+      content,
+    });
+    setLoading(false);
+    setInput("");
+  };
+
+  // Clear input after message is submitted
+  useEffect(() => {
+    if (status === "submitted") {
+      setInput("");
+    }
+    if(RAGDisabled && cntxt.length > 0 && cleanCntxt.length > 0) {
+      setCleanCntxt("")
+      setCntxt([])
+    }
+  }, [status, setInput, RAGDisabled, setCleanCntxt, setCntxt, cntxt, cleanCntxt]);
+
+
+  // Fetch chat history if needed
   useEffect(() => {
     const fetchHistory = async () => {
       try {
@@ -120,56 +203,33 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
         setLoading(false);
       }
     };
-
-    const fetchContext = async () => {
-      try {
-        setLoading(true);
-        const contextResults = await context.getContext({ question: messages[messages.length - 1]?.content! });
-        if (cntxt.length > 0) {
-          setCntxt([]);
-          setCntxt(contextResults);
-        }
-        setContextFetched(true);
-      } catch (error) {
-        console.error("Error fetching context:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (
       input.length > 0 &&
       convo.length === 0 &&
-      !historyFetched &&
-      cntxt.length === 0 &&
-      !contextFetched
+      !historyFetched
     ) {
-      // Run both in parallel
-      Promise.all([fetchHistory(), fetchContext()]).then(() => {
-        console.log("History and Context are set!");
+      fetchHistory().then(() => {
+        console.log("History is set!");
       });
     }
-
-    console.log("YOUR CONTEXT: ", cntxt);
   }, [input]);
 
   const isTyping = status === 'submitted';
 
+  // Scroll to bottom on new messages
   const scrollToBottom = useCallback(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, []);
-
   useEffect(() => {
     scrollToBottom();
   }, [messages, isTyping, scrollToBottom]);
 
-
+  // Widget controls
   const handleMinimize = () => {
     setIsMinimized(!isMinimized);
   };
-
   const handleClose = async () => {
     await history.deleteMessages({sessionId: sessionId!});
     setIsOpen(false);
@@ -177,12 +237,12 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
       onClose();
     }
   };
-
   const handleOpen = () => {
     setIsOpen(true);
     setIsMinimized(false);
   };
 
+  // UI helpers
   const getPositionClasses = () => {
     switch (position) {
       case "bottom-left":
@@ -191,7 +251,6 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
         return "bottom-right";
     }
   };
-
   const getWidgetStyle = () => {
     return {
       width: typeof width === "number" ? `${width}px` : width,
@@ -234,40 +293,33 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
           <div className="chat-header">
             {user ? (
               <div className="chat-title">
-              <Avatar>
-                <AvatarImage src={user.pfp} />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <div className="flex flex-col">
-                <span>{user.name}</span>
-                <div className="message-time">Last seen {formatTime(user.lastSeen)}</div>
+                <Avatar>
+                  <AvatarImage src={user.pfp} />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col">
+                  <span>{user.name}</span>
+                  <div className="message-time">Last seen {formatTime(user.lastSeen)}</div>
+                </div>
               </div>
-            </div>
             ) : (
               <div className="chat-title">
-             <img
-                        src="https://raw.githubusercontent.com/plura-ai/prexo/refs/heads/main/apps/www/public/logo.png"
-                        className="w-9 h-9 rounded-lg object-cover invert"
-                        alt="Chat bot avatar"
-                        onError={(e) => {
-                          console.error("Failed to load image:", e);
-                          e.currentTarget.style.display = "none";
-                        }}
-                      />
-              <div className="flex flex-col">
-                <span>Prexo Ai</span>
-                <div className="message-time">Last seen {formatTime(new Date())}</div>
+                <img
+                  src="https://raw.githubusercontent.com/plura-ai/prexo/refs/heads/main/apps/www/public/logo.png"
+                  className="w-9 h-9 rounded-lg object-cover invert"
+                  alt="Chat bot avatar"
+                  onError={(e) => {
+                    console.error("Failed to load image:", e);
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
+                <div className="flex flex-col">
+                  <span>Prexo Ai</span>
+                  <div className="message-time">Last seen {formatTime(new Date())}</div>
+                </div>
               </div>
-            </div>
             )}
             <div className="chat-controls">
-              {/* <button
-                className="control-btn minimize-btn"
-                onClick={handleMinimize}
-                aria-label={isMinimized ? "Expand width" : "Minimize width"}
-              >
-                {isMinimized ? <PanelRightOpen className="size-4" /> : <PanelLeftOpen className="size-4" />}
-              </button> */}
               <button
                 className="control-btn minimize-btn"
                 onClick={handleMinimize}
@@ -325,21 +377,21 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
               </div>
 
               {messages.length === 0 && suggestedActions && suggestedActions.length < 3 && (
-         <div className="message-content p-2">
-            <SuggestedActions append={append} suggestedActions={suggestedActions} history={history} sessionId={sessionId!} 
-              sessionTTL={sessionTTL} />
-          </div>
-        )}
+                <div className="message-content p-2">
+                  <SuggestedActions append={handleSuggestedAction} suggestedActions={suggestedActions} history={history} sessionId={sessionId!} 
+                    sessionTTL={sessionTTL} />
+                </div>
+              )}
               <ChatInput
-              input={input}
-              handleInputChange={handleInputChange}
-              handleSubmit={handleSubmit}
-              status={status}
-              placeholder={placeholder}
-              sessionId={sessionId}
-              sessionTTL={sessionTTL}
-              isLoading={loading}
-              history={history}
+                input={input}
+                handleInputChange={handleInputChange}
+                handleSubmit={handleCustomSubmit}
+                status={status}
+                placeholder={placeholder}
+                sessionId={sessionId}
+                sessionTTL={sessionTTL}
+                isLoading={loading}
+                history={history}
               />
             </>
           )}

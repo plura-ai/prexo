@@ -86,19 +86,50 @@ export const systemPrompt = () => {
   return `${regularPrompt}\n\n${onboardingToolsPrompt}`;
 };
 
-type PromptParameters = {
+type SysPromptParameters = {
+  chatHistory?: Message[];
+  question: string;
+};
+
+type SysRagPromptParameters = {
   chatHistory?: Message[];
   question: string;
   context?: string;
 };
 
-type Prompt = ({ question, chatHistory, context }: PromptParameters) => string;
+export type BodyParameters = {
+  messages: Message[];
+  history?: Message[];
+  context?: string;
+  RAGDisabled?: boolean;
+};
 
-export const SDK_SYSTEM_PROMPT: Prompt = ({ context, question, chatHistory }) =>
-  `You are a concise AI assistant helping users on a website. Provide brief, clear answers in 1-2 sentences when possible.
-  
-  Context and chat history are provided to help you answer questions accurately. Only use information from these sources.
-  
-  ${context ? `Context: "${context}"\n` : ""}${chatHistory ? `Previous messages:\n${chatHistory.map(m => `${m.role}: ${m.content}`).join('\n')}\n` : ""}
-  Question: "${question}"
-  Answer:`;
+type SysPrompt = ({ question, chatHistory }: SysPromptParameters) => string;
+type SysRagPrompt = ({ question, chatHistory, context }: SysRagPromptParameters) => string;
+
+export const SDK_SYSTEM_PROMPT: SysPrompt = ({ question, chatHistory }) =>
+  `You are Prexo Ai, a friendly AI assistant.
+  To help you answer the questions, a chat history will be provided.
+  Answer the question at the end. Keep your answers concise, clear, and free of jargon.
+  -------------
+  Chat history:
+  ${chatHistory && chatHistory.length > 0 ? `${chatHistory.map(m => `${m.role}: ${m.content}`).join('\n')}\n` : "Not found, It is empty!"}
+  -------------
+  Question: ${question}
+  Helpful answer:`;
+
+export const SDK_RAG_SYSTEM_PROMPT: SysRagPrompt = ({ context, question, chatHistory }) =>
+    `You are Prexo Ai, a friendly AI assistant enhanced with Upstash Vector Store.
+    To help you answer questions, you will be provided with context and/or chat history.
+    Use only the information available in the context or chat history either is acceptable to answer the question at the end. Keep your answers concise, clear, and free of jargon.
+
+    -------------
+    Chat history:
+    ${chatHistory && chatHistory.length > 0 ? `${chatHistory.map(m => `${m.role}: ${m.content}`).join('\n')}\n` : "Not found, It is empty!"}
+    -------------
+    Context:
+    ${context && context.length > 0 ? `"${context}"\n` : "Not found, It is empty!"}
+    -------------
+
+    Question: ${question}
+    Helpful answer:`

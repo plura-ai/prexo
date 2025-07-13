@@ -9,18 +9,18 @@ interface PublicLayoutProps {
 
 const suggestedActions = [
   {
-    label: "What is Real Dev Squad?",
+    label: "What is the context?",
     action:
-      "I would like to know more about RDS.",
-  },
-  {
-    label: "What RDS even does?",
-    action: "Hii, Prexo Ai. Tell me what RDS is.",
-  },
+      "I would like to know about what context you have.",
+  }
 ];
 
 const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
 const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+const vectorUrl = process.env.UPSTASH_VECTOR_REST_URL;
+const vectorToken = process.env.UPSTASH_VECTOR_REST_TOKEN;
+const namespace = "saidev"
 
 export default function PublicLayout({ children }: PublicLayoutProps) {
   return (
@@ -37,6 +37,9 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
                 sessionId="1234"
                 {...(redisUrl && redisToken
                   && { redis: { url: redisUrl, token: redisToken } }
+                )}
+                {...(vectorUrl && vectorToken && namespace
+                  && { vector: { url: vectorUrl, token: vectorToken, namespace } }
                 )}
               />
     </div>

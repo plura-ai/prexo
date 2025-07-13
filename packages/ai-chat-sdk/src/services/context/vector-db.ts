@@ -2,7 +2,6 @@ import type { AddContextPayload, ResetOptions, SaveOperationResult, VectorPayloa
 import { DEFAULT_SIMILARITY_THRESHOLD, DEFAULT_TOP_K } from "../../lib/constants";
 import type { Index } from "@upstash/vector";
 import { nanoid } from "nanoid";
-import { extractText } from "../../lib/extract-text";
 
 // Helper function to chunk text
 function chunkText(text: string, chunkSize = 500, overlap = 50): string[] {
@@ -18,7 +17,7 @@ export class VectorDB {
     constructor(index: Index) {
       this.index = index;
     }
-  
+
     async reset(options?: ResetOptions) {
       await this.index.reset({ namespace: options?.namespace });
     }
@@ -53,6 +52,7 @@ export class VectorDB {
         },
         { namespace }
       );
+      // console.log("Vector Retrive: ", result)
       const allValuesUndefined = result.every((embedding) => embedding.data === undefined);
   
       if (allValuesUndefined) {
@@ -131,14 +131,25 @@ export class VectorDB {
           }
 
           // extractText should return a string (the extracted text)
-          const extractedText = await extractText(fileSource);
+          const response = await fetch("http://localhost:3001/v1/sdk/extractor", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${process.env.PREXO_API_KEY!}`,
+            },
+            body: JSON.stringify({ url: fileSource }),
+          });
+          if (!response.ok) {
+            throw new Error(`Failed to extract text: ${response.status} ${response.statusText}`);
+          }
+          const res = await response.json();
 
           // chunk the extracted text
           const transformArgs = "config" in input ? input.config : {};
           // If transformArgs has chunkSize/overlap, use them, else default
           const chunkSize = (transformArgs && (transformArgs as any).chunkSize) || 500;
-          const overlap = (transformArgs && (transformArgs as any).overlap) || 50;
-          const chunks = chunkText(extractedText, chunkSize, overlap);
+          const overlap = (transformArgs && (transformArgs as any).overlap) || 100;
+          const chunks = chunkText(res.output.txt, chunkSize, overlap);
 
           // upsert each chunk
           const ids: string[] = [];

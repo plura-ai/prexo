@@ -1,8 +1,5 @@
 import type { Message } from "ai";
 import type { QueryMode } from "@upstash/vector";
-import type { WebBaseLoaderParams } from "@langchain/community/document_loaders/web/cheerio";
-import type { RecursiveCharacterTextSplitterParams } from "langchain/text_splitter";
-import type { UnstructuredLoaderOptions } from "@langchain/community/document_loaders/fs/unstructured";
 
 export type VectorPayload = {
   question: string | number[];
@@ -13,10 +10,6 @@ export type VectorPayload = {
   queryMode?: QueryMode;
 };
 
-export type ProcessorType = {
-  name: "unstructured";
-  options: UnstructuredLoaderOptions;
-};
 
 export type FilePath = string;
 export type URL = string;
@@ -43,40 +36,32 @@ export type DatasWithFileSource =
       type?: "pdf" | "csv" | "text-file" | "html";
       fileSource: FilePath;
       options?: AddContextOptions;
-      processor: ProcessorType;
     }
   | {
       type: "pdf";
       fileSource: FilePath | Blob;
       options?: AddContextOptions;
-      config?: Partial<RecursiveCharacterTextSplitterParams>;
-      pdfConfig?: { parsedItemSeparator?: string; splitPages?: boolean };
     }
   | {
       type: "csv";
       fileSource: FilePath | Blob;
       options?: AddContextOptions;
-      csvConfig?: { column?: string; separator?: string };
     }
   | {
       type: "text-file";
       fileSource: FilePath | Blob;
       options?: AddContextOptions;
-      config?: Partial<RecursiveCharacterTextSplitterParams>;
     }
   | (
       | {
           type: "html";
           source: URL;
-          htmlConfig?: WebBaseLoaderParams;
           options?: AddContextOptions;
-          config: Partial<RecursiveCharacterTextSplitterParams>;
         }
       | {
           type: "html";
           source: FilePath | Blob;
           options?: AddContextOptions;
-          config?: Partial<RecursiveCharacterTextSplitterParams>;
         }
     );
 

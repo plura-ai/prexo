@@ -31,7 +31,7 @@ export class ExtVector {
     await this.vectorDB.delete({ ids, namespace: this.namespace });
   }
 
-  async getContext<TMetadata = any>(payload: Omit<VectorPayload, "namespace">): Promise<{ data: string; id: string; metadata: TMetadata }[]> {
+  async getContext<TMetadata>(payload: Omit<VectorPayload, "namespace">): Promise<{ data: string; id: string; metadata: TMetadata }[]> {
     return this.vectorDB.retrieve<TMetadata>({ ...payload, namespace: this.namespace });
   }
 
