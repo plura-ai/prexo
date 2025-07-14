@@ -8,7 +8,10 @@
       "import": "./src/client/index.ts"
     },
     "./history": {
-      "import": "./src/history/client.ts"
+      "import": "./src/services/history/client.ts"
+    },
+    "./context": {
+      "import": "./src/services/context/client.ts"
     }
   },
   "main": "./dist/client/index.js",
@@ -26,6 +29,8 @@
   "license": "MIT",
   "devDependencies": {
     "@types/bun": "latest",
+    "@types/papaparse": "^5.3.16",
+    "@types/pdf-parse": "^1.1.5",
     "cpx": "^1.5.0",
     "tsup": "^8.5.0"
   },
@@ -34,15 +39,23 @@
     "ai": "^4.3.16"
   },
   "dependencies": {
+    "@langchain/community": "^0.3.48",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.2.7",
+    "@upstash/vector": "^1.2.2",
     "ai": "^4.3.16",
+    "cheerio": "^1.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "langsmith": "^0.3.42",
     "lucide-react": "^0.525.0",
+    "nanoid": "^5.1.5",
+    "papaparse": "^5.5.3",
+    "pdf-parse": "^1.1.1",
     "tailwind-merge": "^3.3.1",
-    "tw-animate-css": "^1.3.5"
+    "tw-animate-css": "^1.3.5",
+    "unstructured-client": "^0.26.1"
   },
   "repository": {
     "type": "git",

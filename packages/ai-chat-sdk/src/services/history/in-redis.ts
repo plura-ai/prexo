@@ -3,8 +3,9 @@ import type { Message } from "ai";
 import {
   DEFAULT_CHAT_SESSION_ID,
   DEFAULT_HISTORY_LENGTH,
-} from "../lib/constants";
-import type { BaseMessageHistory } from "../lib/types";
+  DEFAULT_HISTORY_TTL,
+} from "../../lib/constants";
+import type { BaseMessageHistory } from "../../lib/types";
 
 export type RedisHistoryConfig = {
   config?: RedisConfigNodejs;
@@ -34,11 +35,15 @@ export class InRedisHistory implements BaseMessageHistory {
     sessionTTL?: number;
   }): Promise<void> {
     const { message, sessionId, sessionTTL } = params;
+    let TTL = DEFAULT_HISTORY_TTL;
+    if (sessionTTL) {
+      TTL = sessionTTL
+    }
     const sessionID = DEFAULT_CHAT_SESSION_ID(sessionId)
 
     await this.client.lpush(sessionID, JSON.stringify(message));
     if (sessionTTL) {
-      await this.client.expire(sessionID, sessionTTL);
+      await this.client.expire(sessionID, TTL);
     }
   }
 

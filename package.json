@@ -5,9 +5,13 @@
     "build": "turbo run db:generate && turbo build --summarize",
     "build:www": "turbo --filter=www build",
     "build:api": "turbo --filter=api build",
+    "build:docs": "turbo --filter=docs build",
+    "build:trig": "bunx trigger.dev@latest deploy",
     "dev": "turbo run dev",
     "dev:www": "turbo --filter=www dev",
     "dev:api": "turbo --filter=api dev",
+    "dev:docs": "turbo --filter=docs dev",
+    "dev:trig": "bunx trigger.dev@latest dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
@@ -19,6 +23,7 @@
     "envc": "bash scripts/envc.sh"
   },
   "devDependencies": {
+    "@trigger.dev/build": "^3.3.17",
     "drizzle-kit": "^0.31.1",
     "prettier": "^3.5.3",
     "tsx": "^4.19.4",
@@ -34,8 +39,16 @@
     "packages/*"
   ],
   "dependencies": {
+    "@trigger.dev/sdk": "^3.3.17",
+    "canvas": "^3.1.2",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.44.2",
-    "prexo": "."
+    "next": "^15.3.5",
+    "pdf-parser": "^1.0.5",
+    "pdf2pic": "^3.2.0",
+    "pdfjs-dist": "^5.3.93",
+    "prexo": ".",
+    "puppeteer": "^24.12.1",
+    "tesseract.js": "^6.0.1"
   }
 }

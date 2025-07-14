@@ -7,7 +7,7 @@ import type { BaseMessageHistory, SuggestedActionsT } from "../../../../src/lib/
 import { motion } from "framer-motion";
 
 interface SuggestedActionsProps {
-  append: UseChatHelpers["append"];
+  append: (content: string) => Promise<void>;
   suggestedActions: SuggestedActionsT[];
   sessionId?: string;
   sessionTTL?: number;
@@ -33,10 +33,7 @@ function PureSuggestedActions({ append, suggestedActions, sessionId, sessionTTL,
           <Button
             variant="secondary"
             onClick={async () => {
-              append({
-                role: "user",
-                content: suggestedAction.action,
-              });
+              append(suggestedAction.action);
               if(history){
                 await history.addMessage({
                   message: {

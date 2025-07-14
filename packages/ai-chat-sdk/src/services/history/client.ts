@@ -1,5 +1,5 @@
 "use client";
-import type { BaseMessageHistory } from "../lib/types";
+import type { BaseMessageHistory } from "../../lib/types";
 import { InMemoryHistory } from "./in-memory";
 import { InRedisHistory } from "./in-redis";
 
