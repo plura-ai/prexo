@@ -1,4 +1,4 @@
-import { SiteFooter } from "@/components/custom/site/footer/footer";
+import SiteFooter from "@/components/custom/site/footer/footer";
 import { Navbar } from "@/components/custom/site/navbar/navbar";
 import { PrexoAiChatBot } from "@prexo/ai-chat-sdk";
 
@@ -29,19 +29,19 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
       {children}
       <SiteFooter />
       <PrexoAiChatBot
-          width={380}
-          height={550}
-          apiKey={process.env.PREXO_API_KEY!}
-          suggestedActions={suggestedActions}
-          position="bottom-right"
-          sessionId="1234"
-          {...(redisUrl && redisToken
-            && { redis: { url: redisUrl, token: redisToken } }
-          )}
-          {...(vectorUrl && vectorToken && namespace
-            && { vector: { url: vectorUrl, token: vectorToken, namespace } }
-          )}
-        />
+                width={380}
+                height={550}
+                apiKey={process.env.PREXO_API_KEY!}
+                suggestedActions={suggestedActions}
+                position="bottom-right"
+                sessionId="1234"
+                {...(redisUrl && redisToken
+                  && { redis: { url: redisUrl, token: redisToken } }
+                )}
+                {...(vectorUrl && vectorToken && namespace
+                  && { vector: { url: vectorUrl, token: vectorToken, namespace } }
+                )}
+              />
     </div>
   );
 }
