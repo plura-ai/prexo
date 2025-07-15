@@ -11,7 +11,7 @@
       "import": "./src/services/history/client.ts"
     },
     "./context": {
-      "import": "./src/services/context/client.ts"
+      "import": "./src/services/context/vector-db.ts"
     }
   },
   "main": "./dist/client/index.js",
