@@ -1,10 +1,11 @@
 
+import { BASE_API_ENDPOINT } from "../../lib/utils";
 import type { AddContextPayload, VectorPayload, SaveOperationResult } from "../../lib/types";
 
 export class IntVector {
   private namespace: string;
   private apiKey?: string;
-  private BASE_API = 'http://localhost:3001/v1/sdk/context';
+  private BASE_API = `${BASE_API_ENDPOINT}/context`;
   
 
   constructor(namespace: string, apiKey?: string) {

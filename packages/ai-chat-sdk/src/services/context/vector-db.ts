@@ -2,6 +2,7 @@ import type { AddContextPayload, ResetOptions, SaveOperationResult, VectorPayloa
 import { DEFAULT_SIMILARITY_THRESHOLD, DEFAULT_TOP_K } from "../../lib/constants";
 import type { Index } from "@upstash/vector";
 import { nanoid } from "nanoid";
+import { BASE_API_ENDPOINT } from "../../lib/utils";
 
 // Helper function to chunk text
 function chunkText(text: string, chunkSize = 500, overlap = 50): string[] {
@@ -131,7 +132,7 @@ export class VectorDB {
           }
 
           // extractText should return a string (the extracted text)
-          const response = await fetch("http://localhost:3001/v1/sdk/extractor", {
+          const response = await fetch(`${BASE_API_ENDPOINT}/extractor`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
