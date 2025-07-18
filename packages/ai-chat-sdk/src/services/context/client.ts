@@ -9,6 +9,7 @@ export type GetContextClientParams = {
     token: string;
     namespace: string;
   },
+  apiKey?: string;
 };
 
 export const getContextClient = (
@@ -17,14 +18,14 @@ export const getContextClient = (
   const vectorUrl = params?.vector?.url;
   const vectorToken = params?.vector?.token;
   const namespace = params?.vector?.namespace;
+  const apiKey = params?.apiKey;
 
   if (vectorUrl && vectorToken && namespace) {
     return new ExtVector(
       { url: vectorUrl, token: vectorToken },
       namespace
     );
-  } else {
-    console.log("Vector DB is not initialised!");
-    return undefined;
+  } else if (apiKey && namespace) {
+    return new IntVector(namespace, apiKey);
   }
 };

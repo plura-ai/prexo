@@ -69,6 +69,13 @@ context.post("/add", async (c) => {
             options: { namespace }
           });
         break;
+      case "embedding":
+          result = await vectorDB.save({
+            type: "embedding",
+            data: data,
+            options: { namespace }
+          });
+          break;
         
       default:
         return c.json(
@@ -97,6 +104,84 @@ context.post("/add", async (c) => {
     return c.json(
       {
         message: "Failed to add context",
+        error: error instanceof Error ? error.message : String(error),
+        status: 500,
+      },
+      500
+    );
+  }
+});
+
+context.get("/get", async (c) => {
+  try {
+    const { payload, namespace  } = await c.req.json();
+    const result = await vectorDB.retrieve({ ...payload, namespace });
+
+    if (!result || result.length === 0) {
+      throw new Error("No data found");
+    }
+
+    return c.json(
+      {
+        message: "Context retrieved successfully!",
+        status: 200,
+        data: result,
+      },
+      200
+    );
+  } catch (error) {
+    console.error("Error getting context:", error);
+    return c.json(
+      {
+        message: "Failed to get context",
+        error: error instanceof Error ? error.message : String(error),
+        status: 500,
+      },
+      500
+    );
+  }
+});
+
+context.post("/reset", async (c) => {
+  try {
+    const { namespace } = await c.req.json();
+    await vectorDB.reset({ namespace });
+    return c.json(
+      {
+        message: "Context reset successfully!",
+        status: 200,
+      },
+      200
+    );
+  } catch (error) {
+    console.error("Error resetting context:", error);
+    return c.json(
+      {
+        message: "Failed to reset context",
+        error: error instanceof Error ? error.message : String(error),
+        status: 500,
+      },
+      500
+    );
+  }
+});
+
+context.delete("/delete", async (c) => {
+  try {
+    const { ids, namespace } = await c.req.json();
+    await vectorDB.delete({ ids, namespace });
+    return c.json(
+      {
+        message: "Context delete successfully!",
+        status: 200,
+      },
+      200
+    );
+  } catch (error) {
+    console.error("Error deleting context:", error);
+    return c.json(
+      {
+        message: "Failed to delete context",
         error: error instanceof Error ? error.message : String(error),
         status: 500,
       },

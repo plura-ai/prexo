@@ -12,7 +12,7 @@ import {
   X,
 } from "lucide-react";
 import { useLocalStorage } from "../../../hooks/use.local.store";
-import { useChat, type UseChatHelpers } from "ai/react";
+import { useChat, type UseChatHelpers } from "@ai-sdk/react";
 import { BASE_API_ENDPOINT } from "../../../lib/utils";
 import { SuggestedActions } from "./suggested.actions";
 import type { SuggestedActionsT, VectorContextResult } from "../../../../src/lib/types";
@@ -82,7 +82,7 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [isMinimized, setIsMinimized] = useLocalStorage("@prexo-chat-bot-#isMinimized", false);
   const history = getHistoryClient({redis});
-  const context = getContextClient({vector});
+  const context = getContextClient({vector, apiKey});
   const [historyFetched, setHistoryFetched] = useState(false);
 
   // Error checks
