@@ -16,7 +16,6 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@prexo/ai-chat-sdk": "workspace:*",
     "@prexo/auth": "workspace:*",
-    "@prexo/chat-sdk": "workspace:*",
     "@prexo/store": "workspace:*",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-checkbox": "^1.3.2",
