@@ -1,12 +1,14 @@
 import { defineConfig } from "@trigger.dev/sdk/v3";
 import { additionalFiles, additionalPackages } from "@trigger.dev/build/extensions/core";
+import { puppeteer } from "@trigger.dev/build/extensions/puppeteer";
 
 export default defineConfig({
   project: "proj_zqfxzidlrnyrsvmyknsn",
   build: {
     extensions: [
-      additionalPackages({ packages: ["papaparse", "fs", "path", "puppeteer"] }),
+      additionalPackages({ packages: ["papaparse", "fs", "path"] }),
       additionalFiles({ files: ["triggers/lib/extract-text.ts"] }),
+      puppeteer(),
     ],
   },
   runtime: "node",

@@ -99,7 +99,7 @@ export default function RootLayout({
           <StoreProvider>
             <ThemeProvider
               attribute="class"
-              defaultTheme="system"
+              defaultTheme="dark"
               enableSystem
               disableTransitionOnChange
             >

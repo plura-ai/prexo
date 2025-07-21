@@ -13,7 +13,7 @@ import {
   SectionHeader,
   SectionHeaderHeading,
   SectionHeaderDescription,
-} from "../text-wrappers";
+} from "../../text-wrappers";
 import { aiCode } from "@/images/image";
 
 const agentCards = [
