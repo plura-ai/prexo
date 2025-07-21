@@ -44,13 +44,12 @@ export async function extractText(source: string): Promise<string> {
       const combinedText = texts.join("\n").trim();
       
       // Check for error messages
-      const errorMessages = [];
-      if (result.ErrorMessage && Array.isArray(result.ErrorMessage)) {
-        errorMessages.push(...result.ErrorMessage);
-      } else if (result.ErrorMessage && typeof result.ErrorMessage === "string") {
+      const errorMessages: string[] = [];
+      if (Array.isArray(result.ErrorMessage)) {
+        errorMessages.push(...result.ErrorMessage.filter((msg: unknown): msg is string => typeof msg === "string"));
+      } else if (typeof result.ErrorMessage === "string") {
         errorMessages.push(result.ErrorMessage);
       }
-      
       if(errorMessages.length > 0) {
         console.log(errorMessages)
       }
