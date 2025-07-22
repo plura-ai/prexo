@@ -7,7 +7,7 @@ import {
   IconBrandGithub,
   IconBrandDiscord,
 } from "@tabler/icons-react";
-import { authClient } from "@prexo/auth/client";
+// import { authClient } from "@prexo/auth/client";
 import React from "react";
 
 export default function LoginPage() {
@@ -16,56 +16,56 @@ export default function LoginPage() {
       ? "http://localhost:3000/onboarding"
       : "https://app.prexo.com/onboarding";
 
-  const handleAuth = async (
-    provider: "github" | "discord" | "google",
-  ) => {
-    switch (provider) {
-      case "google":
-        await authClient.signIn.social({
-          provider: provider,
-          callbackURL: callbackUrl,
-          fetchOptions: {
-            onSuccess() {
-              console.log("Successfully signed in with Google");
-            },
-            onError(error) {
-              console.error("Error signing in with Google:", error);
-            },
-          },
-        });
-        break;
-      case "github":
-        await authClient.signIn.social({
-          provider: provider,
-          callbackURL: callbackUrl,
-          fetchOptions: {
-            onSuccess() {
-              console.log("Successfully signed in with GitHub");
-            },
-            onError(error) {
-              console.error("Error signing in with GitHub:", error);
-            },
-          },
-        });
-        break;
-      case "discord":
-        await authClient.signIn.social({
-          provider: provider,
-          callbackURL: callbackUrl,
-          fetchOptions: {
-            onSuccess() {
-              console.log("Successfully signed in with Discord");
-            },
-            onError(error) {
-              console.error("Error signing in with Discord:", error);
-            },
-          },
-        });
-        break;
-      default:
-        break;
-    }
-  };
+  // const handleAuth = async (
+  //   provider: "github" | "discord" | "google",
+  // ) => {
+  //   switch (provider) {
+  //     case "google":
+  //       await authClient.signIn.social({
+  //         provider: provider,
+  //         callbackURL: callbackUrl,
+  //         fetchOptions: {
+  //           onSuccess() {
+  //             console.log("Successfully signed in with Google");
+  //           },
+  //           onError(error) {
+  //             console.error("Error signing in with Google:", error);
+  //           },
+  //         },
+  //       });
+  //       break;
+  //     case "github":
+  //       await authClient.signIn.social({
+  //         provider: provider,
+  //         callbackURL: callbackUrl,
+  //         fetchOptions: {
+  //           onSuccess() {
+  //             console.log("Successfully signed in with GitHub");
+  //           },
+  //           onError(error) {
+  //             console.error("Error signing in with GitHub:", error);
+  //           },
+  //         },
+  //       });
+  //       break;
+  //     case "discord":
+  //       await authClient.signIn.social({
+  //         provider: provider,
+  //         callbackURL: callbackUrl,
+  //         fetchOptions: {
+  //           onSuccess() {
+  //             console.log("Successfully signed in with Discord");
+  //           },
+  //           onError(error) {
+  //             console.error("Error signing in with Discord:", error);
+  //           },
+  //         },
+  //       });
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // };
 
   return (
     <div className="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
@@ -82,7 +82,7 @@ export default function LoginPage() {
                   variant="outline"
                   type="button"
                   className="w-full cursor-pointer"
-                  onClick={() => handleAuth("google")}
+                  // onClick={() => handleAuth("google")}
                 >
                   <IconBrandGoogle size="10" />
                   Continue with Google
@@ -91,7 +91,7 @@ export default function LoginPage() {
                   variant="outline"
                   type="button"
                   className="w-full cursor-pointer"
-                  onClick={() => handleAuth("github")}
+                  // onClick={() => handleAuth("github")}
                 >
                   <IconBrandGithub size="10" />
                   Continue with Github
@@ -100,7 +100,7 @@ export default function LoginPage() {
                   variant="outline"
                   type="button"
                   className="w-full cursor-pointer"
-                  onClick={() => handleAuth("discord")}
+                  // onClick={() => handleAuth("discord")}
                 >
                   <IconBrandDiscord size="10" />
                   Continue with Discord
