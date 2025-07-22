@@ -6,9 +6,9 @@ import {
   IconBrandGoogle,
   IconBrandGithub,
   IconBrandDiscord,
-  IconFingerprint,
 } from "@tabler/icons-react";
 import { authClient } from "@prexo/auth/client";
+import React from "react";
 
 export function LoginForm({
   className,
@@ -65,20 +65,13 @@ export function LoginForm({
           },
         });
         break;
-      case "passkey":
-        try {
-          const data = await authClient.passkey.addPasskey();
-          console.log("PassKey added successfully:", data);
-        } catch (error) {
-          console.error("Error signing in with PassKey:", error);
-        }
       default:
         break;
     }
   };
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form>
+      <form onSubmit={e => e.preventDefault()}>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-start">
             <h2 className="text-3xl font-bold">Think it. Make it.</h2>
@@ -114,15 +107,39 @@ export function LoginForm({
             </Button>
           </div>
           <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t" />
-          <Button
-            variant="outline"
-            type="button"
-            className="w-full cursor-pointer"
-            onClick={() => handleAuth("passkey")}
-          >
-            <IconFingerprint size="10" />
-            Continue with PassKey
-          </Button>
+          {/* {showPasskeyEmail ? (
+            <div className="flex flex-col gap-2 w-full">
+              <PassKeyInput handleOnInputChange={setPasskeyEmail}/>
+              <Button
+                variant="outline"
+                type="button"
+                className="w-full cursor-pointer"
+                disabled={!passkeyEmail || loading}
+                onClick={() => handleAuth("passkey", passkeyEmail)}
+              >
+                <IconFingerprint size="10" />
+                {loading ? "Signing in..." : "Continue with PassKey"}
+              </Button>
+              <Button
+                variant="outline"
+                type="button"
+                className="w-full cursor-pointer mt-1"
+                onClick={() => setShowPasskeyEmail(false)}
+              >
+                Cancel
+              </Button>
+            </div>
+          ) : (
+            <Button
+              variant="outline"
+              type="button"
+              className="w-full cursor-pointer"
+              onClick={() => setShowPasskeyEmail(true)}
+            >
+              <IconFingerprint size="10" />
+              Continue with PassKey
+            </Button>
+          )} */}
         </div>
       </form>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">

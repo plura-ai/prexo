@@ -1,6 +1,6 @@
 "use client";
 
-import { LoginForm } from "@/components/login-form";
+import { LoginForm } from "@/components/custom/login-form";
 import { useAuth } from "@/context/auth.context";
 import { redirect } from "next/navigation";
 

@@ -19,9 +19,9 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "d:build": "tsup",
     "postbuild": "rm -rf dist/client/styles && cpx 'src/**/*.css' dist",
-    "pre-publish": "bun run build",
+    "pre-publish": "bun run d:build",
     "type-check": "tsc --noEmit"
   },
   "keywords": ["react", "chat", "widget", "sdk", "typescript", "embeddable"],

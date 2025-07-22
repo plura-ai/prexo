@@ -1,5 +1,4 @@
 "use client";
-import NotFound from "@/app/not-found";
 import { useMyProfileStore } from "@prexo/store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -9,10 +8,13 @@ export default function Onboarding() {
   const router = useRouter();
 
   useEffect(() => {
+    if (!myProfile) {
+      router.replace("/auth");
+      return;
+    }
     if (
-      myProfile &&
-      myProfile?.role !== "onboarded" &&
-      myProfile?.role === "user"
+      myProfile.role !== "onboarded" &&
+      myProfile.role === "user"
     ) {
       router.replace(`/onboarding/${myProfile.id}`);
     } else {
@@ -20,10 +22,6 @@ export default function Onboarding() {
       router.replace("/dashboard");
     }
   }, [myProfile, router]);
-
-  if (!myProfile) {
-    return NotFound();
-  }
 
   return null;
 }

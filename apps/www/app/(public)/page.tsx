@@ -2,6 +2,8 @@
 import AgentsSec from "@/components/custom/site/hero/agents.sec";
 import { AnncBtn } from "@/components/custom/site/hero/annc.btn";
 import CtaBtns from "@/components/custom/site/hero/cta.btn";
+import MemorySec from "@/components/custom/site/hero/memory.sec";
+import OssSec from "@/components/custom/site/hero/oss.sec";
 import { SectionHeaderDescription, SectionHeaderHeading } from "@/components/custom/text-wrappers";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -12,7 +14,7 @@ export default function Home() {
     <main className="flex flex-col items-center justify-center w-full min-h-screen overflow-hidden gap-5">
       <section
         id="hero"
-        className="relative flex flex-col items-center justify-center w-full h-screen p-4 border-b border-dashed overflow-hidden rounded-b-4xl"
+        className="relative flex flex-col items-center justify-center w-full h-screen p-4 border-y border-dashed overflow-hidden rounded-t-4xl rounded-b-4xl mt-2"
       >
 
         <div
@@ -37,7 +39,7 @@ export default function Home() {
           </div>
         </div>
         <AnncBtn/>
-        <SectionHeaderHeading>Transform Your Business with</SectionHeaderHeading>
+        <SectionHeaderHeading>Transform Your SaaS with</SectionHeaderHeading>
         <SectionHeaderHeading>AI-Powered Sales & Support</SectionHeaderHeading>
 
         <SectionHeaderDescription className="mt-2 md:text-center">
@@ -47,10 +49,25 @@ export default function Home() {
         <CtaBtns/>
       </section>
       <section
-        id="about"
-        className="flex flex-col items-center justify-center w-full h-full p-4 border-t border-dashed rounded-t-4xl"
-      ></section>
+        id="agents"
+        className="flex flex-col items-center justify-center w-full h-full p-4 border-y border-dashed rounded-t-4xl rounded-b-4xl"
+      >
       <AgentsSec />
+      </section>
+
+      <section
+        id="memory"
+        className="flex flex-col items-center justify-center w-full h-full p-4 border-y border-dashed rounded-t-4xl rounded-b-4xl"
+      >
+      <MemorySec />
+      </section>
+
+      <section
+        id="oss"
+        className="flex flex-col items-center justify-center w-full h-full p-4 border-y border-dashed rounded-t-4xl rounded-b-4xl"
+      >
+      <OssSec />
+      </section>
     </main>
   );
 }

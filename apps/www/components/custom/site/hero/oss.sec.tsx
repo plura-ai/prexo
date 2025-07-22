@@ -16,27 +16,27 @@ import {
 
 const agentCards = [
   {
-    title: "Easy Integration",
+    title: "AI Assistant",
     description:
-      "Integrate agents seamlessly into your existing applications. Our platform supports ReactJs frameworks and languages, making it easy to get started.",
+      "Intelligent coding companion that understands your needs. It helps streamline your coding process and enhances productivity.",
     icon: IconBrain,
     href: "/features/ai-assistant",
     class: "md:col-span-2 md:row-span-2 h-[40rem]",
-    image: "/img/demo.config.png",
+    image: "/img/ai.code.png",
   },
   {
-    title: "Agentic Automation",
+    title: "Smart Automation",
     description:
-      "Automate issue tickets and sales processes with intelligent workflows. This feature allows you to focus on more important aspects of your projects.",
+      "Automate repetitive tasks with intelligent workflows. This feature allows you to focus on more important aspects of your projects.",
     icon: IconRobot,
     href: "/features/automation",
     class: "",
     image: null,
   },
   {
-    title: "Personalized Responses",
+    title: "Code Generation",
     description:
-      "Agents remembers user interactions and preferences, allowing them to provide personalized responses. This enhances user experience and engagement.",
+      "Generate high-quality code snippets instantly. This tool saves time and reduces the likelihood of errors in your code.",
     icon: IconCode,
     href: "/features/code-gen",
     class: "",
@@ -44,17 +44,16 @@ const agentCards = [
   },
 ];
 
-export default function AgentsSec() {
+export default function OssSec() {
   return (
     <div className="relative w-full items-center justify-center py-10">
       <div className="px-8 md:px-14">
         <SectionHeader className="flex flex-col z-50 mb-10">
-          <SectionHeaderHeading>Why Agents? Not Just Chatbots</SectionHeaderHeading>
+          <SectionHeaderHeading>We believe in Open Source</SectionHeaderHeading>
           <SectionHeaderDescription>
-            Agents are more than just chatbots; they are intelligent systems that
-            can handle complex background tasks, engage customers, qualify leads, and resolve
-            issues. They learn from interactions and adapt to provide better
-            responses over time.
+            Linear is shaped by the practices and principles that distinguish
+            world-class product teams from the rest: relentless focus, fast
+            execution, and a commitment to the quality of craft.
           </SectionHeaderDescription>
         </SectionHeader>
 
@@ -68,7 +67,7 @@ export default function AgentsSec() {
               )}
             >
               {card.image && (
-                <div className="w-full absolute bottom-[-8rem] right-[-4rem] h-auto mb-4 rounded-xl">
+                <div className="w-full absolute bottom-[-10rem] right-[-10rem] h-auto mb-4 rounded-lg">
                   <Image
                     src={card.image}
                     alt={card.title}
@@ -79,7 +78,7 @@ export default function AgentsSec() {
                 </div>
               )}
               <h3 className="text-2xl font-semibold mb-2">{card.title}</h3>
-              <p className="text-muted-foreground">{card.description}</p>
+              <p className="text-gray-400">{card.description}</p>
               <div className="md:bottom-[-30rem] left-[10%] group-hover:opacity-100 opacity-30 z-[-1] absolute bg-gradient-to-t from-secondary/20 to-primary/50 blur-[8em] rounded-xl transition-all translate-x-[-50%] duration-500 ease-out w-[10rem] md:w-[30rem] h-[20rem] md:h-[30rem] rotate-[0deg]" />
               <Link
                 href={card.href}
