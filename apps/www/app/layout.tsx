@@ -4,9 +4,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/context/auth.context";
 import { RoutesContext } from "@/context/routes.context";
-// import { RouteGuard } from "@/context/route.guard";
-// import CookiesConsent from "@/components/cookies.notify";
-export const dynamic = "force-dynamic";
 
 const uxumGrotesque = localFont({
   src: [
@@ -114,7 +111,6 @@ export default function RootLayout({
               <div className="flex flex-col items-center bg-background">
                 {children}
               </div>
-              {/* <CookiesConsent /> */}
             </ThemeProvider>
             </RoutesContext>
         </AuthProvider>

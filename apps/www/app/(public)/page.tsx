@@ -1,5 +1,4 @@
 "use client";
-export const dynamic = "force-dynamic";
 
 import AgentsSec from "@/components/custom/site/hero/agents.sec";
 import { AnncBtn } from "@/components/custom/site/hero/annc.btn";
@@ -49,6 +48,7 @@ export default function Home() {
           engage customers, qualify leads, and resolve issues.
         </SectionHeaderDescription>
         <CtaBtns/>
+
       </section>
       <section
         id="agents"

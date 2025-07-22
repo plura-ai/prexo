@@ -86,10 +86,12 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
   const [historyFetched, setHistoryFetched] = useState(false);
 
   // Error checks
-  if(apiKey.length === 0) {
+  if(apiKey && apiKey.length === 0) {
+    console.error("API key is required for PrexoAiChatBot to function properly");
     throw new Error("API key is required for PrexoAiChatBot to function properly");
   }
   if(suggestedActions && suggestedActions.length > 3) {
+    console.error("You can only add max 3 suggested actions!");
     throw new Error("You can only add max 3 suggested actions!")
   }
 
