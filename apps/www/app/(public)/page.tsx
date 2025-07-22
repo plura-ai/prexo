@@ -1,4 +1,6 @@
 "use client";
+export const dynamic = "force-dynamic";
+
 import AgentsSec from "@/components/custom/site/hero/agents.sec";
 import { AnncBtn } from "@/components/custom/site/hero/annc.btn";
 import CtaBtns from "@/components/custom/site/hero/cta.btn";
