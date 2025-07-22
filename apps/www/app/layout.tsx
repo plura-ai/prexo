@@ -2,8 +2,8 @@ import localFont from "next/font/local";
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { StoreProvider } from "@/context/store.context";
 import { AuthProvider } from "@/context/auth.context";
+import { RouteGuard } from "@/context/route.guard";
 // import CookiesConsent from "@/components/cookies.notify";
 
 const uxumGrotesque = localFont({
@@ -96,7 +96,7 @@ export default function RootLayout({
         className={`${uxumGrotesque.variable} ${untitledSans.variable} antialiased`}
       >
         <AuthProvider>
-          <StoreProvider>
+          <RouteGuard>
             <ThemeProvider
               attribute="class"
               defaultTheme="dark"
@@ -108,7 +108,7 @@ export default function RootLayout({
               </div>
               {/* <CookiesConsent /> */}
             </ThemeProvider>
-          </StoreProvider>
+            </RouteGuard>
         </AuthProvider>
       </body>
     </html>
