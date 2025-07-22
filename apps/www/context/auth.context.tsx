@@ -24,23 +24,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { myProfile, addMyProfile, removeMyProfile } = useMyProfileStore();
 
   useEffect(() => {
+    let isMounted = true;
     async function getData() {
       setLoading(true);
       try {
         const session = await authClient.getSession();
-        if (session.data?.user) {
-          setUser(session.data.user);
-          // If the user is logged in, we check if their profile is already added
-          if (myProfile && myProfile.id === session.data.user.id) {
+        // Defensive: ensure session.data and session.data.user are defined
+        const sessionUser = session?.data?.user ?? null;
+        if (sessionUser) {
+          setUser(sessionUser);
+          // Defensive: ensure myProfile is defined and has id
+          if (myProfile && myProfile.id === sessionUser.id) {
             return;
           }
-          // If the user is logged in and their profile is not added, we add it
-          addMyProfile(session.data.user);
-          console.log("User fetched:", session.data.user);
+          addMyProfile(sessionUser);
+          console.log("User fetched:", sessionUser);
         } else {
           setUser(null);
-          // If the user is not logged in, we remove their profile if it exists
-          if (myProfile) {
+          if (myProfile && myProfile.id) {
             removeMyProfile(myProfile.id);
             console.log("User profile removed:", myProfile.id);
           }
@@ -49,10 +50,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       } catch (error) {
         console.error("Error fetching user:", error);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     }
     getData();
+    return () => {
+      isMounted = false;
+    };
   }, [addMyProfile, myProfile, removeMyProfile]);
 
   return (
