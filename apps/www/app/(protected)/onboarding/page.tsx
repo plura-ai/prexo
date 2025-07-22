@@ -9,7 +9,7 @@ export default function Onboarding() {
 
   useEffect(() => {
     if (!myProfile) {
-      router.replace("/auth");
+      router.replace("/log-on");
       return;
     }
     if (

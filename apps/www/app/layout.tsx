@@ -87,7 +87,7 @@ export const metadata: Metadata = {
 };
 
 const protectedRoutes = ["/onboarding", "/dashboard"];
-const publicRoutes = ["/", "/auth"];
+const publicRoutes = ["/", "/log-on"];
 
 export default function RootLayout({
   children,

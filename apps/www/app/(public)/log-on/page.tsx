@@ -17,7 +17,7 @@ export default function LoginPage() {
       : "https://app.prexo.com/onboarding";
 
   const handleAuth = async (
-    provider: "github" | "discord" | "google" | "passkey",
+    provider: "github" | "discord" | "google",
   ) => {
     switch (provider) {
       case "google":

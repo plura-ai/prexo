@@ -15,7 +15,7 @@ export function Navbar() {
   const { myProfile } = useMyProfileStore();
   const router = useRouter();
 
-  let loginURL = "/auth";
+  let loginURL = "/log-on";
   if (myProfile) {
     loginURL = myProfile.role === "onboarded" ? "/dashboard" : "/onboarding";
   }
