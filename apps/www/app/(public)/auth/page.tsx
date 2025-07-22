@@ -11,10 +11,10 @@ import {
 import React from "react";
 
 export default function LoginPage() {
-  const callbackUrl =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000/onboarding"
-      : "https://app.prexo.com/onboarding";
+  // const callbackUrl =
+  //   process.env.NODE_ENV === "development"
+  //     ? "http://localhost:3000/onboarding"
+  //     : "https://app.prexo.com/onboarding";
 
   // const handleAuth = async (
   //   provider: "github" | "discord" | "google",
