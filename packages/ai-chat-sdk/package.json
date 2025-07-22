@@ -19,7 +19,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "d:build": "tsup",
     "postbuild": "rm -rf dist/client/styles && cpx 'src/**/*.css' dist",
     "pre-publish": "bun run build",
     "type-check": "tsc --noEmit"
