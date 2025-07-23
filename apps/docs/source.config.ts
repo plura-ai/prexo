@@ -21,6 +21,7 @@ export const docs = defineDocs({
 const generator = createGenerator();
 
 export default defineConfig({
+  lastModifiedTime: "git",
   mdxOptions: {
     remarkPlugins: [[remarkAutoTypeTable, { generator }], remarkImage, remarkNpm],
   },

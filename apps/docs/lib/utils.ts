@@ -12,6 +12,6 @@ export async function getLastEdit(
   return getGithubLastEdit({
     owner: 'SkidGod4444',
     repo: 'prexo',
-    path: `content/docs/${filePath}`,
+    path: `apps/docs/content/docs/${filePath}`,
   });
 }

@@ -24,6 +24,7 @@ const socials = {
   discord: "https://l.devwtf.in/plura-dc",
   github: "https://git.new/prexo",
   docs: "https://docs.prexoai.xyz",
+  sponsor: "https://l.devwtf.in/sponsor"
 }
 
 export { site, socials };

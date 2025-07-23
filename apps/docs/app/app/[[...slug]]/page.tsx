@@ -4,6 +4,7 @@ import {
   DocsBody,
   DocsDescription,
   DocsTitle,
+  EditOnGitHub,
 } from 'fumadocs-ui/page';
 import { notFound } from 'next/navigation';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
@@ -11,6 +12,9 @@ import { getMDXComponents } from '@/mdx-components';
 import { Rate } from '@/components/custom/rate';
 import posthog from 'posthog-js'
 import {getLastEdit} from '@/lib/utils';
+import { Breadcrumb } from '@/components/custom/breadcrumb';
+import { Separator } from '@/components/ui/separator';
+import { LLMCopyButton, ViewOptions } from '@/components/custom/page-actions';
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -20,13 +24,33 @@ export default async function Page(props: {
   if (!page) notFound();
 
   const MDXContent = page.data.body;
-  const lastEdit = await getLastEdit(page.path);
-  console.log(page.path)
+  let lastEdit: Date | null;
+  if (process.env.NODE_ENV === 'development') {
+    lastEdit = new Date();
+  } else {
+    lastEdit = await getLastEdit(page.path);
+  }
 
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
+    
+    <DocsPage
+      toc={page.data.toc}
+      full={page.data.full}
+      breadcrumb={{
+        enabled: true,
+        component: <Breadcrumb tree={source.pageTree} />
+      }}
+      
+    >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
+      <div className="flex flex-row gap-2 items-center border-b pb-6">
+  <LLMCopyButton markdownUrl={`${page.url}.mdx`} />
+  <ViewOptions
+    markdownUrl={`${page.url}.mdx`}
+    githubUrl={`https://github.com/SkidGod4444/prexo/tree/main/apps/docs/content/docs/${page.path}`}
+  />
+</div>
       <DocsBody>
         <MDXContent
           components={getMDXComponents({
@@ -42,11 +66,12 @@ export default async function Page(props: {
           return { success: true, discordUrl: url };
         }}
       />
-      <DocsBody>
+      <DocsBody className='flex items-center justify-between'>
         <p className="text-sm text-fd-muted-foreground">
           Last updated on{' '}
-          {lastEdit ? lastEdit.toLocaleDateString() : 'Today'}
+          {lastEdit && lastEdit.toLocaleDateString()}
         </p>
+        <EditOnGitHub href={`https://github.com/SkidGod4444/prexo/tree/main/apps/docs/content/docs/${page.path}`}/>
       </DocsBody>
     </DocsPage>
   );
