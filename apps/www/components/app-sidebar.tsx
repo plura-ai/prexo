@@ -154,7 +154,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar();
   const { myProfile } = useMyProfileStore();
 
-  if(!myProfile) return null;
+  if (!myProfile) return null;
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>

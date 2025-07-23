@@ -105,7 +105,11 @@ export type BodyParameters = {
 };
 
 type SysPrompt = ({ question, chatHistory }: SysPromptParameters) => string;
-type SysRagPrompt = ({ question, chatHistory, context }: SysRagPromptParameters) => string;
+type SysRagPrompt = ({
+  question,
+  chatHistory,
+  context,
+}: SysRagPromptParameters) => string;
 
 export const SDK_SYSTEM_PROMPT: SysPrompt = ({ question, chatHistory }) =>
   `You are Prexo Ai, a friendly AI assistant.
@@ -113,23 +117,27 @@ export const SDK_SYSTEM_PROMPT: SysPrompt = ({ question, chatHistory }) =>
   Answer the question at the end. Keep your answers concise, clear, and free of jargon.
   -------------
   Chat history:
-  ${chatHistory && chatHistory.length > 0 ? `${chatHistory.map(m => `${m.role}: ${m.content}`).join('\n')}\n` : "Not found, It is empty!"}
+  ${chatHistory && chatHistory.length > 0 ? `${chatHistory.map((m) => `${m.role}: ${m.content}`).join("\n")}\n` : "Not found, It is empty!"}
   -------------
   Question: ${question}
   Helpful answer:`;
 
-export const SDK_RAG_SYSTEM_PROMPT: SysRagPrompt = ({ context, question, chatHistory }) =>
-    `You are Prexo Ai, a friendly AI assistant enhanced with Upstash Vector Store.
+export const SDK_RAG_SYSTEM_PROMPT: SysRagPrompt = ({
+  context,
+  question,
+  chatHistory,
+}) =>
+  `You are Prexo Ai, a friendly AI assistant enhanced with Upstash Vector Store.
     To help you answer questions, you will be provided with context and/or chat history.
     Use only the information available in the context or chat history either is acceptable to answer the question at the end. Keep your answers concise, clear, and free of jargon.
 
     -------------
     Chat history:
-    ${chatHistory && chatHistory.length > 0 ? `${chatHistory.map(m => `${m.role}: ${m.content}`).join('\n')}\n` : "Not found, It is empty!"}
+    ${chatHistory && chatHistory.length > 0 ? `${chatHistory.map((m) => `${m.role}: ${m.content}`).join("\n")}\n` : "Not found, It is empty!"}
     -------------
     Context:
     ${context && context.length > 0 ? `"${context}"\n` : "Not found, It is empty!"}
     -------------
 
     Question: ${question}
-    Helpful answer:`
+    Helpful answer:`;

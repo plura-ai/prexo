@@ -1,10 +1,10 @@
-'use client';
-import { usePathname } from 'next/navigation';
-import { useBreadcrumb } from 'fumadocs-core/breadcrumb';
-import type { PageTree } from 'fumadocs-core/server';
-import { Fragment } from 'react';
-import { ChevronRight } from 'lucide-react';
-import Link from 'next/link';
+"use client";
+import { usePathname } from "next/navigation";
+import { useBreadcrumb } from "fumadocs-core/breadcrumb";
+import type { PageTree } from "fumadocs-core/server";
+import { Fragment } from "react";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export function Breadcrumb({ tree }: { tree: PageTree.Root }) {
   const pathname = usePathname();

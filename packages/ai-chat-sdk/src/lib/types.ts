@@ -10,7 +10,6 @@ export type VectorPayload = {
   queryMode?: QueryMode;
 };
 
-
 export type FilePath = string;
 export type URL = string;
 
@@ -29,7 +28,9 @@ export type AddContextOptions = {
 };
 export type UpstashDict = Record<string, unknown>;
 
-export type SaveOperationResult = { success: true; ids: string[] } | { success: false; error: string };
+export type SaveOperationResult =
+  | { success: true; ids: string[] }
+  | { success: false; error: string };
 
 export type DatasWithFileSource =
   | {
@@ -65,9 +66,13 @@ export type DatasWithFileSource =
         }
     );
 
-
 export type AddContextPayload =
-  | { type: "text"; data: string; options?: AddContextOptions; id?: string | number }
+  | {
+      type: "text";
+      data: string;
+      options?: AddContextOptions;
+      id?: string | number;
+    }
   | {
       type: "embedding";
       data: number[];
@@ -93,14 +98,16 @@ export interface BaseMessageHistory {
   }): Promise<Message[]>;
 }
 export interface SuggestedActionsT {
-    label: string,
-    action: string,
-  }
+  label: string;
+  action: string;
+}
 
 export interface BaseVectorContext {
   addContext(input: AddContextPayload): Promise<SaveOperationResult>;
   removeContext(ids: string[]): Promise<void>;
-  getContext<TMetadata = any>(payload: Omit<VectorPayload, "namespace">): Promise<{ data: string; id: string; metadata: TMetadata }[]>;
+  getContext<TMetadata = any>(
+    payload: Omit<VectorPayload, "namespace">,
+  ): Promise<{ data: string; id: string; metadata: TMetadata }[]>;
   resetContext(): Promise<void>;
 }
 

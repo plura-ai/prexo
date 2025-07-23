@@ -7,11 +7,11 @@ export type GetHistoryClientParams = {
   redis?: {
     url: string;
     token: string;
-  }
+  };
 };
 
 export const getHistoryClient = (
-  params?: GetHistoryClientParams
+  params?: GetHistoryClientParams,
 ): BaseMessageHistory => {
   const redisUrl = params?.redis?.url;
   const redisToken = params?.redis?.token;
@@ -21,7 +21,7 @@ export const getHistoryClient = (
       config: {
         url: redisUrl,
         token: redisToken,
-      }
+      },
     });
   }
 

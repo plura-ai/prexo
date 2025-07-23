@@ -21,7 +21,6 @@ export default function ChatInput({
   setInput: UseChatHelpers["setInput"];
   status: UseChatHelpers["status"];
   handleSubmit: UseChatHelpers["handleSubmit"];
-  
 }) {
   const [localStorageInput, setLocalStorageInput] = useLocalStorage(
     "input",

@@ -49,12 +49,14 @@ export default function AgentsSec() {
     <div className="relative w-full items-center justify-center py-10">
       <div className="px-8 md:px-14">
         <SectionHeader className="flex flex-col z-50 mb-10">
-          <SectionHeaderHeading>Why Agents? Not Just Chatbots</SectionHeaderHeading>
+          <SectionHeaderHeading>
+            Why Agents? Not Just Chatbots
+          </SectionHeaderHeading>
           <SectionHeaderDescription>
-            Agents are more than just chatbots; they are intelligent systems that
-            can handle complex background tasks, engage customers, qualify leads, and resolve
-            issues. They learn from interactions and adapt to provide better
-            responses over time.
+            Agents are more than just chatbots; they are intelligent systems
+            that can handle complex background tasks, engage customers, qualify
+            leads, and resolve issues. They learn from interactions and adapt to
+            provide better responses over time.
           </SectionHeaderDescription>
         </SectionHeader>
 

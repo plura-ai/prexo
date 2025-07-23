@@ -1,4 +1,3 @@
-
 export const TypingIndicator = () => {
   return (
     <div className="message bot typing">

@@ -1,6 +1,10 @@
 import { Index } from "@upstash/vector";
 import { VectorDB } from "./vector-db";
-import type { AddContextPayload, VectorPayload, SaveOperationResult } from "../../lib/types";
+import type {
+  AddContextPayload,
+  VectorPayload,
+  SaveOperationResult,
+} from "../../lib/types";
 
 export type ExtVectorConfig = {
   url: string;
@@ -31,8 +35,13 @@ export class ExtVector {
     await this.vectorDB.delete({ ids, namespace: this.namespace });
   }
 
-  async getContext<TMetadata>(payload: Omit<VectorPayload, "namespace">): Promise<{ data: string; id: string; metadata: TMetadata }[]> {
-    return this.vectorDB.retrieve<TMetadata>({ ...payload, namespace: this.namespace });
+  async getContext<TMetadata>(
+    payload: Omit<VectorPayload, "namespace">,
+  ): Promise<{ data: string; id: string; metadata: TMetadata }[]> {
+    return this.vectorDB.retrieve<TMetadata>({
+      ...payload,
+      namespace: this.namespace,
+    });
   }
 
   async resetContext(): Promise<void> {

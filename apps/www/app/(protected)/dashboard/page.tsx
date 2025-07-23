@@ -20,7 +20,7 @@ export default function Page() {
   }, [myProfile, router]);
 
   if (typeof window !== "undefined" && !myProfile) {
-    return null; 
+    return null;
   }
 
   return (

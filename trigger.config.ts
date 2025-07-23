@@ -1,5 +1,8 @@
 import { defineConfig } from "@trigger.dev/sdk/v3";
-import { additionalFiles, additionalPackages } from "@trigger.dev/build/extensions/core";
+import {
+  additionalFiles,
+  additionalPackages,
+} from "@trigger.dev/build/extensions/core";
 import { puppeteer } from "@trigger.dev/build/extensions/puppeteer";
 
 export default defineConfig({
