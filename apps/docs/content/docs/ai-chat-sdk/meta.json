@@ -1,0 +1,8 @@
+{
+    "title": "Ai Chat SDK",
+    "slug": "ai-chat-sdk",
+    "description": "The description of root folder (optional)",
+    "icon": "Brain",
+    "root": true,
+    "defaultOpen": false
+  }
