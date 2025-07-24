@@ -27,28 +27,31 @@ extractor.use(
         return c.text("unauthorized", 401);
       },
     },
-    5, 2, 60
+    5,
+    2,
+    60,
   ),
 );
 
 extractor.post("/", async (c) => {
   const { url } = await c.req.json();
-  const handle = await tasks.trigger<typeof textExtractor>(
-    "extractor",
-    { url }
-  );
-  for await (const run of runs.subscribeToRun<typeof textExtractor>(handle.id)) {
+  const handle = await tasks.trigger<typeof textExtractor>("extractor", {
+    url,
+  });
+  for await (const run of runs.subscribeToRun<typeof textExtractor>(
+    handle.id,
+  )) {
     if (run.output) {
       return c.json({
         status: "ok",
         output: run.output,
       });
     }
-    if(run.error) {
-        return c.json({
-            status: run.error.name,
-            message: run.error.message,
-          });
+    if (run.error) {
+      return c.json({
+        status: run.error.name,
+        message: run.error.message,
+      });
     }
   }
   // If no output was found, return an error
@@ -57,7 +60,7 @@ extractor.post("/", async (c) => {
       status: "error",
       message: "No output from extractor",
     },
-    500
+    500,
   );
 });
 

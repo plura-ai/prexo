@@ -1,7 +1,8 @@
 @import 'tailwindcss';
-@import 'fumadocs-ui/css/black.css';
+@import 'fumadocs-ui/css/vitepress.css';
 @import 'fumadocs-ui/css/preset.css';
 @import "tw-animate-css";
+@import 'fumadocs-twoslash/twoslash.css';
 
 @custom-variant dark (&:is(.dark *));
 

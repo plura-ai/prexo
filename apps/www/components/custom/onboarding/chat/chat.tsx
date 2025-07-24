@@ -31,8 +31,7 @@ export default function OnboardingChat({ chatId }: { chatId: string }) {
       console.log("Received HTTP response from server:", response);
     },
     maxSteps: 5,
-  }
-);
+  });
   return (
     <div className="relative flex flex-col w-screen max-w-2xl mx-auto h-screen">
       {messages.length > 0 && (

@@ -1,8 +1,7 @@
-
-import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import {socials} from "@prexo/utils/constants"
-import Logo from '@/components/custom/logo';
-import { HeartPlus, MessageCircleDashed } from 'lucide-react';
+import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
+import { socials } from "@prexo/utils/constants";
+import Logo from "@/components/custom/logo";
+import { HeartPlus, MessageCircleDashed } from "lucide-react";
 /**
  * Shared layout configurations
  *
@@ -12,10 +11,8 @@ import { HeartPlus, MessageCircleDashed } from 'lucide-react';
  */
 export const baseOptions: BaseLayoutProps = {
   nav: {
-    title: (
-      <Logo/>
-    ),
-    transparentMode: 'always',
+    title: <Logo />,
+    transparentMode: "always",
   },
   githubUrl: socials.github,
   links: [
@@ -23,13 +20,13 @@ export const baseOptions: BaseLayoutProps = {
       type: "button",
       text: "Discord Community",
       url: socials.discord,
-      icon: <MessageCircleDashed/>
+      icon: <MessageCircleDashed />,
     },
     {
       type: "button",
       text: "Sponsor on GitHub",
       url: socials.sponsor,
-      icon: <HeartPlus/>
+      icon: <HeartPlus />,
     },
   ],
 };

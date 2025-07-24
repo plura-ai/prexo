@@ -11,7 +11,11 @@ export function MainNavbar() {
 
   return (
     <div className="flex">
-      <Link href="/" draggable={false} className="mr-8 flex items-center space-x-2">
+      <Link
+        href="/"
+        draggable={false}
+        className="mr-8 flex items-center space-x-2"
+      >
         <Image
           src="/logo.png"
           alt="logo"
@@ -23,19 +27,7 @@ export function MainNavbar() {
         />
       </Link>
       <nav className="hidden md:flex items-center gap-8 text-sm font-semibold">
-        <Link
-          href="/about"
-          draggable={false}
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/about")
-              ? "text-foreground"
-              : "text-foreground/60",
-          )}
-        >
-          About
-        </Link>
-        
+
         <Link
           href={socials.docs}
           target="_blank"

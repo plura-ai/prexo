@@ -24,13 +24,21 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { UserType } from "@prexo/types";
+import { authClient } from "@prexo/auth/client";
+import { useRouter } from "next/navigation";
+import { getPortalLink } from "@prexo/polar";
+import { useAuth } from "@/context/auth.context";
 
-export function NavUser({
-  user,
-}: {
-  user: UserType;
-}) {
+export function NavUser({ user }: { user: UserType }) {
   const { isMobile } = useSidebar();
+  const {setUser} = useAuth();
+  const router = useRouter();
+
+  const handleLogOut = async () => {
+    await authClient.signOut();
+    setUser(null);
+    router.push("/");
+  };
 
   return (
     <SidebarMenu>
@@ -80,13 +88,15 @@ export function NavUser({
                 <IconUserCircle />
                 Account
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
+              <DropdownMenuItem className="cursor-pointer" onClick={async () => {
+                await getPortalLink();
+              }}>
                 <IconCreditCard />
                 Billing
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer">
+            <DropdownMenuItem className="cursor-pointer" onClick={handleLogOut}>
               <IconLogout />
               Log out
             </DropdownMenuItem>

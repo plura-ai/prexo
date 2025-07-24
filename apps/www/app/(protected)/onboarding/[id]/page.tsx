@@ -2,11 +2,13 @@
 import NotFound from "@/app/not-found";
 import OnboardingChat from "@/components/custom/onboarding/chat/chat";
 import { useMyProfileStore } from "@prexo/store";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 
 export default function Onboarding() {
   const { myProfile } = useMyProfileStore();
+  const searchParams = useSearchParams()
+  const redirectUrl = searchParams.get('redirect')
   const pathname = usePathname();
   const uID = pathname?.split("/onboarding/")[1] || null;
   const router = useRouter();
@@ -19,10 +21,13 @@ export default function Onboarding() {
     ) {
       router.replace(`/onboarding/${myProfile.id}`);
     } else {
-      // If the user is already onboarded, redirect to the dashboard or another appropriate page
-      router.replace("/dashboard");
+      if (redirectUrl && redirectUrl.startsWith('/')) {
+        router.push(redirectUrl)
+      } else {
+        router.push('/dashboard')
+      }
     }
-  }, [myProfile, router]);
+  }, [myProfile, router, redirectUrl]);
 
   if (!myProfile || myProfile.id !== uID) {
     return NotFound();

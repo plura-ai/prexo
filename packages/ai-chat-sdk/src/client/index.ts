@@ -1,7 +1,5 @@
 export { PrexoAiChatBot } from "./components/custom/chat.widget";
-export type {
-  PrexoAiChatBotProps,
-} from "./components/custom/chat.widget";
+export type { PrexoAiChatBotProps } from "./components/custom/chat.widget";
 
 // Global window integration for HTML embedding
 declare global {
@@ -17,10 +15,12 @@ interface GlobalChatConfig {
   apiKey: string;
   // theme?: "light" | "dark";
   user?: {
-    name: string | "Prexo Ai",
-    pfp: string | "https://raw.githubusercontent.com/plura-ai/prexo/refs/heads/main/apps/www/public/logo.png",
+    name: string | "Prexo Ai";
+    pfp:
+      | string
+      | "https://raw.githubusercontent.com/plura-ai/prexo/refs/heads/main/apps/www/public/logo.png";
     lastSeen: Date;
-  }; 
+  };
   placeholder?: string;
   botName?: string;
   width?: number | string;
@@ -40,31 +40,34 @@ if (typeof window !== "undefined") {
       // Dynamic import to avoid SSR issues
       import("react").then((React) => {
         import("react-dom/client").then((ReactDOM) => {
-          import("./components/custom/chat.widget").then(({ PrexoAiChatBot }) => {
-            const { mountId = "prexo-ai-chat-sdk-root", ...chatProps } = config;
+          import("./components/custom/chat.widget").then(
+            ({ PrexoAiChatBot }) => {
+              const { mountId = "prexo-ai-chat-sdk-root", ...chatProps } =
+                config;
 
-            // Find or create mount element
-            mountElement = document.getElementById(mountId);
-            if (!mountElement) {
-              mountElement = document.createElement("div");
-              mountElement.id = mountId;
-              document.body.appendChild(mountElement);
-            }
+              // Find or create mount element
+              mountElement = document.getElementById(mountId);
+              if (!mountElement) {
+                mountElement = document.createElement("div");
+                mountElement.id = mountId;
+                document.body.appendChild(mountElement);
+              }
 
-            // Create React root and render
-            const root = ReactDOM.createRoot(mountElement);
-            chatInstance = root;
+              // Create React root and render
+              const root = ReactDOM.createRoot(mountElement);
+              chatInstance = root;
 
-            root.render(
-              React.createElement(PrexoAiChatBot, {
-                ...chatProps,
-                onClose: () => {
-                  config.onClose?.();
-                  window.PrexoAiChatBot.destroy();
-                },
-              }),
-            );
-          });
+              root.render(
+                React.createElement(PrexoAiChatBot, {
+                  ...chatProps,
+                  onClose: () => {
+                    config.onClose?.();
+                    window.PrexoAiChatBot.destroy();
+                  },
+                }),
+              );
+            },
+          );
         });
       });
     },

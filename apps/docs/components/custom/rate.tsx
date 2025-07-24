@@ -1,29 +1,29 @@
-'use client';
-import { buttonVariants } from 'fumadocs-ui/components/ui/button';
-import { ThumbsDown, ThumbsUp } from 'lucide-react';
-import { type SyntheticEvent, useEffect, useState, useTransition } from 'react';
+"use client";
+import { buttonVariants } from "fumadocs-ui/components/ui/button";
+import { ThumbsDown, ThumbsUp } from "lucide-react";
+import { type SyntheticEvent, useEffect, useState, useTransition } from "react";
 import {
   Collapsible,
   CollapsibleContent,
-} from 'fumadocs-ui/components/ui/collapsible';
-import { cva } from 'class-variance-authority';
-import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
+} from "fumadocs-ui/components/ui/collapsible";
+import { cva } from "class-variance-authority";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const rateButtonVariants = cva(
-  'inline-flex items-center gap-2 px-3 py-2 rounded-full font-medium border text-sm [&_svg]:size-4 disabled:cursor-not-allowed',
+  "inline-flex items-center gap-2 px-3 py-2 rounded-full font-medium border text-sm [&_svg]:size-4 disabled:cursor-not-allowed",
   {
     variants: {
       active: {
-        true: 'bg-fd-accent text-fd-accent-foreground [&_svg]:fill-current',
-        false: 'text-fd-muted-foreground',
+        true: "bg-fd-accent text-fd-accent-foreground [&_svg]:fill-current",
+        false: "text-fd-muted-foreground",
       },
     },
   },
 );
 
 export interface Feedback {
-  opinion: 'good' | 'bad';
+  opinion: "good" | "bad";
   url?: string;
   message: string;
 }
@@ -44,8 +44,8 @@ export function Rate({
 }) {
   const url = usePathname();
   const [previous, setPrevious] = useState<Result | null>(null);
-  const [opinion, setOpinion] = useState<'good' | 'bad' | null>(null);
-  const [message, setMessage] = useState('');
+  const [opinion, setOpinion] = useState<"good" | "bad" | null>(null);
+  const [message, setMessage] = useState("");
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
@@ -76,7 +76,7 @@ export function Rate({
           response,
           ...feedback,
         });
-        setMessage('');
+        setMessage("");
         setOpinion(null);
       });
     });
@@ -100,11 +100,11 @@ export function Rate({
           disabled={previous !== null}
           className={cn(
             rateButtonVariants({
-              active: activeOpinion === 'good',
+              active: activeOpinion === "good",
             }),
           )}
           onClick={() => {
-            setOpinion('good');
+            setOpinion("good");
           }}
         >
           <ThumbsUp />
@@ -114,11 +114,11 @@ export function Rate({
           disabled={previous !== null}
           className={cn(
             rateButtonVariants({
-              active: activeOpinion === 'bad',
+              active: activeOpinion === "bad",
             }),
           )}
           onClick={() => {
-            setOpinion('bad');
+            setOpinion("bad");
           }}
         >
           <ThumbsDown />
@@ -136,9 +136,9 @@ export function Rate({
                 target="_blank"
                 className={cn(
                   buttonVariants({
-                    color: 'primary',
+                    color: "primary",
                   }),
-                  'text-xs cursor-pointer',
+                  "text-xs cursor-pointer",
                 )}
               >
                 Join Discussion
@@ -147,9 +147,9 @@ export function Rate({
               <button
                 className={cn(
                   buttonVariants({
-                    color: 'secondary',
+                    color: "secondary",
                   }),
-                  'text-xs cursor-pointer',
+                  "text-xs cursor-pointer",
                 )}
                 onClick={() => {
                   setOpinion(previous.opinion);
@@ -170,14 +170,17 @@ export function Rate({
               className="border rounded-lg bg-fd-secondary text-fd-secondary-foreground p-3 resize-none focus-visible:outline-none placeholder:text-fd-muted-foreground"
               placeholder="Leave your feedback..."
               onKeyDown={(e) => {
-                if (!e.shiftKey && e.key === 'Enter') {
+                if (!e.shiftKey && e.key === "Enter") {
                   submit(e);
                 }
               }}
             />
             <button
               type="submit"
-              className={cn(buttonVariants({ color: 'primary' }), 'w-fit px-3 cursor-pointer')}
+              className={cn(
+                buttonVariants({ color: "primary" }),
+                "w-fit px-3 cursor-pointer",
+              )}
               disabled={isPending}
             >
               Submit

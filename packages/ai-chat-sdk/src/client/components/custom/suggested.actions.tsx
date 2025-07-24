@@ -3,7 +3,10 @@
 import { memo } from "react";
 import type { UseChatHelpers } from "@ai-sdk/react";
 import { Button } from "../../components/ui/button";
-import type { BaseMessageHistory, SuggestedActionsT } from "../../../../src/lib/types";
+import type {
+  BaseMessageHistory,
+  SuggestedActionsT,
+} from "../../../../src/lib/types";
 import { motion } from "framer-motion";
 
 interface SuggestedActionsProps {
@@ -14,8 +17,13 @@ interface SuggestedActionsProps {
   history?: BaseMessageHistory;
 }
 
-function PureSuggestedActions({ append, suggestedActions, sessionId, sessionTTL, history }: SuggestedActionsProps) {
-
+function PureSuggestedActions({
+  append,
+  suggestedActions,
+  sessionId,
+  sessionTTL,
+  history,
+}: SuggestedActionsProps) {
   return (
     <div
       data-testid="suggested-actions"
@@ -34,7 +42,7 @@ function PureSuggestedActions({ append, suggestedActions, sessionId, sessionTTL,
             variant="secondary"
             onClick={async () => {
               append(suggestedAction.action);
-              if(history){
+              if (history) {
                 await history.addMessage({
                   message: {
                     id: Date.now().toString(),
@@ -42,9 +50,8 @@ function PureSuggestedActions({ append, suggestedActions, sessionId, sessionTTL,
                     content: suggestedAction.action,
                   },
                   sessionId: sessionId!,
-                  sessionTTL: sessionTTL!
-                }
-                )
+                  sessionTTL: sessionTTL!,
+                });
               }
             }}
             className="text-left border rounded-xl px-3 py-2 text-sm gap-1 flex flex-col w-auto h-auto justify-start items-start cursor-pointer ml-auto
@@ -54,7 +61,9 @@ function PureSuggestedActions({ append, suggestedActions, sessionId, sessionTTL,
               wordBreak: "break-word",
             }}
           >
-            <span className="suggested-action-label">{suggestedAction.label}</span>
+            <span className="suggested-action-label">
+              {suggestedAction.label}
+            </span>
           </Button>
         </motion.div>
       ))}

@@ -7,25 +7,30 @@ export const maxDuration = 60;
 
 const context = new Hono();
 const index = new Index({
-    url: process.env.UPSTASH_VECTOR_REST_URL!,
-    token: process.env.UPSTASH_VECTOR_REST_TOKEN!,
-  });
+  url: process.env.UPSTASH_VECTOR_REST_URL!,
+  token: process.env.UPSTASH_VECTOR_REST_TOKEN!,
+});
 const vectorDB = new VectorDB(index);
 
 context.use(
   "*",
-  verifyApiKey({
-    apiId: process.env.UNKEY_API_ID!,
-    tags: ["/sdk/context"],
-    handleInvalidKey: (c, result) => {
-      console.log("Invalid API key!", result);
-      return c.json({ error: "unauthorized", reason: result?.code }, 401);
+  verifyApiKey(
+    {
+      apiId: process.env.UNKEY_API_ID!,
+      tags: ["/sdk/context"],
+      handleInvalidKey: (c, result) => {
+        console.log("Invalid API key!", result);
+        return c.json({ error: "unauthorized", reason: result?.code }, 401);
+      },
+      onError: (c, err) => {
+        console.log("Unkey Error:", err.message);
+        return c.text("unauthorized", 401);
+      },
     },
-    onError: (c, err) => {
-      console.log("Unkey Error:", err.message);
-      return c.text("unauthorized", 401);
-    },
-  }, 2, 5, 60)
+    2,
+    5,
+    60,
+  ),
 );
 
 context.post("/add", async (c) => {
@@ -38,52 +43,52 @@ context.post("/add", async (c) => {
         result = await vectorDB.save({
           type: "html",
           fileSource: url,
-          options: { namespace }
+          options: { namespace },
         });
         break;
       case "text":
         result = await vectorDB.save({
           type: "text",
           data: data,
-          options: { namespace }
+          options: { namespace },
         });
         break;
       case "pdf":
-          result = await vectorDB.save({
-            type: "pdf",
-            fileSource: url,
-            options: { namespace }
-          });
+        result = await vectorDB.save({
+          type: "pdf",
+          fileSource: url,
+          options: { namespace },
+        });
         break;
       case "csv":
-          result = await vectorDB.save({
-            type: "csv",
-            fileSource: url,
-            options: { namespace }
-          });
+        result = await vectorDB.save({
+          type: "csv",
+          fileSource: url,
+          options: { namespace },
+        });
         break;
       case "text-file":
-          result = await vectorDB.save({
-            type: "text-file",
-            fileSource: url,
-            options: { namespace }
-          });
+        result = await vectorDB.save({
+          type: "text-file",
+          fileSource: url,
+          options: { namespace },
+        });
         break;
       case "embedding":
-          result = await vectorDB.save({
-            type: "embedding",
-            data: data,
-            options: { namespace }
-          });
-          break;
-        
+        result = await vectorDB.save({
+          type: "embedding",
+          data: data,
+          options: { namespace },
+        });
+        break;
+
       default:
         return c.json(
           {
             message: "Invalid type provided",
             status: 400,
           },
-          400
+          400,
         );
     }
 
@@ -97,7 +102,7 @@ context.post("/add", async (c) => {
         status: 201,
         ids: result.ids,
       },
-      201
+      201,
     );
   } catch (error) {
     console.error("Error adding context:", error);
@@ -107,14 +112,14 @@ context.post("/add", async (c) => {
         error: error instanceof Error ? error.message : String(error),
         status: 500,
       },
-      500
+      500,
     );
   }
 });
 
 context.get("/get", async (c) => {
   try {
-    const { payload, namespace  } = await c.req.json();
+    const { payload, namespace } = await c.req.json();
     const result = await vectorDB.retrieve({ ...payload, namespace });
 
     if (!result || result.length === 0) {
@@ -127,7 +132,7 @@ context.get("/get", async (c) => {
         status: 200,
         data: result,
       },
-      200
+      200,
     );
   } catch (error) {
     console.error("Error getting context:", error);
@@ -137,7 +142,7 @@ context.get("/get", async (c) => {
         error: error instanceof Error ? error.message : String(error),
         status: 500,
       },
-      500
+      500,
     );
   }
 });
@@ -151,7 +156,7 @@ context.post("/reset", async (c) => {
         message: "Context reset successfully!",
         status: 200,
       },
-      200
+      200,
     );
   } catch (error) {
     console.error("Error resetting context:", error);
@@ -161,7 +166,7 @@ context.post("/reset", async (c) => {
         error: error instanceof Error ? error.message : String(error),
         status: 500,
       },
-      500
+      500,
     );
   }
 });
@@ -175,7 +180,7 @@ context.delete("/delete", async (c) => {
         message: "Context delete successfully!",
         status: 200,
       },
-      200
+      200,
     );
   } catch (error) {
     console.error("Error deleting context:", error);
@@ -185,7 +190,7 @@ context.delete("/delete", async (c) => {
         error: error instanceof Error ? error.message : String(error),
         status: 500,
       },
-      500
+      500,
     );
   }
 });

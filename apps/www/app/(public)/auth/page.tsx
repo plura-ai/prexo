@@ -9,16 +9,22 @@ import {
 } from "@tabler/icons-react";
 import { authClient } from "@prexo/auth/client";
 import React from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
-  const callbackUrl =
+  const searchParams = useSearchParams()
+  const redirectUrl = searchParams.get('redirect');
+
+  const baseUrl =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000/onboarding"
       : "https://app.prexo.com/onboarding";
 
-  const handleAuth = async (
-    provider: "github" | "discord" | "google",
-  ) => {
+  const callbackUrl = redirectUrl && redirectUrl.startsWith('/')
+    ? `${baseUrl}?redirect=${encodeURIComponent(redirectUrl)}`
+    : baseUrl;
+
+  const handleAuth = async (provider: "github" | "discord" | "google") => {
     switch (provider) {
       case "google":
         await authClient.signIn.social({
@@ -71,11 +77,13 @@ export default function LoginPage() {
     <div className="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="w-full max-w-sm">
         <div className={cn("flex flex-col gap-6")}>
-          <form onSubmit={e => e.preventDefault()}>
+          <form onSubmit={(e) => e.preventDefault()}>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-start">
                 <h2 className="text-3xl font-bold">Agents, Everywhere</h2>
-                <p className="text-white/75">Try Prexo support Agents for free!</p>
+                <p className="text-white/75">
+                  Try Prexo support Agents for free!
+                </p>
               </div>
               <div className="flex flex-col gap-3">
                 <Button
@@ -110,8 +118,8 @@ export default function LoginPage() {
             </div>
           </form>
           <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-            By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-            and <a href="#">Privacy Policy</a>.
+            By clicking continue, you agree to our{" "}
+            <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
           </div>
         </div>
       </div>

@@ -37,9 +37,9 @@ export class InRedisHistory implements BaseMessageHistory {
     const { message, sessionId, sessionTTL } = params;
     let TTL = DEFAULT_HISTORY_TTL;
     if (sessionTTL) {
-      TTL = sessionTTL
+      TTL = sessionTTL;
     }
-    const sessionID = DEFAULT_CHAT_SESSION_ID(sessionId)
+    const sessionID = DEFAULT_CHAT_SESSION_ID(sessionId);
 
     await this.client.lpush(sessionID, JSON.stringify(message));
     if (sessionTTL) {
@@ -60,7 +60,7 @@ export class InRedisHistory implements BaseMessageHistory {
     amount?: number;
     startIndex?: number;
   }): Promise<Message[]> {
-    const sessionID = DEFAULT_CHAT_SESSION_ID(sessionId)
+    const sessionID = DEFAULT_CHAT_SESSION_ID(sessionId);
     const endIndex = startIndex + amount - 1;
     const messages = await this.client.lrange<Message>(
       sessionID,

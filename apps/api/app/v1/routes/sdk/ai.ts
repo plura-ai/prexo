@@ -9,7 +9,11 @@ import {
 } from "ai";
 import { verifyApiKey } from "@/lib/middleware";
 
-import { BodyParameters, SDK_RAG_SYSTEM_PROMPT, SDK_SYSTEM_PROMPT } from "@/lib/constants";
+import {
+  BodyParameters,
+  SDK_RAG_SYSTEM_PROMPT,
+  SDK_SYSTEM_PROMPT,
+} from "@/lib/constants";
 
 const aiSdk = new Hono<{ Variables: { verifyApiKey: UnkeyContext } }>();
 
@@ -40,24 +44,27 @@ aiSdk.use(
         return c.text("unauthorized", 401);
       },
     },
-    3,3,60
+    3,
+    3,
+    60,
   ),
 );
 
 aiSdk.post("/stream", async (c) => {
-  const { messages, history, context, RAGDisabled }: BodyParameters = await c.req.json();
-  const userQuestion = messages[messages.length - 1]
+  const { messages, history, context, RAGDisabled }: BodyParameters =
+    await c.req.json();
+  const userQuestion = messages[messages.length - 1];
 
-  const sysPrompt = RAGDisabled ? SDK_SYSTEM_PROMPT({
-    question: userQuestion.content,
-    chatHistory: history,
-  }) : SDK_RAG_SYSTEM_PROMPT({
-    question: userQuestion.content,
-    chatHistory: history,
-    context: context
-  })
-  ;
-
+  const sysPrompt = RAGDisabled
+    ? SDK_SYSTEM_PROMPT({
+        question: userQuestion.content,
+        chatHistory: history,
+      })
+    : SDK_RAG_SYSTEM_PROMPT({
+        question: userQuestion.content,
+        chatHistory: history,
+        context: context,
+      });
   console.log(sysPrompt);
 
   const result = streamText({
@@ -77,10 +84,10 @@ aiSdk.post("/stream", async (c) => {
     },
     getErrorMessage: (error) => {
       if (error == null) {
-        return 'unknown error';
+        return "unknown error";
       }
 
-      if (typeof error === 'string') {
+      if (typeof error === "string") {
         return error;
       }
 
