@@ -60,7 +60,7 @@ export default function AgentsSec() {
           </SectionHeaderDescription>
         </SectionHeader>
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 max-w-6xl mx-auto px-2 sm:px-4 md:px-0">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto px-2 sm:px-4 md:px-0">
           {agentCards.map((card, index) => (
             <div
               key={index}
