@@ -3,12 +3,12 @@ import NotFound from "@/app/not-found";
 import OnboardingChat from "@/components/custom/onboarding/chat/chat";
 import { useMyProfileStore } from "@prexo/store";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 
-export default function Onboarding() {
+function OnboardingInner() {
   const { myProfile } = useMyProfileStore();
-  const searchParams = useSearchParams()
-  const redirectUrl = searchParams.get('redirect')
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams.get('redirect');
   const pathname = usePathname();
   const uID = pathname?.split("/onboarding/")[1] || null;
   const router = useRouter();
@@ -33,4 +33,12 @@ export default function Onboarding() {
     return NotFound();
   }
   return <OnboardingChat chatId={uID} />;
+}
+
+export default function Onboarding() {
+  return (
+    <Suspense fallback={null}>
+      <OnboardingInner />
+    </Suspense>
+  );
 }

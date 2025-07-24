@@ -1,13 +1,13 @@
 "use client";
 import { useMyProfileStore } from "@prexo/store";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 
-export default function Onboarding() {
+function OnboardingInner() {
   const { myProfile } = useMyProfileStore();
   const router = useRouter();
-  const searchParams = useSearchParams()
-  const redirectUrl = searchParams.get('redirect')
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams.get('redirect');
 
   useEffect(() => {
     if (!myProfile) {
@@ -26,4 +26,12 @@ export default function Onboarding() {
   }, [myProfile, router, redirectUrl]);
 
   return null;
+}
+
+export default function Onboarding() {
+  return (
+    <Suspense fallback={null}>
+      <OnboardingInner />
+    </Suspense>
+  );
 }

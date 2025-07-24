@@ -8,11 +8,11 @@ import {
   IconBrandDiscord,
 } from "@tabler/icons-react";
 import { authClient } from "@prexo/auth/client";
-import React from "react";
+import React, { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function LoginPage() {
-  const searchParams = useSearchParams()
+function LoginPageContent() {
+  const searchParams = useSearchParams();
   const redirectUrl = searchParams.get('redirect');
 
   const baseUrl =
@@ -124,5 +124,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginPageContent />
+    </Suspense>
   );
 }
