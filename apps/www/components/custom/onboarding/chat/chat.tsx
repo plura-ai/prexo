@@ -6,7 +6,7 @@ import { SuggestedActions } from "../suggested.actions";
 import AiBanner from "@/components/ai.banner";
 
 export default function OnboardingChat({ chatId }: { chatId: string }) {
-  const BASE_API_URL = "http://localhost:3001/v1";
+  const BASE_API_URL = process.env.BASE_API_URL;
   const url = `${BASE_API_URL}/ai/stream`;
 
   const {
