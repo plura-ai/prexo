@@ -10,8 +10,8 @@ import { Card, CardDescription, CardFooter } from "@/components/ui/card";
 export default function MemorySec() {
   return (
     <div className="relative w-full items-center justify-center py-10">
-      <div className="px-8 md:px-14">
-        <SectionHeader className="flex flex-col z-50 mb-10">
+      <div className="px-4 md:px-14">
+        <SectionHeader className="flex flex-col z-50 mb-10 items-start">
           <SectionHeaderHeading>
             Customisable, Persistent Memory
           </SectionHeaderHeading>
@@ -22,8 +22,8 @@ export default function MemorySec() {
           </SectionHeaderDescription>
         </SectionHeader>
 
-        <div className="grid grid-cols-1 px-8 md:px-14 max-w-7xl mx-auto md:grid-cols-2 gap-5">
-          <Card className="flex items-center justify-between border-dashed bg-transparent px-5 rounded-3xl">
+        <div className="grid grid-cols-1 px-4 md:px-14 max-w-7xl mx-auto md:grid-cols-2 gap-5">
+          <Card className="flex items-center justify-between border-dashed bg-transparent p-5 rounded-3xl">
             <CardDescription>
               <span className="text-lg text-muted-foreground">
                 Agent&apos;s memory extracts contexts from your provided
@@ -32,7 +32,7 @@ export default function MemorySec() {
               </span>
             </CardDescription>
 
-            <CardFooter className="w-full">
+            <CardFooter className="w-full mt-4 px-3 md:px-auto">
               <AnimatedBeamMemoryInput />
             </CardFooter>
           </Card>
@@ -46,7 +46,7 @@ export default function MemorySec() {
               </span>
             </CardDescription>
 
-            <CardFooter className="w-full mb-20">
+            <CardFooter className="flex w-[350] md:w-full mt-4 md:px-auto md:mb-20">
               <AnimatedBeamDB />
             </CardFooter>
           </Card>

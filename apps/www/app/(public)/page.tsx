@@ -18,7 +18,7 @@ export default function Home() {
     <main className="flex flex-col items-center justify-center w-full min-h-screen overflow-hidden gap-5">
       <section
         id="hero"
-        className="relative flex flex-col items-center justify-center w-full h-screen p-4 border-y border-dashed overflow-hidden rounded-t-4xl rounded-b-4xl mt-2"
+        className="relative flex flex-col items-center justify-center w-full h-screen p-8 md:px-14 border-y border-dashed overflow-hidden rounded-t-4xl rounded-b-4xl mt-2"
       >
         <div
           className="absolute inset-0 z-0 flex overflow-hidden [mask-image:radial-gradient(circle_at_center,white_0%,white_30%,transparent_70%)]"
