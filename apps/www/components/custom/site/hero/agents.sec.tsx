@@ -71,11 +71,11 @@ export default function AgentsSec({ isMob }: { isMob: boolean }) {
               )}
             >
               {(card.image && !isMob) && (
-                <div className="w-[116%] md:w-full absolute bottom-[-16rem] right-[-4rem] md:bottom-[-9rem] md:right-[-4rem] h-auto mb-4 rounded-xl">
+                <div className="w-[116%] hidden md:w-full lg:block absolute bottom-[-10rem] right-[-4rem] h-auto mb-4 rounded-xl">
                   <Image
                     src={card.image}
                     alt={card.title}
-                    className="h-[35rem] object-contain mb-4 rounded-lg"
+                    className="h-[40rem] object-contain mb-4 rounded-lg"
                     width={800}
                     height={800}
                   />
