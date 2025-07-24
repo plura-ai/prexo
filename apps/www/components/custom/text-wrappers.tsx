@@ -80,7 +80,7 @@ function SectionHeader({
   return (
     <section
       className={cn(
-        "flex items-center justify-start md:items-start gap-8 p-12 md:p-20 md:mr-auto",
+        "flex items-center justify-start md:items-start gap-8 p-2 md:p-20 md:mr-auto",
         className,
       )}
       {...props}

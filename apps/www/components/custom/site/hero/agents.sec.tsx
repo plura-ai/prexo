@@ -47,9 +47,11 @@ const agentCards = [
 export default function AgentsSec() {
   return (
     <div className="relative w-full items-center justify-center py-10">
-      <div className="px-8 md:px-14">
+      <div className="px-4 sm:px-6 md:px-14">
         <SectionHeader className="flex flex-col z-50 mb-10">
-          <SectionHeaderHeading>Why Agents? Not Just Chatbots</SectionHeaderHeading>
+          <SectionHeaderHeading>
+            Why Agents? Not Just Chatbots
+          </SectionHeaderHeading>
           <SectionHeaderDescription>
             Agents are more than just chatbots; they are intelligent systems that
             can handle complex background tasks, engage customers, qualify leads, and resolve
@@ -58,17 +60,17 @@ export default function AgentsSec() {
           </SectionHeaderDescription>
         </SectionHeader>
 
-        <div className="grid grid-cols-1 px-8 md:px-14 max-w-7xl mx-auto md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 max-w-6xl mx-auto px-2 sm:px-4 md:px-0">
           {agentCards.map((card, index) => (
             <div
               key={index}
               className={cn(
                 card.class,
-                "relative group overflow-hidden backdrop-blur-xl rounded-3xl p-8 border border-dashed border-border cursor-pointer",
+                "relative group overflow-hidden backdrop-blur-xl rounded-3xl p-6 sm:p-6 md:p-8 border border-dashed border-border cursor-pointer"
               )}
             >
               {card.image && (
-                <div className="w-full absolute bottom-[-8rem] right-[-4rem] h-auto mb-4 rounded-xl">
+                <div className="w-[115%] md:w-full absolute bottom-[-15rem] right-[-4rem] md:bottom-[-8rem] md:right-[-4rem] h-auto mb-4 rounded-xl">
                   <Image
                     src={card.image}
                     alt={card.title}
@@ -78,14 +80,16 @@ export default function AgentsSec() {
                   />
                 </div>
               )}
-              <h3 className="text-2xl font-semibold mb-2">{card.title}</h3>
-              <p className="text-muted-foreground">{card.description}</p>
+              <h3 className="text-xl sm:text-2xl font-semibold mb-2">{card.title}</h3>
+              <p className="text-sm sm:text-base text-muted-foreground">{card.description}</p>
+
               <div className="md:bottom-[-30rem] left-[10%] group-hover:opacity-100 opacity-30 z-[-1] absolute bg-gradient-to-t from-secondary/20 to-primary/50 blur-[8em] rounded-xl transition-all translate-x-[-50%] duration-500 ease-out w-[10rem] md:w-[30rem] h-[20rem] md:h-[30rem] rotate-[0deg]" />
+
               <Link
                 href={card.href}
                 className="text-primary group w-fit flex items-center gap-1 bg-accent text-xs border border-accent rounded-full px-3 mt-4 py-1 transition-all duration-300 hover:bg-primary hover:text-background"
               >
-                <span className="font-semibold text-xs">Read More</span>{" "}
+                <span className="font-semibold text-xs">Read More</span>
                 <IconArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-all duration-300" />
               </Link>
             </div>
