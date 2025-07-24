@@ -26,7 +26,7 @@ import {
 import { UserType } from "@prexo/types";
 import { authClient } from "@prexo/auth/client";
 import { useRouter } from "next/navigation";
-import { getPortalLink } from "@prexo/polar";
+import { getPortalLink } from "@prexo/auth/client";
 import { useAuth } from "@/context/auth.context";
 
 export function NavUser({ user }: { user: UserType }) {
