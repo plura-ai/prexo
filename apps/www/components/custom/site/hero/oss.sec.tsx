@@ -20,7 +20,7 @@ import { socials } from "@prexo/utils/constants";
 export default function OssSec() {
   return (
     <div className="relative w-full items-center justify-center py-10">
-      <div className="px-8 md:px-14">
+      <div className="px-6 md:px-14">
         <SectionHeader className="flex flex-col z-50 mb-10">
           <SectionHeaderHeading>We believe in Open Source</SectionHeaderHeading>
           <SectionHeaderDescription>
@@ -31,64 +31,51 @@ export default function OssSec() {
           </SectionHeaderDescription>
         </SectionHeader>
 
-        <WarpBackground>
-          <div className="grid grid-cols-1 px-8 md:px-14 max-w-7xl mx-auto md:grid-cols-3 gap-4">
-            <Card>
-              <CardContent className="flex flex-col items-start gap-2">
-                <CardTitle>GitHub</CardTitle>
-                <CardDescription>
-                  It helps us grow and reach more developers like you. Your
-                  support means a lot to us and encourages us to keep improving
-                  the platform.
-                </CardDescription>
-              </CardContent>
-              <CardFooter>
-                <Link href={socials.github} target="_blank" rel="noreferrer">
-                  <Button>
-                    <Icons.gitHub className="size-4 mr-2" />
-                    Star us on GitHub
-                  </Button>
-                </Link>
-              </CardFooter>
-            </Card>
-
-            <Card>
-              <CardContent className="flex flex-col items-start gap-2">
-                <CardTitle>Discord</CardTitle>
-                <CardDescription>
-                  Join our Discord community to connect with other developers,
-                  share your experiences, and get help with any issues you
-                  encounter.
-                </CardDescription>
-              </CardContent>
-              <CardFooter>
-                <Link href={socials.discord} target="_blank" rel="noreferrer">
-                  <Button>
-                    <Icons.discord className="size-4 mr-2" />
-                    Join us on Discord
-                  </Button>
-                </Link>
-              </CardFooter>
-            </Card>
-
-            <Card>
-              <CardContent className="flex flex-col items-start gap-2">
-                <CardTitle>Twitter</CardTitle>
-                <CardDescription>
-                  Follow us on Twitter for the latest updates, news, and
-                  announcements. Stay connected with our community and share
-                  your thoughts with us.
-                </CardDescription>
-              </CardContent>
-              <CardFooter>
-                <Link href={socials.x} target="_blank" rel="noreferrer">
-                  <Button>
-                    <Icons.twitter className="size-4 mr-2" />
-                    Follow us on Twitter
-                  </Button>
-                </Link>
-              </CardFooter>
-            </Card>
+        <WarpBackground className="p-10 md:p-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-2">
+            {[
+              {
+                title: "GitHub",
+                description:
+                  "It helps us grow and reach more developers like you. Your support means a lot to us and encourages us to keep improving the platform.",
+                icon: <Icons.gitHub className="size-4 mr-2" />,
+                href: socials.github,
+                label: "Star us on GitHub",
+              },
+              {
+                title: "Discord",
+                description:
+                  "Join our Discord community to connect with other developers, share your experiences, and get help with any issues you encounter.",
+                icon: <Icons.discord className="size-4 mr-2" />,
+                href: socials.discord,
+                label: "Join us on Discord",
+              },
+              {
+                title: "Twitter",
+                description:
+                  "Follow us on Twitter for the latest updates, news, and announcements. Stay connected with our community and share your thoughts with us.",
+                icon: <Icons.twitter className="size-4 mr-2" />,
+                href: socials.x,
+                label: "Follow us on Twitter",
+              },
+            ].map((card, i) => (
+              <Card key={i} className="flex flex-col justify-between h-full py-0">
+                <CardContent className="flex flex-col items-start gap-2 p-5 pb-0">
+                  <CardTitle>{card.title}</CardTitle>
+                  <CardDescription className="text-base text-muted-foreground">
+                    {card.description}
+                  </CardDescription>
+                </CardContent>
+                <CardFooter className="p-5 pt-4">
+                  <Link href={card.href} target="_blank" rel="noreferrer">
+                    <Button className="text-sm">
+                      {card.icon}
+                      {card.label}
+                    </Button>
+                  </Link>
+                </CardFooter>
+              </Card>
+            ))}
           </div>
         </WarpBackground>
       </div>
