@@ -49,7 +49,7 @@ export default function Home() {
           Create intelligent agents that handle both sales and support 24/7,
           engage customers, qualify leads, and resolve issues.
         </SectionHeaderDescription>
-        <CtaBtns />
+        <CtaBtns isMob={isMob}/>
       </section>
       <section
         id="agents"
