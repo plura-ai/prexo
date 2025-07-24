@@ -42,6 +42,7 @@ export default function Home() {
           </div>
         </div>
         <AnncBtn />
+        <div className="flex flex-col items-center justify-center">
         <SectionHeaderHeading>Transform Your SaaS with</SectionHeaderHeading>
         <SectionHeaderHeading>AI-Powered Sales & Support</SectionHeaderHeading>
 
@@ -49,6 +50,7 @@ export default function Home() {
           Create intelligent agents that handle both sales and support 24/7,
           engage customers, qualify leads, and resolve issues.
         </SectionHeaderDescription>
+        </div>
         <CtaBtns isMob={isMob}/>
       </section>
       <section

@@ -22,7 +22,7 @@ export default function MemorySec() {
           </SectionHeaderDescription>
         </SectionHeader>
 
-        <div className="grid grid-cols-1 px-4 md:px-14 max-w-7xl mx-auto md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 px-4 md:px-14 max-w-7xl mx-auto lg:grid-cols-2 gap-5">
           <Card className="flex items-center justify-between border-dashed bg-transparent p-5 rounded-3xl">
             <CardDescription>
               <span className="text-lg text-muted-foreground">
