@@ -451,7 +451,7 @@ export function AnimatedBeamDB() {
 
   return (
     <div
-      className="relative flex w-full max-w-[500px] items-center justify-center overflow-hidden md:p-10"
+      className="relative flex w-full max-w-[500px] items-center justify-center overflow-hidden md:max-p-10"
       ref={containerRef}
     >
       <div className="flex size-full flex-col items-stretch justify-between gap-10">

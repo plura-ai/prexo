@@ -39,7 +39,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <AnncBtn/>
+        <AnncBtn />
         <SectionHeaderHeading>Transform Your SaaS with</SectionHeaderHeading>
         <SectionHeaderHeading>AI-Powered Sales & Support</SectionHeaderHeading>
 
@@ -47,28 +47,28 @@ export default function Home() {
           Create intelligent agents that handle both sales and support 24/7,
           engage customers, qualify leads, and resolve issues.
         </SectionHeaderDescription>
-        <CtaBtns/>
+        <CtaBtns />
 
       </section>
       <section
         id="agents"
         className="flex flex-col items-center justify-center w-full h-full p-4 border-y border-dashed rounded-t-4xl rounded-b-4xl"
       >
-      <AgentsSec />
+        <AgentsSec isMob={isMob} />
       </section>
 
       <section
         id="memory"
         className="flex flex-col items-center justify-center w-full h-full p-4 border-y border-dashed rounded-t-4xl rounded-b-4xl"
       >
-      <MemorySec />
+        <MemorySec />
       </section>
 
       <section
         id="oss"
         className="flex flex-col items-center justify-center w-full h-full p-4 border-y border-dashed rounded-t-4xl rounded-b-4xl"
       >
-      <OssSec />
+        <OssSec />
       </section>
     </main>
   );

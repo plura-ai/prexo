@@ -20,7 +20,7 @@ import { socials } from "@prexo/utils/constants";
 export default function OssSec() {
   return (
     <div className="relative w-full items-center justify-center py-10">
-      <div className="px-4 sm:px-6 md:px-14">
+      <div className="px-6 md:px-14">
         <SectionHeader className="flex flex-col z-50 mb-10">
           <SectionHeaderHeading>We believe in Open Source</SectionHeaderHeading>
           <SectionHeaderDescription>
@@ -31,8 +31,8 @@ export default function OssSec() {
           </SectionHeaderDescription>
         </SectionHeader>
 
-        <WarpBackground className="p-5 sm:p-10 md:p-20">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-2">
+        <WarpBackground className="p-10 md:p-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-2">
             {[
               {
                 title: "GitHub",

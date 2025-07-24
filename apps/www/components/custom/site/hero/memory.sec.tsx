@@ -22,7 +22,7 @@ export default function MemorySec() {
           </SectionHeaderDescription>
         </SectionHeader>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto px-2 sm:px-4 md:px-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto px-4 md:px-14">
           <Card className="flex flex-col justify-between border-dashed bg-transparent p-5 rounded-3xl h-full">
             <CardDescription className="text-lg text-muted-foreground">
               Agent&apos;s memory extracts contexts from your provided 
