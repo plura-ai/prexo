@@ -21,7 +21,7 @@ const agentCards = [
       "Integrate agents seamlessly into your existing applications. Our platform supports ReactJs frameworks and languages, making it easy to get started.",
     icon: IconBrain,
     href: "/features/ai-assistant",
-    class: "md:col-span-2 md:row-span-2 h-[40rem]",
+    class: "md:col-span-2 md:row-span-2 md:h-[40rem]",
     image: "/img/demo.config.png",
   },
   {
@@ -44,7 +44,7 @@ const agentCards = [
   },
 ];
 
-export default function AgentsSec() {
+export default function AgentsSec({isMob = false}: { isMob?: boolean }) {
   return (
     <div className="relative w-full items-center justify-center py-10">
       <div className="px-8 md:px-14">
@@ -69,7 +69,7 @@ export default function AgentsSec() {
                 "relative group overflow-hidden backdrop-blur-xl rounded-3xl p-8 border border-dashed border-border cursor-pointer",
               )}
             >
-              {card.image && (
+              {(card.image && !isMob) && (
                 <div className="w-full absolute bottom-[-8rem] right-[-4rem] h-auto mb-4 rounded-xl">
                   <Image
                     src={card.image}

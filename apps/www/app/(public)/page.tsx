@@ -55,7 +55,7 @@ export default function Home() {
         id="agents"
         className="flex flex-col items-center justify-center w-full h-full p-4 border-y border-dashed rounded-t-4xl rounded-b-4xl"
       >
-        <AgentsSec />
+        <AgentsSec isMob={isMob}/>
       </section>
 
       <section
