@@ -19,6 +19,7 @@ export default function MemorySec() {
           <SectionHeaderDescription>
             Our memory system allows you to create custom memory inputs and
             databases, enabling your agents to learn and adapt over time.
+            customer queries and tasks.
           </SectionHeaderDescription>
         </SectionHeader>
 
