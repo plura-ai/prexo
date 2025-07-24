@@ -21,4 +21,23 @@ type ProjectType = {
   apiKey?: string | null;
 };
 
-export type { UserType, ProjectType };
+interface PCards {
+  isYearly?: boolean;
+  isUserAuthenticated?: boolean;
+  items: Array<{
+    name: string;
+    isFeatured: boolean;
+    isFree: boolean;
+    currency: string;
+    btn: string;
+    priceMonthly: number;
+    priceYearly: number;
+    beforePriceMonthly: number;
+    beforePriceYearly: number;
+    discountYearly: number;
+    discountMonthly: number;
+    benifits: string[];
+  }>;
+}
+
+export type { UserType, ProjectType, PCards };

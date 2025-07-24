@@ -27,18 +27,6 @@ export function MainNavbar() {
         />
       </Link>
       <nav className="hidden md:flex items-center gap-8 text-sm font-semibold">
-        <Link
-          href="/about"
-          draggable={false}
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/about")
-              ? "text-foreground"
-              : "text-foreground/60",
-          )}
-        >
-          About
-        </Link>
 
         <Link
           href={socials.docs}

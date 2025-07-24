@@ -9,12 +9,20 @@ import {
 } from "@tabler/icons-react";
 import { authClient } from "@prexo/auth/client";
 import React from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
-  const callbackUrl =
+  const searchParams = useSearchParams()
+  const redirectUrl = searchParams.get('redirect');
+
+  const baseUrl =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000/onboarding"
       : "https://app.prexo.com/onboarding";
+
+  const callbackUrl = redirectUrl && redirectUrl.startsWith('/')
+    ? `${baseUrl}?redirect=${encodeURIComponent(redirectUrl)}`
+    : baseUrl;
 
   const handleAuth = async (provider: "github" | "discord" | "google") => {
     switch (provider) {
