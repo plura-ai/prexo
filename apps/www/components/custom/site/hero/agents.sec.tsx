@@ -16,7 +16,7 @@ import {
 
 
 export default function AgentsSec({ isMob }: { isMob: boolean }) {
-  console.log(isMob)
+
   const agentCards = [
     {
       title: "Easy Integration",
@@ -48,7 +48,7 @@ export default function AgentsSec({ isMob }: { isMob: boolean }) {
   ];
   return (
     <div className="relative w-full items-center justify-center py-10">
-      <div className="px-4 sm:px-6 md:px-14">
+      <div className="px-6 md:px-14">
         <SectionHeader className="flex flex-col z-50 mb-10">
           <SectionHeaderHeading>
             Why Agents? Not Just Chatbots
@@ -67,7 +67,7 @@ export default function AgentsSec({ isMob }: { isMob: boolean }) {
               key={index}
               className={cn(
                 card.class,
-                "relative group overflow-hidden backdrop-blur-xl rounded-3xl p-6 sm:p-6 md:p-8 border border-dashed border-border cursor-pointer"
+                "relative group overflow-hidden backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-dashed border-border cursor-pointer"
               )}
             >
               {(card.image && !isMob) && (
@@ -81,8 +81,8 @@ export default function AgentsSec({ isMob }: { isMob: boolean }) {
                   />
                 </div>
               )}
-              <h3 className="text-xl sm:text-2xl font-semibold mb-2">{card.title}</h3>
-              <p className="text-sm sm:text-base text-muted-foreground">{card.description}</p>
+              <h3 className="text-2xl font-semibold mb-2">{card.title}</h3>
+              <p className="text-base text-muted-foreground">{card.description}</p>
 
               <div className="md:bottom-[-30rem] left-[10%] group-hover:opacity-100 opacity-30 z-[-1] absolute bg-gradient-to-t from-secondary/20 to-primary/50 blur-[8em] rounded-xl transition-all translate-x-[-50%] duration-500 ease-out w-[10rem] md:w-[30rem] h-[20rem] md:h-[30rem] rotate-[0deg]" />
 
