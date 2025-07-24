@@ -1,8 +1,9 @@
 {
     "title": "Ai Chat SDK",
     "slug": "ai-chat-sdk",
-    "description": "The description of root folder (optional)",
+    "description": "The Prexo AI Chat SDK",
     "icon": "Brain",
     "root": true,
+    "pages": ["intro", "chatbot"],
     "defaultOpen": false
   }

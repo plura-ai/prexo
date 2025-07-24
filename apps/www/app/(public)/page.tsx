@@ -5,7 +5,10 @@ import { AnncBtn } from "@/components/custom/site/hero/annc.btn";
 import CtaBtns from "@/components/custom/site/hero/cta.btn";
 import MemorySec from "@/components/custom/site/hero/memory.sec";
 import OssSec from "@/components/custom/site/hero/oss.sec";
-import { SectionHeaderDescription, SectionHeaderHeading } from "@/components/custom/text-wrappers";
+import {
+  SectionHeaderDescription,
+  SectionHeaderHeading,
+} from "@/components/custom/text-wrappers";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function Home() {
@@ -17,7 +20,6 @@ export default function Home() {
         id="hero"
         className="relative flex flex-col items-center justify-center w-full h-screen p-4 border-y border-dashed overflow-hidden rounded-t-4xl rounded-b-4xl mt-2"
       >
-
         <div
           className="absolute inset-0 z-0 flex overflow-hidden [mask-image:radial-gradient(circle_at_center,white_0%,white_30%,transparent_70%)]"
           style={{ opacity: 0.5 }}
@@ -39,7 +41,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <AnncBtn/>
+        <AnncBtn />
         <SectionHeaderHeading>Transform Your SaaS with</SectionHeaderHeading>
         <SectionHeaderHeading>AI-Powered Sales & Support</SectionHeaderHeading>
 
@@ -47,28 +49,27 @@ export default function Home() {
           Create intelligent agents that handle both sales and support 24/7,
           engage customers, qualify leads, and resolve issues.
         </SectionHeaderDescription>
-        <CtaBtns/>
-
+        <CtaBtns />
       </section>
       <section
         id="agents"
         className="flex flex-col items-center justify-center w-full h-full p-4 border-y border-dashed rounded-t-4xl rounded-b-4xl"
       >
-      <AgentsSec />
+        <AgentsSec />
       </section>
 
       <section
         id="memory"
         className="flex flex-col items-center justify-center w-full h-full p-4 border-y border-dashed rounded-t-4xl rounded-b-4xl"
       >
-      <MemorySec />
+        <MemorySec />
       </section>
 
       <section
         id="oss"
         className="flex flex-col items-center justify-center w-full h-full p-4 border-y border-dashed rounded-t-4xl rounded-b-4xl"
       >
-      <OssSec />
+        <OssSec />
       </section>
     </main>
   );

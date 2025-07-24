@@ -11,7 +11,11 @@ export function MainNavbar() {
 
   return (
     <div className="flex">
-      <Link href="/" draggable={false} className="mr-8 flex items-center space-x-2">
+      <Link
+        href="/"
+        draggable={false}
+        className="mr-8 flex items-center space-x-2"
+      >
         <Image
           src="/logo.png"
           alt="logo"
@@ -35,7 +39,7 @@ export function MainNavbar() {
         >
           About
         </Link>
-        
+
         <Link
           href={socials.docs}
           target="_blank"

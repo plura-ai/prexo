@@ -2,5 +2,6 @@
     "title": "Introduction",
     "root": false,
     "defaultOpen": true,
-    "pages": ["quick-start", "prexo-ai"]
+    "pages": ["quick-start", "prexo-ai"],
+    "icon": "Album"
   }

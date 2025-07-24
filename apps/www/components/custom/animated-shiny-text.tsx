@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import { ComponentPropsWithoutRef, CSSProperties, FC } from "react";
 
-
 export interface AnimatedShinyTextProps
   extends ComponentPropsWithoutRef<"span"> {
   shimmerWidth?: number;

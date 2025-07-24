@@ -53,10 +53,10 @@ export default function AgentsSec() {
             Why Agents? Not Just Chatbots
           </SectionHeaderHeading>
           <SectionHeaderDescription>
-            Agents are more than just chatbots; they are intelligent systems that
-            can handle complex background tasks, engage customers, qualify leads, and resolve
-            issues. They learn from interactions and adapt to provide better
-            responses over time.
+            Agents are more than just chatbots; they are intelligent systems
+            that can handle complex background tasks, engage customers, qualify
+            leads, and resolve issues. They learn from interactions and adapt to
+            provide better responses over time.
           </SectionHeaderDescription>
         </SectionHeader>
 

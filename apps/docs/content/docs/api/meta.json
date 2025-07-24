@@ -1,7 +1,7 @@
 {
     "title": "Prexo API",
     "slug": "api",
-    "description": "The description of root folder (optional)",
+    "description": "The Prexo REST API",
     "icon": "Terminal",
     "root": true,
     "defaultOpen": false

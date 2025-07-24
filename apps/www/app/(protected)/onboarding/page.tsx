@@ -12,10 +12,7 @@ export default function Onboarding() {
       router.replace("/auth");
       return;
     }
-    if (
-      myProfile.role !== "onboarded" &&
-      myProfile.role === "user"
-    ) {
+    if (myProfile.role !== "onboarded" && myProfile.role === "user") {
       router.replace(`/onboarding/${myProfile.id}`);
     } else {
       // If the user is already onboarded, redirect to the dashboard or another appropriate page

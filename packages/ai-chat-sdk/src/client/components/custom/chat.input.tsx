@@ -10,7 +10,7 @@ interface ChatInputProps {
   handleInputChange: UseChatHelpers["handleInputChange"];
   placeholder: string;
   sessionId?: string;
-  sessionTTL?: number
+  sessionTTL?: number;
   isLoading?: boolean;
   history?: BaseMessageHistory;
 }
@@ -24,44 +24,44 @@ function ChatInputComponent({
   sessionId,
   sessionTTL,
   isLoading,
-  history
+  history,
 }: ChatInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleKeyPress = async (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-    try {
-      if (history) {
-        await history.addMessage({
-          message: {
-            id: Date.now().toString(),
-            role: "user",
-            content: input
-          },
-          sessionId: sessionId!,
-          sessionTTL: sessionTTL!
-        });
+      try {
+        if (history) {
+          await history.addMessage({
+            message: {
+              id: Date.now().toString(),
+              role: "user",
+              content: input,
+            },
+            sessionId: sessionId!,
+            sessionTTL: sessionTTL!,
+          });
+        }
+      } catch (err) {
+        console.error("addMessage error:", err);
       }
-    } catch (err) {
-      console.error("addMessage error:", err);
-    }
       handleSubmit(e);
     }
   };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       if (history) {
         await history.addMessage({
           message: {
             id: Date.now().toString(),
             role: "user",
-            content: input
+            content: input,
           },
           sessionId: sessionId!,
-          sessionTTL: sessionTTL!
+          sessionTTL: sessionTTL!,
         });
       }
     } catch (err) {
@@ -80,12 +80,12 @@ function ChatInputComponent({
           onChange={handleInputChange}
           onKeyPress={handleKeyPress}
           placeholder={placeholder}
-          disabled={status === 'streaming'}
+          disabled={status === "streaming"}
           className="message-input"
         />
         <button
           type="submit"
-          disabled={status === 'streaming' || isLoading}
+          disabled={status === "streaming" || isLoading}
           className="send-button"
           aria-label="Send message"
         >

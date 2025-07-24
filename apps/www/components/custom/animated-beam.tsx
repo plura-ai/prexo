@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 import { RefObject, useEffect, useId, useState } from "react";
 
-
 export interface AnimatedBeamProps {
   className?: string;
   containerRef: RefObject<HTMLElement | null>; // Container ref

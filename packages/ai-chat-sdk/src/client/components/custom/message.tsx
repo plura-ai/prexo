@@ -29,9 +29,7 @@ export const Message: React.FC<MessageProps> = ({ message }) => {
         <div className="message-bubble">
           <p>{message.content}</p>
         </div>
-        <div className="message-time">
-        {formatTime(new Date())}
-        </div>
+        <div className="message-time">{formatTime(new Date())}</div>
       </div>
     </div>
   );

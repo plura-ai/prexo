@@ -25,11 +25,7 @@ import {
 } from "@/components/ui/sidebar";
 import { UserType } from "@prexo/types";
 
-export function NavUser({
-  user,
-}: {
-  user: UserType;
-}) {
+export function NavUser({ user }: { user: UserType }) {
   const { isMobile } = useSidebar();
 
   return (

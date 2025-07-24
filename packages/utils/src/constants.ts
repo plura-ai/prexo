@@ -16,7 +16,7 @@ const site = {
   logo: "/img/logo.png",
   ogImage: "/img/og-image.png",
   twitterHandle: "@agentify_ai",
-}
+};
 
 const socials = {
   npm: "https://l.devwtf.in/npmXyZ",
@@ -24,7 +24,7 @@ const socials = {
   discord: "https://l.devwtf.in/plura-dc",
   github: "https://git.new/prexo",
   docs: "https://docs.prexoai.xyz",
-  sponsor: "https://l.devwtf.in/sponsor"
-}
+  sponsor: "https://l.devwtf.in/sponsor",
+};
 
 export { site, socials };

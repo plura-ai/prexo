@@ -1,7 +1,6 @@
 import { Unkey, verifyKey } from "@unkey/api";
 
-
-const rootKey = process.env.UNKEY_ROOT_API_KEY!
+const rootKey = process.env.UNKEY_ROOT_API_KEY!;
 const apiID = process.env.UNKEY_API_ID!;
 const unkey = new Unkey({ rootKey: rootKey });
 

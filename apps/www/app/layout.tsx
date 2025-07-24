@@ -98,10 +98,10 @@ export default function RootLayout({
         className={`${uxumGrotesque.variable} ${untitledSans.variable} antialiased`}
       >
         <AuthProvider>
-        <RoutesContext
-          protectedRoutes={protectedRoutes}
-          publicRoutes={publicRoutes}
-        >
+          <RoutesContext
+            protectedRoutes={protectedRoutes}
+            publicRoutes={publicRoutes}
+          >
             <ThemeProvider
               attribute="class"
               defaultTheme="dark"
@@ -112,7 +112,7 @@ export default function RootLayout({
                 {children}
               </div>
             </ThemeProvider>
-            </RoutesContext>
+          </RoutesContext>
         </AuthProvider>
       </body>
     </html>

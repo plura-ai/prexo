@@ -6,13 +6,11 @@ interface PublicLayoutProps {
   children: React.ReactNode;
 }
 
-
 const suggestedActions = [
   {
     label: "What is the context?",
-    action:
-      "I would like to know about what context you have.",
-  }
+    action: "I would like to know about what context you have.",
+  },
 ];
 
 const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
@@ -20,7 +18,7 @@ const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
 
 const vectorUrl = process.env.UPSTASH_VECTOR_REST_URL;
 const vectorToken = process.env.UPSTASH_VECTOR_REST_TOKEN;
-const namespace = "saidev"
+const namespace = "saidev";
 
 export default function PublicLayout({ children }: PublicLayoutProps) {
   return (
@@ -29,19 +27,20 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
       {children}
       <SiteFooter />
       <PrexoAiChatBot
-                width={380}
-                height={550}
-                apiKey={process.env.PREXO_API_KEY!}
-                suggestedActions={suggestedActions}
-                position="bottom-right"
-                sessionId="1234"
-                {...(redisUrl && redisToken
-                  && { redis: { url: redisUrl, token: redisToken } }
-                )}
-                {...(vectorUrl && vectorToken && namespace
-                  && { vector: { url: vectorUrl, token: vectorToken, namespace } }
-                )}
-              />
+        width={380}
+        height={550}
+        apiKey={process.env.PREXO_API_KEY!}
+        suggestedActions={suggestedActions}
+        position="bottom-right"
+        sessionId="1234"
+        {...(redisUrl &&
+          redisToken && { redis: { url: redisUrl, token: redisToken } })}
+        {...(vectorUrl &&
+          vectorToken &&
+          namespace && {
+            vector: { url: vectorUrl, token: vectorToken, namespace },
+          })}
+      />
     </div>
   );
 }
