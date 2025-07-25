@@ -233,7 +233,6 @@
       "dependencies": {
         "@polar-sh/better-auth": "^1.0.1",
         "@polar-sh/sdk": "^0.33.0",
-        "@prexo/auth": "workspace:*",
         "@prexo/db": "workspace:*",
         "@prexo/utils": "workspace:*",
         "better-auth": "^1.2.9",

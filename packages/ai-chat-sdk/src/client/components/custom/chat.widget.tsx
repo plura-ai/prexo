@@ -409,7 +409,7 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
               {messages.length === 0 &&
                 suggestedActions &&
                 suggestedActions.length < 3 && (
-                  <div className="message-content p-2">
+                  <div className="p-2">
                     <SuggestedActions
                       append={handleSuggestedAction}
                       suggestedActions={suggestedActions}

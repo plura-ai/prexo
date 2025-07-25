@@ -2,9 +2,9 @@
 
 import { cn } from "@/lib/utils";
 import { socials } from "@prexo/utils/constants";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Logo from "../logo";
 
 export function MainNavbar() {
   const pathname = usePathname();
@@ -16,15 +16,7 @@ export function MainNavbar() {
         draggable={false}
         className="mr-8 flex items-center space-x-2"
       >
-        <Image
-          src="/logo.png"
-          alt="logo"
-          width={35}
-          height={35}
-          className="rounded-sm dark:invert"
-          draggable={false}
-          priority
-        />
+         <Logo isTextVisible={false}/>
       </Link>
       <nav className="hidden md:flex items-center gap-8 text-sm font-semibold">
 
@@ -56,7 +48,7 @@ export function MainNavbar() {
           Pricing
         </Link>
 
-        <Link
+        {/* <Link
           href="/contact"
           draggable={false}
           className={cn(
@@ -67,7 +59,7 @@ export function MainNavbar() {
           )}
         >
           Contact
-        </Link>
+        </Link> */}
       </nav>
     </div>
   );

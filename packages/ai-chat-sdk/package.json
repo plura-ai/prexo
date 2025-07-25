@@ -21,7 +21,7 @@
   "scripts": {
     "d:build": "tsup",
     "postbuild": "rm -rf dist/client/styles && cpx 'src/**/*.css' dist",
-    "pre-publish": "bun run build",
+    "pre-publish": "bun run d:build",
     "type-check": "tsc --noEmit"
   },
   "keywords": ["react", "chat", "widget", "sdk", "typescript", "embeddable", "ai-chat-sdk", "prexo-ai", "chat-widget", "chatbot", "react-chat-widget"],

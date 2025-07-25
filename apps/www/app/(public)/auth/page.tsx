@@ -10,10 +10,13 @@ import {
 import { authClient } from "@prexo/auth/client";
 import React, { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import TermsAndConditionsDialog from "@/components/custom/terms-and-co";
+import { useLocalStorage } from "usehooks-ts";
 
 function LoginPageContent() {
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get('redirect');
+  const [lastUsedProvider, setLastUsedProvider] = useLocalStorage("@prexo-#lastUsedProvider", "");
 
   const baseUrl =
     process.env.NODE_ENV === "development"
@@ -39,6 +42,7 @@ function LoginPageContent() {
             },
           },
         });
+        setLastUsedProvider(provider);
         break;
       case "github":
         await authClient.signIn.social({
@@ -53,6 +57,7 @@ function LoginPageContent() {
             },
           },
         });
+        setLastUsedProvider(provider);
         break;
       case "discord":
         await authClient.signIn.social({
@@ -67,6 +72,7 @@ function LoginPageContent() {
             },
           },
         });
+        setLastUsedProvider(provider);
         break;
       default:
         break;
@@ -82,7 +88,7 @@ function LoginPageContent() {
               <div className="flex flex-col items-start">
                 <h2 className="text-3xl font-bold">Agents, Everywhere</h2>
                 <p className="text-white/75">
-                  Try Prexo support Agents for free!
+                  Experience seamless customer support and sales with Prexo Agents—try it free!
                 </p>
               </div>
               <div className="flex flex-col gap-3">
@@ -94,6 +100,7 @@ function LoginPageContent() {
                 >
                   <IconBrandGoogle size="10" />
                   Continue with Google
+                  {lastUsedProvider === "google" && (<span className="text-muted-foreground text-sm">(last used)</span>)}
                 </Button>
                 <Button
                   variant="outline"
@@ -103,6 +110,7 @@ function LoginPageContent() {
                 >
                   <IconBrandGithub size="10" />
                   Continue with Github
+                  {lastUsedProvider === "github" && (<span className="text-muted-foreground text-sm">(last used)</span>)}
                 </Button>
                 <Button
                   variant="outline"
@@ -112,6 +120,7 @@ function LoginPageContent() {
                 >
                   <IconBrandDiscord size="10" />
                   Continue with Discord
+                  {lastUsedProvider === "discord" && (<span className="text-muted-foreground text-sm">(last used)</span>)}
                 </Button>
               </div>
               <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t" />
@@ -119,7 +128,7 @@ function LoginPageContent() {
           </form>
           <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
             By clicking continue, you agree to our{" "}
-            <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+            <TermsAndConditionsDialog/> .
           </div>
         </div>
       </div>

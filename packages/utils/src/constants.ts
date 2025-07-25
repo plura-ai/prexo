@@ -25,6 +25,8 @@ const socials = {
   github: "https://git.new/prexo",
   docs: "https://docs.prexoai.xyz",
   sponsor: "https://l.devwtf.in/sponsor",
+  me: "https://devwtf.in",
+  myX: "https://l.devwtf.in/x",
 };
 
 export { site, socials };

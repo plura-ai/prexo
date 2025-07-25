@@ -27,7 +27,7 @@ function PureSuggestedActions({
   return (
     <div
       data-testid="suggested-actions"
-      className="grid grid-cols-3 gap-2 w-full"
+      className="grid grid-row-3 gap-2 w-full"
     >
       {suggestedActions.map((suggestedAction, index) => (
         <motion.div
