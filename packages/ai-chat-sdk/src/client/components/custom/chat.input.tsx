@@ -2,6 +2,7 @@
 import React, { useRef, type KeyboardEvent, memo } from "react";
 import type { UseChatHelpers } from "@ai-sdk/react";
 import type { BaseMessageHistory } from "../../../../src/lib/types";
+import { DEFAULT_MSG_ID } from "../../../../src/lib/constants";
 
 interface ChatInputProps {
   input: UseChatHelpers["input"];
@@ -35,7 +36,7 @@ function ChatInputComponent({
         if (history) {
           await history.addMessage({
             message: {
-              id: Date.now().toString(),
+              id: DEFAULT_MSG_ID,
               role: "user",
               content: input,
             },
@@ -56,7 +57,7 @@ function ChatInputComponent({
       if (history) {
         await history.addMessage({
           message: {
-            id: Date.now().toString(),
+            id: DEFAULT_MSG_ID,
             role: "user",
             content: input,
           },

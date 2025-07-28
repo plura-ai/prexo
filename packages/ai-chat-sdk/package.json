@@ -21,7 +21,7 @@
   "scripts": {
     "d:build": "tsup",
     "postbuild": "rm -rf dist/client/styles && cpx 'src/**/*.css' dist",
-    "pre-publish": "bun run d:build",
+    "pre-publish": "bun run d:build && bun run postbuild",
     "type-check": "tsc --noEmit"
   },
   "keywords": ["react", "chat", "widget", "sdk", "typescript", "embeddable", "ai-chat-sdk", "prexo-ai", "chat-widget", "chatbot", "react-chat-widget"],
@@ -69,5 +69,5 @@
   "bugs": {
     "url": "https://github.com/SkidGod4444/prexo/issues"
   },
-  "homepage": "https://prexoai.xyz"
+  "homepage": "https://docs.prexoai.xyz"
 }

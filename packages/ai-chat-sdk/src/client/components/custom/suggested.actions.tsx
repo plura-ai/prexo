@@ -1,7 +1,7 @@
 "use client";
 
 import { memo } from "react";
-import type { UseChatHelpers } from "@ai-sdk/react";
+import { DEFAULT_MSG_ID } from "../../../../src/lib/constants";
 import { Button } from "../../components/ui/button";
 import type {
   BaseMessageHistory,
@@ -45,7 +45,7 @@ function PureSuggestedActions({
               if (history) {
                 await history.addMessage({
                   message: {
-                    id: Date.now().toString(),
+                    id: DEFAULT_MSG_ID,
                     role: "user",
                     content: suggestedAction.action,
                   },
