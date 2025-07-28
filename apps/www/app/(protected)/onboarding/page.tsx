@@ -9,6 +9,10 @@ function OnboardingInner() {
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get('redirect');
 
+  const consoleUrl = process.env.NODE_ENV === "production"
+  ? "https://console.prexoai.xyz"
+  : "http://localhost:3002";
+
   useEffect(() => {
     if (!myProfile) {
       router.replace("/auth");
@@ -20,10 +24,10 @@ function OnboardingInner() {
       if (redirectUrl && redirectUrl.startsWith('/')) {
         router.push(redirectUrl)
       } else {
-        router.push('/dashboard')
+        router.push(consoleUrl)
       }
     }
-  }, [myProfile, router, redirectUrl]);
+  }, [myProfile, router, redirectUrl, consoleUrl]);
 
   return null;
 }

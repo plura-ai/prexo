@@ -12,6 +12,7 @@
     "dev:api": "turbo --filter=api dev",
     "dev:docs": "turbo --filter=docs dev",
     "dev:trig": "bunx trigger.dev@latest dev",
+    "scan:www": "turbo --filter=www scanner",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",

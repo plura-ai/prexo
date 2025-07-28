@@ -25,6 +25,7 @@ export interface PrexoAiChatBotProps {
   sessionId?: string;
   sessionTTL?: number;
   onClose?: () => void;
+  onOpen?: () => void;
   theme?: "light" | "dark";
   user?: {
     name: string | "Prexo Ai";
@@ -61,6 +62,7 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
   sessionId,
   sessionTTL,
   onClose,
+  onOpen,
   user,
   theme,
   placeholder = "Type your message...",
@@ -269,6 +271,9 @@ export const PrexoAiChatBot: React.FC<PrexoAiChatBotProps> = ({
   const handleOpen = () => {
     setIsOpen(true);
     setIsMinimized(false);
+    if (onOpen) {
+      onOpen();
+    }
   };
 
   // UI helpers

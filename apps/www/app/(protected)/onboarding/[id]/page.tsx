@@ -12,6 +12,9 @@ function OnboardingInner() {
   const pathname = usePathname();
   const uID = pathname?.split("/onboarding/")[1] || null;
   const router = useRouter();
+  const consoleUrl = process.env.NODE_ENV === "production"
+  ? "https://console.prexoai.xyz"
+  : "http://localhost:3002";
 
   useEffect(() => {
     if (
@@ -24,10 +27,10 @@ function OnboardingInner() {
       if (redirectUrl && redirectUrl.startsWith('/')) {
         router.push(redirectUrl)
       } else {
-        router.push('/dashboard')
+        router.push(consoleUrl)
       }
     }
-  }, [myProfile, router, redirectUrl]);
+  }, [myProfile, router, redirectUrl, consoleUrl]);
 
   if (!myProfile || myProfile.id !== uID) {
     return NotFound();

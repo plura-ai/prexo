@@ -33,6 +33,12 @@ export const auth: ReturnType<typeof betterAuth> = betterAuth({
     })
   ],
   trustedOrigins: ["*"],
+  advanced: {
+    crossSubDomainCookies: {
+      enabled: process.env.NODE_ENV === "production",
+      domain: "prexoai.xyz",
+    },
+  },
   socialProviders: {
     github: {
       clientId: process.env.GITHUB_CLIENT_ID!,

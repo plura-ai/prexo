@@ -32,6 +32,7 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
       <PrexoAiChatBot
         // width={380}
         // height={550}
+        sessionId="009"
         apiKey={apiKey!}
         suggestedActions={suggestedActions}
         {...(redisUrl &&

@@ -1,6 +1,6 @@
 "use client";
 
-import { IconCirclePlusFilled, type Icon } from "@tabler/icons-react";
+import { type Icon } from "@tabler/icons-react";
 
 import {
   SidebarGroup,
@@ -9,6 +9,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export function NavMain({
   items,
@@ -19,10 +21,13 @@ export function NavMain({
     icon?: Icon;
   }[];
 }) {
+  const pathname = usePathname();
+  console.log(pathname);
+  
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
-        <SidebarMenu>
+        {/* <SidebarMenu>
           <SidebarMenuItem className="flex items-center gap-2">
             <SidebarMenuButton
               tooltip="Quick Create"
@@ -32,14 +37,23 @@ export function NavMain({
               <span>Quick Create</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
-        </SidebarMenu>
+        </SidebarMenu> */}
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton tooltip={item.title}>
+              <Link href={item.url}>
+              <SidebarMenuButton
+                tooltip={item.title}
+                isActive={
+                  item.url !== "/dashboard"
+                    ? pathname.startsWith(item.url)
+                    : pathname === "/dashboard"
+                }
+              >
                 {item.icon && <item.icon />}
                 <span>{item.title}</span>
               </SidebarMenuButton>
+              </Link>
             </SidebarMenuItem>
           ))}
         </SidebarMenu>

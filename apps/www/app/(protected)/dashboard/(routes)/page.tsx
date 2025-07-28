@@ -1,9 +1,9 @@
 "use client";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
-import { DataTable } from "@/components/data-table";
+// import { DataTable } from "@/components/data-table";
 import { SectionCards } from "@/components/section-cards";
 
-import data from "./data.json";
+// import data from "./data.json";
 import { useMyProfileStore } from "@prexo/store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -31,7 +31,7 @@ export default function Page() {
           <div className="px-4 lg:px-6">
             <ChartAreaInteractive />
           </div>
-          <DataTable data={data} />
+          {/* <DataTable data={data} /> */}
         </div>
       </div>
     </div>

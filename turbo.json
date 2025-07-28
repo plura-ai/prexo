@@ -66,6 +66,10 @@
     "db:push": {
       "cache": false
     },
+
+    "scanner": {
+      "cache": false
+    },
     "lint": {
       "dependsOn": ["^lint"]
     },

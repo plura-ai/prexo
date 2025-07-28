@@ -122,10 +122,11 @@ export default function DashboardHeader() {
                   <SelectPrimitive.SelectTrigger
                     aria-label="Select account type"
                     asChild
+                    
                   >
                     <Button
-                      variant="ghost"
-                      className="focus-visible:bg-accent text-foreground h-8 p-1.5 focus-visible:ring-0"
+                      variant="secondary"
+                      size={"sm"}
                     >
                       <SelectValue placeholder="Select account type" />
                       <ChevronsUpDown
@@ -136,8 +137,6 @@ export default function DashboardHeader() {
                   </SelectPrimitive.SelectTrigger>
                   <SelectContent className="[&_*[role=option]]:ps-2 [&_*[role=option]]:pe-8 [&_*[role=option]>span]:start-auto [&_*[role=option]>span]:end-2">
                     <SelectItem value="personal">Personal</SelectItem>
-                    <SelectItem value="team">Team</SelectItem>
-                    <SelectItem value="business">Business</SelectItem>
                   </SelectContent>
                 </Select>
               </BreadcrumbItem>
@@ -149,8 +148,8 @@ export default function DashboardHeader() {
                     asChild
                   >
                     <Button
-                      variant="ghost"
-                      className="focus-visible:bg-accent text-foreground h-8 p-1.5 focus-visible:ring-0"
+                      variant="secondary"
+                      size={"sm"}
                     >
                       <SelectValue placeholder="Select project" />
                       <ChevronsUpDown

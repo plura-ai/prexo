@@ -18,6 +18,8 @@ const app = new Hono().basePath("/v1");
 
 const allowedOrigins = [
   "http://localhost:3000",
+  "http://localhost:3002",
+  "https://console.prexoai.xyz",
   "https://prexoai.xyz",
   "https://www.prexoai.xyz",
 ];

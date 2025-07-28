@@ -8,12 +8,12 @@ export default function layout({ children }: { children: ReactNode }) {
     <SidebarProvider
       style={
         {
-          "--sidebar-width": "calc(var(--spacing) * 72)",
+          "--sidebar-width": "calc(var(--spacing) * 62)",
           "--header-height": "calc(var(--spacing) * 12)",
         } as React.CSSProperties
       }
     >
-      <AppSidebar variant="inset" collapsible="offcanvas" />
+      <AppSidebar variant="floating" collapsible="icon" />
       <SidebarInset>
         <DashboardHeader />
         {children}

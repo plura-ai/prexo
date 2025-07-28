@@ -3,7 +3,6 @@
 import * as React from "react";
 import {
   IconCamera,
-  IconChartBar,
   IconDashboard,
   IconDatabase,
   IconFileAi,
@@ -11,11 +10,9 @@ import {
   IconFileWord,
   IconFolder,
   IconHelp,
-  IconListDetails,
   IconReport,
   IconSearch,
   IconSettings,
-  IconUsers,
 } from "@tabler/icons-react";
 import { NavDocuments } from "@/components/nav-documents";
 import { NavMain } from "@/components/nav-main";
@@ -35,8 +32,8 @@ import { useMyProfileStore } from "@prexo/store";
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "saidev",
+    email: "mdev@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
@@ -46,24 +43,9 @@ const data = {
       icon: IconDashboard,
     },
     {
-      title: "Lifecycle",
-      url: "#",
-      icon: IconListDetails,
-    },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
-    },
-    {
       title: "Projects",
-      url: "#",
+      url: "/dashboard/projects",
       icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
     },
   ],
   navClouds: [

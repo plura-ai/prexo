@@ -20,7 +20,7 @@ function LoginPageContent() {
 
   const baseUrl =
     process.env.NODE_ENV === "development"
-      ? "http://localhost:3001/onboarding"
+      ? "http://localhost:3000/onboarding"
       : "https://prexoai.xyz/onboarding";
 
   const callbackUrl = redirectUrl && redirectUrl.startsWith('/')

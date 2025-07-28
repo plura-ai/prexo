@@ -14,10 +14,13 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const { myProfile } = useMyProfileStore();
   const router = useRouter();
+  const consoleUrl = process.env.NODE_ENV === "production"
+  ? "https://console.prexoai.xyz"
+  : "http://localhost:3002";
 
   let loginURL = "/auth";
   if (myProfile) {
-    loginURL = myProfile.role === "onboarded" ? "/dashboard" : "/onboarding";
+    loginURL = myProfile.role === "onboarded" ? consoleUrl : "/onboarding";
   }
 
   useEffect(() => {

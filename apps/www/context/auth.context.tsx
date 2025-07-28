@@ -2,6 +2,7 @@
 import { authClient } from "@prexo/auth/client";
 import { useMyProfileStore } from "@prexo/store";
 import { UserType } from "@prexo/types";
+import { useRouter } from "next/navigation";
 import {
   createContext,
   useContext,
@@ -14,6 +15,7 @@ interface AuthContextType {
   user: UserType | null;
   loading: boolean;
   setUser: (user: UserType | null) => void;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -22,6 +24,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
   const { myProfile, addMyProfile, removeMyProfile } = useMyProfileStore();
+  const router = useRouter();
 
   useEffect(() => {
     let isMounted = true;
@@ -59,8 +62,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
   }, [addMyProfile, myProfile, removeMyProfile]);
 
+  // Add logout logic here, inbuilt removeMyProfile
+  const logout = async () => {
+    try {
+      await authClient.signOut();
+      setUser(null);
+      if (myProfile && myProfile.id) {
+        removeMyProfile(myProfile.id);
+        console.log("User profile removed on logout:", myProfile.id);
+      }
+      router.push("/");
+      console.log("User logged out.");
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, setUser }}>
+    <AuthContext.Provider value={{ user, loading, setUser, logout }}>
       {children}
     </AuthContext.Provider>
   );
