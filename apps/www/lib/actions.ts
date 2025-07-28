@@ -1,7 +1,7 @@
 "use server";
 
 const BASE_API_URL = process.env.BASE_API_URL!;
-console.log("BASE_API_URL:", BASE_API_URL);
+
 
 async function createProjectAction(
   name: string,
