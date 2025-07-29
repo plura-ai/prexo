@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 "use client";
 import { Button } from "@/components/ui/button";
 import {
@@ -58,12 +57,14 @@ export function FeedbackModal() {
   const onSubmit: SubmitHandler<PostSchema> = async (data) => {
     try {
       const validatedData = await postSchema.parseAsync({ ...data });
-    //   const res = await createFeedback({
-    //     desc: validatedData.description,
-    //     emotion: selectedEmo,
-    //   });
-    //   return res;
+      console.log(validatedData);
+      //   const res = await createFeedback({
+      //     desc: validatedData.description,
+      //     emotion: selectedEmo,
+      //   });
+      //   return res;
     } catch (error) {
+      console.error(error);
       toast.error(`Error in submiting feeback !Please try again `);
     } finally {
       toast.success(`Thanks for your feedback!`);
@@ -84,8 +85,8 @@ export function FeedbackModal() {
             Leave feedback
           </DialogTitle>
           <DialogDescription>
-            We'd love to hear what went well or how we can improve the product
-            experience.
+            We&apos;d love to hear what went well or how we can improve the
+            product experience.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -118,7 +119,7 @@ export function FeedbackModal() {
                   onClick={() => setSelectedEmo("happy")}
                   type="button"
                 >
-                  <Smile className="text-green-500"/>
+                  <Smile className="text-green-500" />
                 </Button>
                 <Button
                   size="icon"
@@ -127,7 +128,7 @@ export function FeedbackModal() {
                   onClick={() => setSelectedEmo("idle")}
                   type="button"
                 >
-                  <Meh className="text-yellow-500"/>
+                  <Meh className="text-yellow-500" />
                 </Button>
                 <Button
                   size="icon"
@@ -136,7 +137,7 @@ export function FeedbackModal() {
                   onClick={() => setSelectedEmo("sad")}
                   type="button"
                 >
-                  <Frown className="text-red-500"/>
+                  <Frown className="text-red-500" />
                 </Button>
               </div>
             </div>

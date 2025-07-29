@@ -5,12 +5,12 @@ import { useEffect, Suspense } from "react";
 function OnboardingInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectUrl = searchParams.get('redirect');
+  const redirectUrl = searchParams.get("redirect");
 
   useEffect(() => {
-    if (redirectUrl && redirectUrl.startsWith('/')) {
-      router.push(redirectUrl)
-    } 
+    if (redirectUrl && redirectUrl.startsWith("/")) {
+      router.push(redirectUrl);
+    }
   }, [router, redirectUrl]);
 
   return null;

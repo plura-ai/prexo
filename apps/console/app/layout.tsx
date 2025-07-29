@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme.provider";
 import { PosthogProvider } from "@/hooks/use-posthog";
+import { AuthProvider } from "@/context/auth.context";
+import { ContentProvider } from "@/context/store.context";
 
 const uxumGrotesque = localFont({
   src: [
@@ -88,23 +90,26 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
   return (
     <html lang="en" suppressHydrationWarning>
-      <PosthogProvider>
       <body
         className={`${uxumGrotesque.variable} ${untitledSans.variable} antialiased`}
       >
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
+        <AuthProvider>
+          <ContentProvider>
+            <PosthogProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="dark"
+                enableSystem
+                disableTransitionOnChange
+              >
+                {children}
+              </ThemeProvider>
+            </PosthogProvider>
+          </ContentProvider>
+        </AuthProvider>
       </body>
-      </PosthogProvider>
     </html>
   );
 }

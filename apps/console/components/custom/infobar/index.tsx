@@ -9,10 +9,10 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
-  } from "@/components/ui/tooltip"
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import {
   Command,
   CommandEmpty,
@@ -26,38 +26,16 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Check, ChevronsUpDown, Slash } from "lucide-react";
+import { Check, ChevronsUpDown, Plus, Slash } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-// import { FeedbackModal } from "../feedback-modal";
 import { usePathname } from "next/navigation";
 import { FeedbackModal } from "../feedback.modal";
-
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
+import { useProjectsStore } from "@prexo/store";
 
 export default function Infobar() {
+  const { projects } = useProjectsStore();
   const [isScrolled, setIsScrolled] = useState(false);
   const [openPopover2, setOpenPopover2] = useState(false);
   const [value, setValue] = useState("");
@@ -75,19 +53,19 @@ export default function Infobar() {
 
   return (
     <nav
-      className={`flex w-full items-center sticky top-0 right-0 bg-background border-b transition-all duration-200 ${
+      className={`flex w-full items-center sticky top-0 right-0 bg-background border-b transition-all duration-200 shadow-xl ${
         isScrolled ? "shadow-sm z-10" : ""
       }`}
     >
       <div className="flex flex-row items-center gap-2 py-3 w-full">
-      <Tooltip>
-      <TooltipTrigger asChild>
-        <SidebarTrigger className="cursor-pointer"/>
-        </TooltipTrigger>
-      <TooltipContent>
-        <p>⌘ + B</p>
-      </TooltipContent>
-    </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <SidebarTrigger className="cursor-pointer" />
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>⌘ + B</p>
+          </TooltipContent>
+        </Tooltip>
         <Separator orientation="vertical" className="h-6 bg-muted" />
         <Breadcrumb>
           <BreadcrumbList>
@@ -100,27 +78,25 @@ export default function Infobar() {
                     aria-expanded={openPopover2}
                     className="justify-between p-2 h-6"
                   >
-                    {value
-                      ? frameworks.find(
-                          (framework) => framework.value === value,
-                        )?.label
-                      : "Plura"}
+                    {projects.find((project) => project.name === value)?.name ||
+                      projects[0]?.name ||
+                      ""}
                     <ChevronsUpDown className="opacity-50" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="w-[200px] p-0 ml-2">
                   <Command>
                     <CommandInput
-                      placeholder="Search framework..."
+                      placeholder="Search project..."
                       className="h-9"
                     />
                     <CommandList>
-                      <CommandEmpty>No framework found.</CommandEmpty>
+                      <CommandEmpty>No project found.</CommandEmpty>
                       <CommandGroup>
-                        {frameworks.map((framework) => (
+                        {projects.map((proj) => (
                           <CommandItem
-                            key={framework.value}
-                            value={framework.value}
+                            key={proj.id}
+                            value={proj.name}
                             onSelect={(currentValue) => {
                               setValue(
                                 currentValue === value ? "" : currentValue,
@@ -128,11 +104,11 @@ export default function Infobar() {
                               setOpenPopover2(false);
                             }}
                           >
-                            {framework.label}
+                            {proj.name}
                             <Check
                               className={cn(
                                 "ml-auto",
-                                value === framework.value
+                                value === proj.name
                                   ? "opacity-100"
                                   : "opacity-0",
                               )}
@@ -141,6 +117,11 @@ export default function Infobar() {
                         ))}
                       </CommandGroup>
                     </CommandList>
+                    <Separator />
+                    <Button size={"sm"} variant={"outline"} className="m-2">
+                      <Plus className="size-4" />
+                      New Project
+                    </Button>
                   </Command>
                 </PopoverContent>
               </Popover>

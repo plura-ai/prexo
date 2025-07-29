@@ -1,9 +1,7 @@
-
 import Infobar from "@/components/custom/infobar";
 import { AppSidebar } from "@/components/custom/sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
-
 
 async function RouteLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies();

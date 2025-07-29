@@ -2,6 +2,28 @@
 import { usePathname } from "next/navigation";
 import React from "react";
 
+function getPageDescription(page: string): string {
+  if (page.includes("settings")) {
+    return "Manage your account settings, preferences and integrations";
+  }
+  if (page.includes("dashboard")) {
+    return "A detailed overview of your metrics, usage, customers and more";
+  }
+  if (page.includes("integrations")) {
+    return "View and edit all your integrations";
+  }
+  if (page.includes("mails")) {
+    return "View and manage all your email communications";
+  }
+  if (page.includes("workflows")) {
+    return "Design and manage your automation workflows";
+  }
+  if (page.includes("agents")) {
+    return "Manage your agents and their settings";
+  }
+  return "Modify domain settings, change chatbot options, enter sales questions and train your bot to do what you want it to.";
+}
+
 export default function InfobarBreadCrumb() {
   const page = usePathname();
 
@@ -25,19 +47,7 @@ export default function InfobarBreadCrumb() {
             )} */}
       </div>
       <p className="text-muted-foreground text-sm md:text-lg font-sans pl-0">
-        {page.includes("settings")
-          ? "Manage your account settings, preferences and integrations"
-          : page.includes("dashboard")
-            ? "A detailed overview of your metrics, usage, customers and more"
-            : page.includes("integrations")
-              ? "View and edit all your integrations"
-              : page.includes("mails")
-                ? "View and edit all your integrations"
-                : page.includes("workflows")
-                  ? "View and edit all your integrations"
-                  : page.includes("agents")
-                    ? "Manage your agents and their settings"
-                    : "Modify domain settings, change chatbot options, enter sales questions and train your bot to do what you want it to."}
+        {getPageDescription(page)}
       </p>
     </div>
   );

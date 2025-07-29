@@ -6,10 +6,11 @@ import { SuggestedActions } from "../suggested.actions";
 import AiBanner from "@/components/ai.banner";
 
 export default function OnboardingChat({ chatId }: { chatId: string }) {
-  const BASE_API_URL = process.env.NODE_ENV === "development"
-    ? "http://localhost:3001/v1"
-    : "https://api.prexoai.xyz/v1";
-    
+  const BASE_API_URL =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3001/v1"
+      : "https://api.prexoai.xyz/v1";
+
   const url = `${BASE_API_URL}/ai/stream`;
 
   const {

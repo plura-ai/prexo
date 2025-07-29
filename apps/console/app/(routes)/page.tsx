@@ -1,8 +1,3 @@
-
 export default function Home() {
-  return (
-    <div className="font-uxum">
-      sup
-    </div>
-  );
+  return <div className="font-uxum">sup</div>;
 }

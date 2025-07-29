@@ -44,7 +44,7 @@ const agentCards = [
   },
 ];
 
-export default function AgentsSec({isMob = false}: { isMob?: boolean }) {
+export default function AgentsSec({ isMob = false }: { isMob?: boolean }) {
   return (
     <div className="relative w-full items-center justify-center py-10">
       <div className="px-4 md:px-14">
@@ -69,7 +69,7 @@ export default function AgentsSec({isMob = false}: { isMob?: boolean }) {
                 "relative group overflow-hidden backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-dashed border-border cursor-pointer",
               )}
             >
-              {(card.image && !isMob) && (
+              {card.image && !isMob && (
                 <div className="w-full absolute bottom-[-8rem] right-[-4rem] h-auto mb-4 rounded-xl">
                   <Image
                     src={card.image}

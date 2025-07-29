@@ -1,8 +1,11 @@
 import { prisma } from "@prexo/db";
 import { Hono } from "hono";
 import { createApi } from "@prexo/keys";
+import { checkUser } from "@/checks/check.user";
 
 const api = new Hono();
+
+api.use(checkUser);
 
 api.post("/create", async (c) => {
   const { name, projectId } = await c.req.json();

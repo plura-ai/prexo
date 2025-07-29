@@ -83,29 +83,27 @@ export const metadata: Metadata = {
   description: "Operated by Plexy HQ",
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${uxumGrotesque.variable} ${untitledSans.variable} antialiased`}
       >
         <AuthProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="dark"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <div className="flex flex-col items-center bg-background">
-                {children}
-              </div>
-            </ThemeProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="flex flex-col items-center bg-background">
+              {children}
+            </div>
+          </ThemeProvider>
         </AuthProvider>
       </body>
     </html>

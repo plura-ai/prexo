@@ -1,25 +1,23 @@
 import { createAuthClient } from "better-auth/client";
-import { polarClient } from "@polar-sh/better-auth"; 
+import { polarClient } from "@polar-sh/better-auth";
 
-const baseURL = process.env.NODE_ENV === "development"
-  ? "http://localhost:3001"
-  : "https://api.prexoai.xyz";
+const baseURL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3001"
+    : "https://api.prexoai.xyz";
 
 export const authClient = createAuthClient({
   baseURL,
   basePath: "/v1/auth",
-  plugins: [
-    polarClient(),
-  ],
+  plugins: [polarClient()],
 });
-
 
 export async function getCheckoutLink(productsId: string[]) {
   const res = await authClient.checkout({
-  products: productsId, 
-});
+    products: productsId,
+  });
 
-return res.data?.url;
+  return res.data?.url;
 }
 
 export async function getPortalLink() {

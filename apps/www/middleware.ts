@@ -5,12 +5,12 @@ const baseDomain =
   process.env.NODE_ENV === "production"
     ? "https://api.prexoai.xyz"
     : "http://localhost:3001";
-    const appDomain =
-    process.env.NODE_ENV === "production"
-      ? "https://console.prexoai.xyz"
-      : "http://localhost:3002";
+const appDomain =
+  process.env.NODE_ENV === "production"
+    ? "https://console.prexoai.xyz"
+    : "http://localhost:3002";
 
-    const protectedRoutes = ["/onboarding"];
+const protectedRoutes = ["/onboarding"];
 
 export default async function authMiddleware(request: NextRequest) {
   const { data: session } = await betterFetch<Session>(
@@ -26,7 +26,7 @@ export default async function authMiddleware(request: NextRequest) {
   const currentPath = request.nextUrl.pathname;
 
   if (!session || !("role" in session.user)) {
-    console.log("Session Not Found!")
+    console.log("Session Not Found!");
     return NextResponse.next();
   }
 
@@ -38,7 +38,10 @@ export default async function authMiddleware(request: NextRequest) {
     return NextResponse.redirect(`/onboarding/${session.user.id}`);
   }
 
-  if (session.user.role === "onboarded" && protectedRoutes.includes(currentPath)) {
+  if (
+    session.user.role === "onboarded" &&
+    protectedRoutes.includes(currentPath)
+  ) {
     return NextResponse.redirect(appDomain);
   }
 
@@ -46,10 +49,13 @@ export default async function authMiddleware(request: NextRequest) {
     return NextResponse.redirect(appDomain);
   }
 
-  if (session.user && session.user.role !== "onboarded" && currentPath.includes("/auth")) {
+  if (
+    session.user &&
+    session.user.role !== "onboarded" &&
+    currentPath.includes("/auth")
+  ) {
     return NextResponse.redirect(`/onboarding/${session.user.id}`);
   }
-
 
   // Otherwise, allow
   return NextResponse.next();

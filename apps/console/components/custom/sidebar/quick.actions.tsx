@@ -11,9 +11,8 @@ import {
   CommandList,
 } from "@/components/ui/command";
 
-
 type QuickActionButtonProps = {
-  collapse: string;
+  collapse: "expanded" | "collapsed";
 };
 
 const QuickActionButton: React.FC<QuickActionButtonProps> = ({ collapse }) => {
@@ -25,7 +24,7 @@ const QuickActionButton: React.FC<QuickActionButtonProps> = ({ collapse }) => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && event.key === "k") {
         event.preventDefault();
-        toggleOverlay();
+        setIsOpen((prev) => !prev);
       }
     };
     window.addEventListener("keydown", handleKeyDown);

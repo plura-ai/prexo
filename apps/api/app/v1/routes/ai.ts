@@ -8,8 +8,11 @@ import {
 } from "ai";
 import { systemPrompt } from "@/lib/constants";
 import { z } from "zod";
+import { checkUser } from "@/checks/check.user";
 
 const ai = new Hono();
+
+ai.use(checkUser);
 
 export const maxDuration = 30;
 
@@ -39,25 +42,33 @@ ai.post("/stream", async (c) => {
       askForConfirmation: {
         description: "Ask the user for any confirmation.",
         parameters: z.object({
-          message: z.string().describe("Onboarding message to ask for confirmation."),
+          message: z
+            .string()
+            .describe("Onboarding message to ask for confirmation."),
         }),
       },
       sendCreateProjectForm: {
         description: "Send create project form to user. After confirmation.",
         parameters: z.object({
-          message: z.string().describe("Message to send to user after confirmation."),
+          message: z
+            .string()
+            .describe("Message to send to user after confirmation."),
         }),
       },
       sendCreateApiFrom: {
         description: "Send create API form to user. After confirmation.",
         parameters: z.object({
-          message: z.string().describe("Message to send to user after confirmation."),
+          message: z
+            .string()
+            .describe("Message to send to user after confirmation."),
         }),
       },
       completeOnboarding: {
         description: "Send UI to user to confirm onboarding is complete.",
         parameters: z.object({
-          message: z.string().describe("Message to ask if onboarding is complete."),
+          message: z
+            .string()
+            .describe("Message to ask if onboarding is complete."),
         }),
       },
     },

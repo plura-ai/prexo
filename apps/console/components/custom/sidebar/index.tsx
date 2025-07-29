@@ -1,16 +1,10 @@
 "use client";
 import {
-  Webhook,
   Layers2,
-  Waypoints,
-  Mails,
   Settings,
-  Brain,
   BrainCircuit,
   FlaskConical,
-  ArchiveRestore,
-  Codepen,
-  Workflow,
+  BookMarked,
 } from "lucide-react";
 
 import {
@@ -31,13 +25,10 @@ import { usePathname } from "next/navigation";
 import { NavUser } from "./nav.user";
 import Logo from "../logo";
 import QuickActionButton from "./quick.actions";
-// import QuickActionButton from "./quick-action-btn";
+import Link from "next/link";
+import { useAuth } from "@/context/auth.context";
+import { NavSecondary } from "./nav.secondary";
 
-const user = {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-}
 // Menu items.
 const items = [
   {
@@ -45,40 +36,22 @@ const items = [
     url: "/dashboard",
     icon: Layers2,
   },
-  {
-    title: "Integrations",
-    url: "/integrations",
-    icon: Waypoints,
-  },
-  {
-    title: "Workflows",
-    url: "/workflows",
-    icon: Workflow,
-  },
-  {
-    title: "Events",
-    url: "/events",
-    icon: Webhook,
-  },
-  {
-    title: "Mails",
-    url: "/mails",
-    icon: Mails,
-  },
+];
+
+const navSecondary = [
   {
     title: "Settings",
     url: "/settings",
     icon: Settings,
   },
+  {
+    title: "Documentation",
+    url: "https://docs.prexoai.xyz",
+    icon: BookMarked,
+  },
 ];
-
 // Playground items.
 const IntelItems = [
-  {
-    title: "Agents",
-    url: "/agents",
-    icon: Brain,
-  },
   {
     title: "Memory",
     url: "/memory",
@@ -89,26 +62,17 @@ const IntelItems = [
     url: "/playground",
     icon: FlaskConical,
   },
-  {
-    title: "Components",
-    url: "/components",
-    icon: Codepen,
-  },
-  {
-    title: "Archives",
-    url: "/archives",
-    icon: ArchiveRestore,
-  },
 ];
 
 export function AppSidebar() {
   const path = usePathname();
   const { state } = useSidebar();
+  const { user, loading } = useAuth();
 
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
-        <Logo isCollapsed={state === "collapsed"}/>
+        <Logo isCollapsed={state === "collapsed"} />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -138,22 +102,26 @@ export function AppSidebar() {
             <SidebarMenu>
               {IntelItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild tooltip={item.title}>
-                    <a href={item.url}>
+                  <SidebarMenuButton
+                    asChild
+                    tooltip={item.title}
+                    isActive={path.includes(item.url)}
+                  >
+                    <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        <NavSecondary items={navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-
-      <QuickActionButton collapse={state}/>
-        <NavUser user={user} />
+        <QuickActionButton collapse={state} />
+        {user && !loading && <NavUser user={user} />}
       </SidebarFooter>
     </Sidebar>
   );
