@@ -33,12 +33,16 @@ import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { FeedbackModal } from "../feedback.modal";
 import { useProjectsStore } from "@prexo/store";
+import { useLocalStorage } from "usehooks-ts";
 
 export default function Infobar() {
   const { projects } = useProjectsStore();
   const [isScrolled, setIsScrolled] = useState(false);
   const [openPopover2, setOpenPopover2] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useLocalStorage(
+    "@prexo-#consoleId",
+    projects[0]?.name,
+  );
   const pathname = usePathname()
     .replace(/^\/|\/$/g, "")
     .split("/");
@@ -53,8 +57,8 @@ export default function Infobar() {
 
   return (
     <nav
-      className={`flex w-full items-center sticky top-0 right-0 bg-background border-b transition-all duration-200 shadow-xl ${
-        isScrolled ? "shadow-sm z-10" : ""
+      className={`flex w-full items-center sticky top-0 right-0 bg-background border-b ${
+        isScrolled ? "z-50" : ""
       }`}
     >
       <div className="flex flex-row items-center gap-2 py-3 w-full">
@@ -78,9 +82,9 @@ export default function Infobar() {
                     aria-expanded={openPopover2}
                     className="justify-between p-2 h-6"
                   >
-                    {projects.find((project) => project.name === value)?.name ||
-                      projects[0]?.name ||
-                      ""}
+                    {value
+                      ? projects.find((proj) => proj.id === value)?.name
+                      : "Select project"}
                     <ChevronsUpDown className="opacity-50" />
                   </Button>
                 </PopoverTrigger>
@@ -96,7 +100,7 @@ export default function Infobar() {
                         {projects.map((proj) => (
                           <CommandItem
                             key={proj.id}
-                            value={proj.name}
+                            value={proj.id}
                             onSelect={(currentValue) => {
                               setValue(
                                 currentValue === value ? "" : currentValue,
@@ -108,9 +112,7 @@ export default function Infobar() {
                             <Check
                               className={cn(
                                 "ml-auto",
-                                value === proj.name
-                                  ? "opacity-100"
-                                  : "opacity-0",
+                                value === proj.id ? "opacity-100" : "opacity-0",
                               )}
                             />
                           </CommandItem>
