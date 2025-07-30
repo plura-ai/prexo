@@ -11,7 +11,7 @@ export const checkUser = async (c: Context, next: Next) => {
     }
     console.log("Access Denied!");
     return NextResponse.json(
-      { message: "You are not authorized!" },
+      { message: "Authentication error occurred" },
       { status: 401 },
     );
   } catch (error) {

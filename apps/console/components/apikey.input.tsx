@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { CheckIcon, CopyIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";

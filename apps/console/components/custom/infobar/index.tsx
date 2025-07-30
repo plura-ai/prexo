@@ -135,7 +135,7 @@ export default function Infobar() {
               <BreadcrumbItem>
                 <Button
                   variant={"secondary"}
-                  className="selection-none p-2 h-6"
+                  className="select-none p-2 h-6"
                 >
                   {pathname[0].charAt(0).toUpperCase() + pathname[0].slice(1)}
                 </Button>
