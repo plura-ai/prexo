@@ -73,7 +73,7 @@ ai.post("/stream", async (c) => {
       },
     },
     onStepFinish: (step) => {
-      console.log("Step finished:", step);
+      // console.log("Step finished:", step);
     },
   });
 

@@ -26,9 +26,9 @@ export default function ApiCardAiUi({
 }: ApiCardProps) {
   const [projectID, setProjectID] = useState<string | null>(null);
   const { myProfile } = useMyProfileStore();
-  const { setProjects, projects, addProject } = useProjectsStore();
+  const { setProjects, addProject } = useProjectsStore();
   const name = "default-api-key";
-  const [apiKey, setApiKey] = useState(projects?.[0]?.apiKey || "");
+  const [apiKey, setApiKey] = useState("");
   const [loading, setLoading] = useState(false);
 
   if (!name.trim() || !myProfile?.id) {
@@ -46,10 +46,9 @@ export default function ApiCardAiUi({
       // Call the API to create the API key
       setLoading(true);
       const response = await createApiKeyAction(name, projectID, myProfile?.id);
-      console.log("Response from createApiKeyAction:", response);
       setProjects([]);
-      setApiKey(response?.project?.apiKey || "");
-      console.log("API key created successfully:", response?.project?.apiKey);
+      setApiKey(response?.apiKey || "");
+      console.log("API key created successfully:", response?.apiKey);
       addProject(response?.project);
       setLoading(false);
 

@@ -34,10 +34,6 @@ export default async function authMiddleware(request: NextRequest) {
     return NextResponse.redirect("/auth");
   }
 
-  if (session.user && session.user.role !== "onboarded") {
-    return NextResponse.redirect(`/onboarding/${session.user.id}`);
-  }
-
   if (
     session.user.role === "onboarded" &&
     protectedRoutes.includes(currentPath)
@@ -54,7 +50,7 @@ export default async function authMiddleware(request: NextRequest) {
     session.user.role !== "onboarded" &&
     currentPath.includes("/auth")
   ) {
-    return NextResponse.redirect(`/onboarding/${session.user.id}`);
+    return NextResponse.redirect(`/onboarding`);
   }
 
   // Otherwise, allow

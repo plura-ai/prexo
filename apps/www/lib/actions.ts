@@ -1,5 +1,7 @@
 "use server";
 
+import { cookies } from "next/headers";
+
 const BASE_API_URL = process.env.BASE_API_URL!;
 
 async function createProjectAction(
@@ -7,6 +9,7 @@ async function createProjectAction(
   description?: string | null,
   userId?: string,
 ) {
+  const cookieHeader = cookies().toString();
   const response = await fetch(`${BASE_API_URL}/project/create`, {
     method: "POST",
     body: JSON.stringify({
@@ -14,6 +17,11 @@ async function createProjectAction(
       userId: userId,
       description: description,
     }),
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      ...(cookieHeader ? { cookie: cookieHeader } : {}),
+    },
   });
   console.log("Response from createProjectAction:", response);
   const project = await response.json();
@@ -25,9 +33,15 @@ async function createApiKeyAction(
   projectId: string,
   userId: string,
 ) {
+  const cookieHeader = cookies().toString();
   const response = await fetch(`${BASE_API_URL}/api/create`, {
     method: "POST",
     body: JSON.stringify({ name, projectId, userId }),
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      ...(cookieHeader ? { cookie: cookieHeader } : {}),
+    },
   });
   console.log("Response from createApiKeyAction:", response);
   const res = await response.json();
@@ -36,9 +50,15 @@ async function createApiKeyAction(
 
 async function completeOnboardingAction(userId: string) {
   try {
+    const cookieHeader = cookies().toString();
     const res = await fetch(`${BASE_API_URL}/user/onboarded`, {
       method: "POST",
       body: JSON.stringify({ userId }),
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        ...(cookieHeader ? { cookie: cookieHeader } : {}),
+      },
     });
     const data = await res.json();
     return data;

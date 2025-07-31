@@ -29,7 +29,7 @@ api.post("/create", async (c) => {
     return c.json({ message: "Failed to create ApiKey" }, 500);
   }
   console.log("Created new ApiKey:", newAPI);
-  return c.json({ project: newAPI }, 201);
+  return c.json({ project: newAPI, apiKey: apiKey.key }, 201);
 });
 
 api.post("/new", async (c) => {
