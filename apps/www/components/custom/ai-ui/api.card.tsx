@@ -3,15 +3,13 @@ import React, { useState } from "react";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
 } from "@/components/ui/card";
-import CopyInput from "@/components/copy.input";
 import type { UIMessage } from "ai";
 import { ProjectDropDownAiUi } from "./project.drop.down";
 import { Button } from "@/components/ui/button";
 import { createApiKeyAction } from "@/lib/actions";
 import { useMyProfileStore, useProjectsStore } from "@prexo/store";
+import { useLocalStorage } from "usehooks-ts";
 
 type ApiCardProps = {
   addToolResult: (result: { toolCallId: string; result: string }) => void;
@@ -28,7 +26,7 @@ export default function ApiCardAiUi({
   const { myProfile } = useMyProfileStore();
   const { setProjects, addProject } = useProjectsStore();
   const name = "default-api-key";
-  const [apiKey, setApiKey] = useState("");
+  const [apiKey, setApiKey] = useLocalStorage("@prexo-#tempApiKey", '');
   const [loading, setLoading] = useState(false);
 
   if (!name.trim() || !myProfile?.id) {
@@ -48,7 +46,7 @@ export default function ApiCardAiUi({
       const response = await createApiKeyAction(name, projectID, myProfile?.id);
       setProjects([]);
       setApiKey(response?.apiKey || "");
-      console.log("API key created successfully:", response?.apiKey);
+      console.log("API key created successfully:", apiKey);
       addProject(response?.project);
       setLoading(false);
 
@@ -77,16 +75,9 @@ export default function ApiCardAiUi({
       <CardContent>
         <form>
           <div className="flex flex-col gap-6">
-            {!apiKey && (
-              <div className="grid gap-2">
+          <div className="grid gap-2">
                 <ProjectDropDownAiUi onProjectSelect={setProjectID} />
               </div>
-            )}
-            {apiKey ? (
-              <div className="grid gap-2">
-                <CopyInput value={apiKey} />
-              </div>
-            ) : (
               <div className="grid gap-2">
                 <Button
                   className="cursor-pointer"
@@ -97,18 +88,9 @@ export default function ApiCardAiUi({
                   {loading ? "Creating API Key..." : "Create API Key"}
                 </Button>
               </div>
-            )}
           </div>
         </form>
       </CardContent>
-      {apiKey && (
-        <CardFooter>
-          <CardDescription>
-            Copy your ApiKey and keep it safe. You will not be able to see it
-            again.
-          </CardDescription>
-        </CardFooter>
-      )}
     </Card>
   );
 }

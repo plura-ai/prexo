@@ -63,6 +63,14 @@ ai.post("/stream", async (c) => {
             .describe("Message to send to user after confirmation."),
         }),
       },
+      sendApiCopyCard: {
+        description: "Send API Key copy card. After confirmation.",
+        parameters: z.object({
+          message: z
+            .string()
+            .describe("Message to send to user after confirmation."),
+        }),
+      },
       completeOnboarding: {
         description: "Send UI to user to confirm onboarding is complete.",
         parameters: z.object({
