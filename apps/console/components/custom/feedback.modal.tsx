@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { Profanity } from "profanity-validator";
-import { Frown, Meh, MessageSquare, Smile } from "lucide-react";
+import { Frown, Meh, MessageSquare, PenLine, Smile } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -74,9 +74,8 @@ export function FeedbackModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="default">
-          {" "}
-          <MessageSquare /> Feedback{" "}
+        <Button size={"sm"}>
+          <PenLine /> Feedback{" "}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[425px] md:min-w-[480px] border">

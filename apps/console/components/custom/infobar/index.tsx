@@ -26,14 +26,15 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Check, ChevronsUpDown, Plus, Slash } from "lucide-react";
+import { Check, ChevronsUpDown, Plus, Slash, Sparkles } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { FeedbackModal } from "../feedback.modal";
-import { useProjectsStore } from "@prexo/store";
+import { useApiKeyStore, useProjectsStore } from "@prexo/store";
 import { useLocalStorage } from "usehooks-ts";
+import Link from "next/link";
 
 export default function Infobar() {
   const { projects } = useProjectsStore();
@@ -41,8 +42,9 @@ export default function Infobar() {
   const [openPopover2, setOpenPopover2] = useState(false);
   const [value, setValue] = useLocalStorage(
     "@prexo-#consoleId",
-    projects[0]?.id,
+    "", 
   );
+  const { key } = useApiKeyStore();
   const pathname = usePathname()
     .replace(/^\/|\/$/g, "")
     .split("/");
@@ -54,6 +56,16 @@ export default function Infobar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    if(projects.length > 0 && !value) {
+      setValue(projects[0].id);
+    }
+
+    if(projects.length > 0 && value && !projects.find((proj) => proj.id === value)) {
+      setValue(projects[0].id);
+    }
+  }, [projects, value, setValue]);
 
   return (
     <nav
@@ -128,23 +140,37 @@ export default function Infobar() {
                 </PopoverContent>
               </Popover>
             </BreadcrumbItem>
-            <BreadcrumbSeparator>
-              <Slash className="h-4 w-4" />
-            </BreadcrumbSeparator>
-            {pathname[0] && (
-              <BreadcrumbItem>
-                <Button
-                  variant={"secondary"}
-                  className="select-none p-2 h-6"
-                >
-                  {pathname[0].charAt(0).toUpperCase() + pathname[0].slice(1)}
-                </Button>
-              </BreadcrumbItem>
-            )}
+            {pathname.length > 0 && pathname.map((segment, idx) => (
+              <React.Fragment key={idx}>
+                <BreadcrumbSeparator>
+                  <Slash className="h-4 w-4" />
+                </BreadcrumbSeparator>
+                <BreadcrumbItem>
+                  <Button
+                    variant={"ghost"}
+                    className="select-none p-2 h-6 border border-dashed"
+                  >
+                    {segment.charAt(0).toUpperCase() + segment.slice(1)}
+                  </Button>
+                </BreadcrumbItem>
+              </React.Fragment>
+            ))}
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <div className="hidden md:flex">
+      <div className="hidden md:flex gap-2">
+        <Button variant={"outline"} size={"sm"}>
+        <span className="inline-flex items-center">
+          <svg height="12" width="12" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+          <g fill="currentColor">
+            <ellipse cx="9.5" cy="3.75" fill="none" rx="6.25" ry="2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1">
+              </ellipse>
+              <path d="M3.25,3.75v3c0,1.104,2.798,2,6.25,2s6.25-.896,6.25-2V3.75" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1">
+                </path>
+                <path d="M2.25,11.25v3c0,1.104,2.798,2,6.25,2s6.25-.896,6.25-2v-3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="M3.311,10.135c-.67,.319-1.061,.702-1.061,1.115,0,1.104,2.798,2,6.25,2s6.25-.896,6.25-2c0-.223-.119-.438-.33-.638" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" x1="9.5" x2="9.5" y1="5.75" y2="8.75"></line><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" x1="6.25" x2="6.25" y1="5.458" y2="8.458"></line><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" x1="12.75" x2="12.75" y1="5.458" y2="8.458"></line><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" x1="8.5" x2="8.5" y1="13.25" y2="16.25"></line><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" x1="5.25" x2="5.25" y1="12.958" y2="15.958"></line><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" x1="11.75" x2="11.75" y1="12.958" y2="15.958"></line></g></svg>
+                </span>
+          {key.remaining ? key.remaining : "0"}
+        </Button>
         <FeedbackModal />
       </div>
     </nav>

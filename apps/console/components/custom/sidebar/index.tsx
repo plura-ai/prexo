@@ -5,6 +5,10 @@ import {
   BrainCircuit,
   FlaskConical,
   BookMarked,
+  DatabaseBackup,
+  DatabaseZap,
+  MessageCircleDashed,
+  Video,
 } from "lucide-react";
 
 import {
@@ -18,6 +22,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   useSidebar,
 } from "@/components/ui/sidebar";
 
@@ -36,6 +43,16 @@ const items = [
     url: "/dashboard",
     icon: Layers2,
   },
+  {
+    title: "Conversations",
+    url: "#",
+    icon: MessageCircleDashed
+  },
+  {
+    title: "Meetings",
+    url: "#",
+    icon: Video
+  }
 ];
 
 const navSecondary = [
@@ -54,8 +71,20 @@ const navSecondary = [
 const IntelItems = [
   {
     title: "Memory",
-    url: "/memory",
+    url: "#",
     icon: BrainCircuit,
+    subItems: [
+      {
+      title: "History",
+      url: "/memory/history",
+      icon: DatabaseBackup,
+    },
+    {
+      title: "Context",
+      url: "/memory/context",
+      icon: DatabaseZap,
+    }
+  ]
   },
   {
     title: "Playground",
@@ -105,13 +134,29 @@ export function AppSidebar() {
                   <SidebarMenuButton
                     asChild
                     tooltip={item.title}
-                    isActive={path.includes(item.url)}
+                    isActive={path.split("/").pop() === item.url.replace(/^\//, "")}
                   >
                     <Link href={item.url}>
                     <item.icon className="text-muted-foreground"/>
                       <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
+                  {item.subItems?.length ? (
+                  <SidebarMenuSub>
+                    {item.subItems.map((item) => (
+                      <SidebarMenuSubItem key={item.title}>
+                        <SidebarMenuSubButton asChild 
+                        isActive={path.includes(item.url)}
+                        >
+                          <Link href={item.url}>
+                            <item.icon className="text-muted-foreground"/>
+                            <span>{item.title}</span>
+                          </Link>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    ))}
+                  </SidebarMenuSub>
+                ) : null}
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>

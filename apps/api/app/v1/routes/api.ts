@@ -65,7 +65,7 @@ api.post("/verify", async (c) => {
 
   const verify = await verifyApi(apiKey);
   if (!verify.result) {
-    return c.json({ message: "Failed to verify API key" }, 500);
+    return c.json({ message: "Failed to verify API key" }, 401);
   }
 
   return c.json({ result: verify.result }, 201);

@@ -20,16 +20,16 @@ const agentCards = [
     description:
       "Integrate agents seamlessly into your existing applications. Our platform supports ReactJs frameworks and languages, making it easy to get started.",
     icon: IconBrain,
-    href: "/features/ai-assistant",
+    href: "https://docs.prexoai.xyz/app/quick-start",
     class: "md:col-span-2 md:row-span-2 md:h-[40rem]",
     image: "/img/demo.config.png",
   },
   {
     title: "Agentic Automation",
     description:
-      "Automate issue tickets and sales processes with intelligent workflows. This feature allows you to focus on more important aspects of your projects.",
+      "Automate support service and sales processes with intelligent workflows. This feature allows you to focus on more important aspects of your projects.",
     icon: IconRobot,
-    href: "/features/automation",
+    href: "https://docs.prexoai.xyz/",
     class: "",
     image: null,
   },
@@ -38,7 +38,7 @@ const agentCards = [
     description:
       "Agents remembers user interactions and preferences, allowing them to provide personalized responses. This enhances user experience and engagement.",
     icon: IconCode,
-    href: "/features/code-gen",
+    href: "https://docs.prexoai.xyz/",
     class: "",
     image: "",
   },
