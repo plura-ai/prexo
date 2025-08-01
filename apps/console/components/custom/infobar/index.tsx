@@ -41,7 +41,7 @@ export default function Infobar() {
   const [openPopover2, setOpenPopover2] = useState(false);
   const [value, setValue] = useLocalStorage(
     "@prexo-#consoleId",
-    projects[0]?.name,
+    projects[0]?.id,
   );
   const pathname = usePathname()
     .replace(/^\/|\/$/g, "")
@@ -144,7 +144,7 @@ export default function Infobar() {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <div>
+      <div className="hidden md:flex">
         <FeedbackModal />
       </div>
     </nav>

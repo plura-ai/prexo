@@ -86,10 +86,10 @@ export function AppSidebar() {
                     tooltip={item.title}
                     isActive={path.includes(item.url)}
                   >
-                    <a href={item.url}>
-                      <item.icon />
+                    <Link href={item.url}>
+                      <item.icon className="text-muted-foreground"/>
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -108,7 +108,7 @@ export function AppSidebar() {
                     isActive={path.includes(item.url)}
                   >
                     <Link href={item.url}>
-                      <item.icon />
+                    <item.icon className="text-muted-foreground"/>
                       <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>

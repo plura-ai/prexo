@@ -1,6 +1,6 @@
 "use client";
 import { authClient } from "@prexo/auth/client";
-import { useMyProfileStore } from "@prexo/store";
+import { useApiKeyStore, useMyProfileStore, useProjectsStore } from "@prexo/store";
 import { UserType } from "@prexo/types";
 import { useRouter } from "next/navigation";
 import {
@@ -10,6 +10,7 @@ import {
   useEffect,
   ReactNode,
 } from "react";
+import { useLocalStorage } from "usehooks-ts";
 
 interface AuthContextType {
   user: UserType | null;
@@ -29,6 +30,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
   const { myProfile, addMyProfile, removeMyProfile } = useMyProfileStore();
+  const {setProjects} = useProjectsStore();
+  const {removeKey} = useApiKeyStore();
+  const [cons, setCons] = useLocalStorage(
+    "@prexo-#consoleId",
+    '',
+  );
   const router = useRouter();
 
   useEffect(() => {
@@ -49,9 +56,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           console.log("User fetched:", sessionUser);
         } else {
           setUser(null);
+        
           if (myProfile && myProfile.id) {
             removeMyProfile(myProfile.id);
-            console.log("User profile removed:", myProfile.id);
+            setProjects([])
+            removeKey()
+            setCons('')
+            console.log("consoleId reset!", cons)
+            console.log("Stores cleared!");
           }
           console.log("No user found in session.");
         }
@@ -65,7 +77,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => {
       isMounted = false;
     };
-  }, [addMyProfile, myProfile, removeMyProfile]);
+  }, [addMyProfile, myProfile, removeMyProfile, removeKey, setCons, setProjects]);
 
   // Add logout logic here, inbuilt removeMyProfile
   const logout = async () => {

@@ -26,7 +26,6 @@ export default async function authMiddleware(request: NextRequest) {
   const currentPath = request.nextUrl.pathname;
 
   if (!session || !("role" in session.user)) {
-    console.log("Session Not Found!");
     return NextResponse.next();
   }
 
