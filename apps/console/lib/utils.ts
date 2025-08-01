@@ -10,31 +10,31 @@ function getRandomElement(arr: string[]): string {
 }
 
 export function generateApiKeyName(): string {
-  const sexyWords = [
-    "lusty",
-    "sexy",
-    "horny",
-    "sensual",
-    "sultry",
-    "naughty",
-    "steamy",
-    "tempting",
-    "seductive",
-    "frisky",
-    "spicy",
-    "desirable",
-    "teasing",
-    "provocative",
-    "racy",
-    "risqué",
-    "flirty",
-    "alluring",
-    "hot",
-    "erotic",
-    "raunchy",
-    "kinky",
-    "passionate",
-  ];
+  const descriptiveWords = [
+    "awesome",
+    "brilliant",
+    "clever",
+    "dynamic",
+    "elegant",
+    "fantastic",
+    "genius",
+    "innovative",
+    "magnificent",
+    "outstanding",
+    "powerful",
+    "remarkable",
+    "spectacular",
+    "superb",
+    "tremendous",
+    "wonderful",
+    "excellent",
+    "amazing",
+    "incredible",
+    "impressive",
+    "marvelous",
+    "stellar",
+    "supreme",
+    ];
 
   const adjectives = [
     "moody",
@@ -97,7 +97,7 @@ export function generateApiKeyName(): string {
   switch (order) {
     case 0:
       parts = [
-        getRandomElement(sexyWords),
+        getRandomElement(descriptiveWords),
         getRandomElement(adjectives),
         getRandomElement(nouns),
       ];
@@ -105,7 +105,7 @@ export function generateApiKeyName(): string {
     case 1:
       parts = [
         getRandomElement(adjectives),
-        getRandomElement(sexyWords),
+        getRandomElement(descriptiveWords),
         getRandomElement(nouns),
       ];
       break;
@@ -113,7 +113,7 @@ export function generateApiKeyName(): string {
       parts = [
         getRandomElement(adjectives),
         getRandomElement(nouns),
-        getRandomElement(sexyWords),
+        getRandomElement(descriptiveWords),
       ];
       break;
   }

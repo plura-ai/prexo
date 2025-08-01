@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { Profanity } from "profanity-validator";
-import { Frown, Meh, MessageSquare, PenLine, Smile } from "lucide-react";
+import { Frown, Meh, PenLine, Smile } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";

@@ -1,6 +1,5 @@
 {
   "name": "@prexo/mail",
-  "module": "index.ts",
   "exports": {
     ".": "./src/index.ts"
   },

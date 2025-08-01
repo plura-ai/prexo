@@ -80,7 +80,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
           });
 
           if (!data.ok) {
-            throw new Error(`Failed to fetch projects: ${data.status}`);
+            throw new Error(`Failed to fetch API key: ${data.status}`);
           }
 
           const response = await data.json();

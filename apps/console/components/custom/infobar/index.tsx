@@ -26,7 +26,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Check, ChevronsUpDown, Plus, Slash, Sparkles } from "lucide-react";
+import { Check, ChevronsUpDown, Plus, Slash } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -34,7 +34,6 @@ import { usePathname } from "next/navigation";
 import { FeedbackModal } from "../feedback.modal";
 import { useApiKeyStore, useProjectsStore } from "@prexo/store";
 import { useLocalStorage } from "usehooks-ts";
-import Link from "next/link";
 
 export default function Infobar() {
   const { projects } = useProjectsStore();
