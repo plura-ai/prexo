@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme.provider";
 import { PosthogProvider } from "@/hooks/use-posthog";
 import { AuthProvider } from "@/context/auth.context";
 import { ContentProvider } from "@/context/store.context";
+import { Toaster } from "@/components/ui/sonner"
 
 const uxumGrotesque = localFont({
   src: [
@@ -109,6 +110,7 @@ export default function RootLayout({
             </PosthogProvider>
           </ContentProvider>
         </AuthProvider>
+        <Toaster />
       </body>
     </html>
   );

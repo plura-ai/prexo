@@ -255,6 +255,7 @@
       "version": "0.0.0",
       "dependencies": {
         "@prexo/db": "workspace:*",
+        "@prexo/mail": "workspace:*",
         "@prexo/polar": "workspace:*",
         "@prexo/utils": "workspace:*",
         "better-auth": "^1.2.8",
@@ -298,6 +299,14 @@
       "version": "0.0.0",
       "dependencies": {
         "@unkey/api": "^0.36.0",
+      },
+    },
+    "packages/logs": {
+      "name": "@prexo/logs",
+      "version": "0.0.0",
+      "dependencies": {
+        "@unkey/api": "^0.36.0",
+        "getlogs-sdk": "^1.0.0",
       },
     },
     "packages/mail": {
@@ -758,6 +767,8 @@
     "@prexo/db": ["@prexo/db@workspace:packages/db"],
 
     "@prexo/keys": ["@prexo/keys@workspace:packages/keys"],
+
+    "@prexo/logs": ["@prexo/logs@workspace:packages/logs"],
 
     "@prexo/mail": ["@prexo/mail@workspace:packages/mail"],
 
@@ -1860,6 +1871,8 @@
     "get-uri": ["get-uri@6.0.5", "", { "dependencies": { "basic-ftp": "^5.0.2", "data-uri-to-buffer": "^6.0.2", "debug": "^4.3.4" } }, "sha512-b1O07XYq8eRuVzBNgJLstU6FYc1tS6wnMtF1I1D9lE8LxZSOGZ7LhxN54yPP6mGw5f2CkXY2BQUL9Fx41qvcIg=="],
 
     "get-value": ["get-value@2.0.6", "", {}, "sha512-Ln0UQDlxH1BapMu3GPtf7CuYNwRZf2gwCuPqbyG6pB8WfmFpzqcy4xtAaAMUhnNqjMKTiCPZG2oMT3YSx8U2NA=="],
+
+    "getlogs-sdk": ["getlogs-sdk@1.0.0", "", { "dependencies": { "tsup": "^8.5.0" }, "peerDependencies": { "typescript": "^5" } }, "sha512-xSDC+G2t6kRz7gzlUoSzCS/8hzVydm/15R6S/saWKfivNkk0cWVfBYJDsVFrJoLeoKzzDlArHImyr6d7xrOBkA=="],
 
     "github-slugger": ["github-slugger@2.0.0", "", {}, "sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw=="],
 

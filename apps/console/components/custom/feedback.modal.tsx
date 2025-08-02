@@ -23,10 +23,11 @@ import {
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-// import { createFeedback } from "@/actions/feedback";
+import {feedbacksLogger} from "@prexo/logs"
+import { useMyProfileStore } from "@prexo/store";
 
 const profanity = new Profanity({
-  customWords: [""],
+  customWords: ["Saidev", "Saidev Dhal"],
   heat: 0.9,
 });
 
@@ -49,24 +50,38 @@ export function FeedbackModal() {
   const [selectedEmo, setSelectedEmo] = useState<"happy" | "idle" | "sad">(
     "happy",
   );
+  const [isLoading, setIsLoading] = useState(false)
+  const {myProfile} = useMyProfileStore();
 
   const form = useForm<PostSchema>({
     resolver: zodResolver(postSchema),
   });
 
   const onSubmit: SubmitHandler<PostSchema> = async (data) => {
+    setIsLoading(true);
     try {
       const validatedData = await postSchema.parseAsync({ ...data });
       console.log(validatedData);
-      //   const res = await createFeedback({
-      //     desc: validatedData.description,
-      //     emotion: selectedEmo,
-      //   });
-      //   return res;
+        await feedbacksLogger({
+          content: validatedData.description,
+          emo: selectedEmo,
+          userId: myProfile?.id as string,
+          userName: myProfile?.name as string,
+          color:
+            selectedEmo === "happy"
+              ? "#22c55e" // green
+              : selectedEmo === "idle"
+              ? "#fbbf24" // yellow
+              : "#ef4444", // red
+        });
+        setIsLoading(false);
     } catch (error) {
+      setIsLoading(false)
       console.error(error);
       toast.error(`Error in submiting feeback !Please try again `);
     } finally {
+      setIsLoading(false);
+      form.reset();
       toast.success(`Thanks for your feedback!`);
     }
   };
@@ -113,7 +128,7 @@ export function FeedbackModal() {
               <div className="flex gap-2">
                 <Button
                   size="icon"
-                  variant="outline"
+                  variant={selectedEmo === "happy" ? "secondary" :"outline"}
                   className={`transition-all duration-200 ${selectedEmo === "happy" ? "border-primary border-[1px]" : ""}`}
                   onClick={() => setSelectedEmo("happy")}
                   type="button"
@@ -122,7 +137,7 @@ export function FeedbackModal() {
                 </Button>
                 <Button
                   size="icon"
-                  variant="outline"
+                  variant={selectedEmo === "idle" ? "secondary" :"outline"}
                   className={`transition-all duration-200 ${selectedEmo === "idle" ? "border-primary border-[1px]" : ""}`}
                   onClick={() => setSelectedEmo("idle")}
                   type="button"
@@ -131,7 +146,7 @@ export function FeedbackModal() {
                 </Button>
                 <Button
                   size="icon"
-                  variant="outline"
+                  variant={selectedEmo === "sad" ? "secondary" :"outline"}
                   className={`transition-all duration-200 ${selectedEmo === "sad" ? "border-primary border-[1px]" : ""}`}
                   onClick={() => setSelectedEmo("sad")}
                   type="button"
@@ -141,7 +156,7 @@ export function FeedbackModal() {
               </div>
             </div>
             <Button type="submit" className="w-full">
-              {form.formState.isSubmitting ? "Checking..." : "Submit"}
+              {form.formState.isSubmitting || isLoading ? "Submitting..." : "Submit"}
             </Button>
           </form>
         </Form>
