@@ -46,12 +46,14 @@ const items = [
   {
     title: "Conversations",
     url: "#",
-    icon: MessageCircleDashed
+    icon: MessageCircleDashed,
+    isDisabled: true
   },
   {
     title: "Meetings",
     url: "#",
-    icon: Video
+    icon: Video,
+    isDisabled: true
   }
 ];
 
@@ -114,6 +116,7 @@ export function AppSidebar() {
                     asChild
                     tooltip={item.title}
                     isActive={path.includes(item.url)}
+                    className={`border ${item.isDisabled && "bg-black hover:bg-black border-dashed"}`}
                   >
                     <Link href={item.url}>
                       <item.icon className="text-muted-foreground"/>

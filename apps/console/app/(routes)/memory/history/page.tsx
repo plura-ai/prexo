@@ -1,9 +1,13 @@
+"use client";
+import InfobarBreadCrumb from '@/components/custom/infobar/bread.crumb';
+import { HistoryViewer } from '@/components/custom/memory/history.viewer'
 import React from 'react'
 
 export default function MemoryHistory() {
   return (
-    <div>
-      his
+    <div className="flex flex-col items-center justify-center overflow-hidden">
+      <InfobarBreadCrumb />
+      <HistoryViewer/>
     </div>
   )
 }

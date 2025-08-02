@@ -7,7 +7,7 @@ interface SectionProps {
 export default function SectionLabel({ label, msg }: SectionProps) {
   return (
     <div>
-      <p className="text-lg font-medium mb-2">{label}</p>
+      <p className="text-lg font-medium mb-1">{label}</p>
       <p className="text-sm text-muted-foreground">{msg}</p>
     </div>
   );
