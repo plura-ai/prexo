@@ -30,7 +30,7 @@
     "ai": "^4.3.16",
     "getlogs-sdk": "^1.0.1",
     "hono": "^4.10.4",
-    "next": "^15.4.5",
+    "next": "15.4.10",
     "ollama-ai-provider-v2": "^1.1.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
