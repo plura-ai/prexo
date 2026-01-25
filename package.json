@@ -49,7 +49,7 @@
   "dependencies": {
     "@mendable/firecrawl-js": "^4.3.1",
     "@trigger.dev/sdk": "^3.3.17",
-    "next": "^15.3.5",
+    "next": "15.3.8",
     "puppeteer": "^24.12.1"
   }
 }
